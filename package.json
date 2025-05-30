@@ -1,0 +1,8 @@
+{
+  "name": "my-fullstack-app",
+  "private": true,
+  "scripts": {
+    "dev-f": "cd front && npm run dev",
+    "dev-b": "cd back && npm run develop"
+  }
+}
