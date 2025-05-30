@@ -7,7 +7,6 @@ import { SlidersResponsive } from "@/constants/window";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 export default function SliderView({ data }: any) {
-  console.log(data);
   return (
     <Swiper
       slidesPerView={5}
@@ -17,12 +16,12 @@ export default function SliderView({ data }: any) {
       className="mySwiper w-full flex place-items-center *:w-full *:h-full"
       breakpoints={SlidersResponsive}
     >
-      {data.map((song: any) => (
+      {data?.map((song: any) => (
         <SwiperSlide key={song.id}>
-          <Link href={`/music/${song.singer?.name} - ${song.name}`}>
+          <Link href={`/music/${song.singer?.name} - ${song.documentId}`}>
             <img
-              src={`http://localhost:1337${song.cover?.url}`}
-              alt={song.title}
+              src={song.coverUrl}
+              alt={song.name}
               sizes="(max-width: 768px) 100vw, 50vw"
               className="w-full object-cover rounded-xl h-44 bg-gray-200"
               loading="lazy"

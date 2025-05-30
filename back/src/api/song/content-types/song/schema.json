@@ -21,33 +21,11 @@
       "target": "api::comment.comment"
     },
     "likes": {
-      "type": "biginteger"
-    },
-    "cover": {
-      "type": "media",
-      "multiple": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
-    },
-    "audio": {
-      "type": "media",
-      "multiple": false,
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ]
+      "type": "biginteger",
+      "default": "0"
     },
     "lyric": {
       "type": "text"
-    },
-    "publish_time": {
-      "type": "datetime"
     },
     "album": {
       "type": "relation",
@@ -71,6 +49,12 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::singer.singer"
+    },
+    "audioUrl": {
+      "type": "string"
+    },
+    "coverUrl": {
+      "type": "string"
     }
   }
 }

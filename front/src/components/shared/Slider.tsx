@@ -12,7 +12,8 @@ export default async function Slider({
   const url = new URL(`http://localhost:1337/api/songs?${query}&populate=*
 `);
   const response = await fetch(url);
-  const songs: any = await response.json();
+  const data: any = await response.json();
+  const songs: any = data.data;
 
   return (
     <>
@@ -26,7 +27,7 @@ export default async function Slider({
           See More
         </Link>
       </div>
-      <SliderView data={songs.data} />
+      <SliderView data={songs} />
     </>
   );
 }

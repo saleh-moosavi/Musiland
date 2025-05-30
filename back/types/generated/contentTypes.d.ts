@@ -523,14 +523,14 @@ export interface ApiSongSong extends Struct.CollectionTypeSchema {
   };
   attributes: {
     album: Schema.Attribute.Relation<'manyToOne', 'api::album.album'>;
-    audio: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    audioUrl: Schema.Attribute.String;
     comments: Schema.Attribute.Relation<'oneToMany', 'api::comment.comment'>;
-    cover: Schema.Attribute.Media<'images' | 'files' | 'videos' | 'audios'>;
+    coverUrl: Schema.Attribute.String;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
     genres: Schema.Attribute.Relation<'manyToMany', 'api::genre.genre'>;
-    likes: Schema.Attribute.BigInteger;
+    likes: Schema.Attribute.BigInteger & Schema.Attribute.DefaultTo<'0'>;
     locale: Schema.Attribute.String & Schema.Attribute.Private;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::song.song'> &
       Schema.Attribute.Private;
@@ -540,7 +540,6 @@ export interface ApiSongSong extends Struct.CollectionTypeSchema {
       'manyToMany',
       'api::playlist.playlist'
     >;
-    publish_time: Schema.Attribute.DateTime;
     publishedAt: Schema.Attribute.DateTime;
     singer: Schema.Attribute.Relation<'oneToOne', 'api::singer.singer'>;
     updatedAt: Schema.Attribute.DateTime;
