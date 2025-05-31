@@ -31,7 +31,7 @@ export default function VolumeBtn({
         )}
       </div>
       {isRangeInputVisible && (
-        <div className="absolute border border-purple-200 box-content -top-20 lg:-top-28 -right-2 w-24 lg:w-40 bg-gray-100 pb-2 px-2 rounded-full">
+        <div className="absolute border border-purple-200 box-content -top-18 -right-2 w-24 lg:w-40 bg-gray-100 pb-2 px-2 rounded-full">
           <RangeInput
             progress={volumeVal}
             handleProgressChange={handleVolumeChange}

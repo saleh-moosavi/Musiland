@@ -1,4 +1,4 @@
-import PlayButton from "./PlayButton";
+import PlayButton from "../shared/PlayButton";
 
 export default function SingleMusicView({ song }: any) {
   if (!song) {
@@ -36,15 +36,15 @@ export default function SingleMusicView({ song }: any) {
           </p>
         </div>
         <div className="space-y-5">
-          <div className="flex items-center gap-5">
-            <button className="w-full py-2 border rounded-xl border-gray-400 text-sm">
-              Download 320
-            </button>
-            <button className="w-full py-2 border rounded-xl border-gray-400 text-sm">
-              Download 128
-            </button>
-          </div>
-          <PlayButton audio={song.audioUrl} />
+          <a
+            download={true}
+            href={song.audioUrl}
+            target="_blank"
+            className="w-full text-center inline-block py-2 shadow-md hover:shadow-gray-300 cursor-pointer rounded-xl border-gray-400 text-sm"
+          >
+            Download
+          </a>
+          <PlayButton song={song} />
 
           <div className="flex gap-5 items-center text-sm justify-between">
             <p>{song.comments?.length} Comments</p>
