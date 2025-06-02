@@ -21,7 +21,7 @@ export default function VolumeBtn({
 
   return (
     <article className="flex items-center gap-x-3 group relative">
-      <div onClick={() => setIsRangeInputVisible(!isRangeInputVisible)}>
+      <div className="cursor-pointer" onClick={() => setIsRangeInputVisible(!isRangeInputVisible)}>
         {volumeVal === 0 ? (
           <Volume />
         ) : volumeVal < 50 ? (

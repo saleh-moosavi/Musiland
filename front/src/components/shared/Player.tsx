@@ -6,10 +6,52 @@ import VolumeBtn from "./player/VolumeBtn";
 import ProgressBar from "./player/ProgressBar";
 import useMusicStore from "@/store/musicStore";
 import MusicDetail from "./player/MusicDetail";
+import useSameSongsStore from "@/store/sameSongStore";
 
 export default function Player() {
   const audioRef = useRef<HTMLAudioElement>(null);
-  const { audioSrc } = useMusicStore();
+
+  const { sameSongsList } = useSameSongsStore();
+  const {
+    audioSrc,
+    setAudioSrc,
+    setAudioCover,
+    setAudioName,
+    setAudioGenres,
+    setAudioPlaylists,
+  } = useMusicStore();
+
+  const handlePrevSong = () => {
+    const currentIndex = sameSongsList.findIndex(
+      (song) => song.audioUrl === audioSrc
+    );
+
+    if (currentIndex > 0) {
+      // Set the audioSrc to the previous song's audioUrl
+      const song = sameSongsList[currentIndex - 1];
+      setAudioSrc(song.audioUrl);
+      setAudioCover(song.coverUrl);
+      setAudioName(song.name);
+      setAudioGenres(song.genres);
+      setAudioPlaylists(song.playlists);
+    }
+  };
+
+  const handleNextSong = () => {
+    const currentIndex = sameSongsList.findIndex(
+      (song) => song.audioUrl === audioSrc
+    );
+
+    if (currentIndex !== -1 && currentIndex < sameSongsList.length - 1) {
+      // Set the audioSrc to the next song's audioUrl
+      const song = sameSongsList[currentIndex + 1];
+      setAudioSrc(song.audioUrl);
+      setAudioCover(song.coverUrl);
+      setAudioName(song.name);
+      setAudioGenres(song.genres);
+      setAudioPlaylists(song.playlists);
+    }
+  };
 
   return (
     <footer className="pb-2 fixed bottom-0 inset-x-0 z-50 max-w-[90rem] mx-5 xl:mx-auto">
@@ -33,9 +75,9 @@ export default function Player() {
             <MusicDetail />
           </div>
           <div className="flex gap-x-5 items-center justify-self-center">
-            <SkipBack />
+            <SkipBack className="cursor-pointer" onClick={handlePrevSong} />
             <PlayBtn audioContext={audioRef} />
-            <SkipForward />
+            <SkipForward className="cursor-pointer" onClick={handleNextSong} />
           </div>
           <div className="flex gap-x-5 items-center justify-self-end">
             <VolumeBtn audioContext={audioRef} />

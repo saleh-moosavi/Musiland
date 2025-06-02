@@ -1,1 +1,19 @@
 @import "tailwindcss";
+
+[data-nextjs-dev-indicator],
+.next-dev-indicator,
+nextjs-portal {
+  display: none !important;
+}
+
+::-webkit-scrollbar {
+  width: 2px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(47, 47, 47);
+}
+
+::-webkit-scrollbar-track {
+  margin: 2rem;
+}

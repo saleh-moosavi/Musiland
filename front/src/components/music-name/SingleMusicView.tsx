@@ -29,7 +29,7 @@ export default function SingleMusicView({ song }: any) {
               : "Unknown"}
           </p>
           <p className="font-semibold my-10">
-            Genre:{" "}
+            playlist:{" "}
             {song.playlists && song.playlists.length > 0
               ? song.playlists?.map((p: any) => p.name).join(", ")
               : "Unknown"}

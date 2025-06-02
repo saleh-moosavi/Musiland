@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/shared/Navbar";
 import Player from "@/components/shared/Player";
+import SameSongs from "@/components/shared/SameSongs";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,6 +20,7 @@ export default function RootLayout({
         <Navbar />
         <div className="min-h-[70vh] max-w-[90rem] py-28 mx-5 xl:mx-auto">
           {children}
+          <SameSongs />
         </div>
         <Player />
       </body>

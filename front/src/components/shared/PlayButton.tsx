@@ -3,11 +3,19 @@ import useMusicStore from "@/store/musicStore";
 import { PlayCircleIcon } from "lucide-react";
 
 export default function PlayButton({ song, icon }: any) {
-  const { setAudioSrc, setAudioCover, setAudioName } = useMusicStore();
+  const {
+    setAudioSrc,
+    setAudioCover,
+    setAudioName,
+    setAudioGenres,
+    setAudioPlaylists,
+  } = useMusicStore();
   const handlePlaySong = () => {
+    setAudioName(song.name);
     setAudioSrc(song.audioUrl);
     setAudioCover(song.coverUrl);
-    setAudioName(song.name);
+    setAudioGenres(song.genres);
+    setAudioPlaylists(song.playlists);
   };
 
   if (icon) {
