@@ -1,6 +1,6 @@
 "use client";
 import { SkipBack, SkipForward } from "lucide-react";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import PlayBtn from "./player/PlayBtn";
 import VolumeBtn from "./player/VolumeBtn";
 import ProgressBar from "./player/ProgressBar";
@@ -21,6 +21,36 @@ export default function Player() {
     setAudioPlaylists,
   } = useMusicStore();
 
+  const songSetter = (song: any) => {
+    setAudioSrc(song.audioUrl);
+    setAudioCover(song.coverUrl);
+    setAudioName(song.name);
+    setAudioGenres(song.genres);
+    setAudioPlaylists(song.playlists);
+  };
+
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const handleEnded = () => {
+      const currentIndex = sameSongsList.findIndex(
+        (song) => song.audioUrl === audioSrc
+      );
+
+      if (currentIndex !== -1 && currentIndex < sameSongsList.length - 1) {
+        const nextSong = sameSongsList[currentIndex + 1];
+        songSetter(nextSong);
+      }
+    };
+
+    audio.addEventListener("ended", handleEnded);
+
+    return () => {
+      audio.removeEventListener("ended", handleEnded);
+    };
+  }, [audioSrc, sameSongsList]);
+
   const handlePrevSong = () => {
     const currentIndex = sameSongsList.findIndex(
       (song) => song.audioUrl === audioSrc
@@ -29,11 +59,7 @@ export default function Player() {
     if (currentIndex > 0) {
       // Set the audioSrc to the previous song's audioUrl
       const song = sameSongsList[currentIndex - 1];
-      setAudioSrc(song.audioUrl);
-      setAudioCover(song.coverUrl);
-      setAudioName(song.name);
-      setAudioGenres(song.genres);
-      setAudioPlaylists(song.playlists);
+      songSetter(song);
     }
   };
 
@@ -45,11 +71,7 @@ export default function Player() {
     if (currentIndex !== -1 && currentIndex < sameSongsList.length - 1) {
       // Set the audioSrc to the next song's audioUrl
       const song = sameSongsList[currentIndex + 1];
-      setAudioSrc(song.audioUrl);
-      setAudioCover(song.coverUrl);
-      setAudioName(song.name);
-      setAudioGenres(song.genres);
-      setAudioPlaylists(song.playlists);
+      songSetter(song);
     }
   };
 

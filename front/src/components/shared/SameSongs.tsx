@@ -48,8 +48,8 @@ export default function SameSongs() {
         isPanelVisible ? "" : "hidden"
       }`}
     >
-      <article className="max-w-[90rem] mx-auto w-full h-full bg-gray-200 rounded-3xl space-y-5 p-5 overflow-y-scroll overscroll-y-contain shadow-md outline-gray-300 outline-1">
-        <div className="flex justify-between items-center">
+      <article className="max-w-[90rem] mx-auto w-full h-full bg-gray-200 rounded-3xl px-5 pb-5 overflow-y-scroll overscroll-y-contain shadow-md outline-gray-300 outline-1">
+        <div className="flex justify-between items-center sticky top-0 bg-gray-200 py-5 z-20">
           <p className="select-none font-semibold">Similar Songs</p>
           <X
             className="hover:stroke-red-600 transition-all duration-200 cursor-pointer"
@@ -59,7 +59,7 @@ export default function SameSongs() {
         {sameSongsList ? (
           sameSongsList.map((song: any) => (
             <section
-              className={`flex justify-start items-center gap-2 md:gap-10 w-full p-2 rounded-2xl overflow-hidden hover:bg-gray-100 select-none transition-all duration-200 ${
+              className={`flex justify-start items-center gap-2 mb-5 md:gap-10 w-full p-2 rounded-2xl overflow-hidden hover:bg-gray-100 select-none transition-all duration-200 ${
                 audioSrc == song.audioUrl ? "bg-gray-300" : "bg-white"
               }`}
               key={song.id}
