@@ -24,7 +24,6 @@ export default function SameSongs() {
       );
       const response = await fetch(url);
       const data: any = await response.json();
-      console.log(data.data)
 
       // Sort the songs to ensure the currently playing song is first
       const songs = data.data.sort((a: any, b: any) => {

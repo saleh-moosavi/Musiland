@@ -20,12 +20,24 @@ export default function ProgressBar({
   }, []);
 
   const handleProgressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (audioContext.current) {
-      audioContext.current.currentTime =
-        (Number(e.target.value) / 100) * audioContext.current.duration;
+    const audio = audioContext.current;
+    if (!audio) return;
+
+    audio.muted = true;
+
+    audio.currentTime = (Number(e.target.value) / 100) * audio.duration;
+
+    if (audio.paused) {
+      audio.play();
     }
-    audioContext.current?.play();
+
+    setTimeout(() => {
+      if (audio) {
+        audio.muted = false;
+      }
+    }, 250);
   };
+
   return (
     <RangeInput
       progress={progress}

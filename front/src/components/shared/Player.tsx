@@ -56,10 +56,7 @@ export default function Player() {
   return (
     <footer className="pb-2 fixed bottom-0 inset-x-0 z-50 max-w-[90rem] mx-5 xl:mx-auto">
       <audio
-        src={
-          audioSrc ||
-          "https://sv2.mybia2music.com/s2/Music/1404/02/27/Reza%20Shiri/Reza%20Shiri%20-%20Fatabarak%20Allah%20[128].mp3"
-        }
+        src={audioSrc}
         ref={audioRef}
         suppressHydrationWarning
         onError={() => alert("Audio playback failed. Please try another song.")}

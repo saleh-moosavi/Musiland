@@ -12,7 +12,9 @@ export default function PlayBtn({
   const { audioSrc } = useMusicStore();
 
   useEffect(() => {
-    handlePlayPause();
+    if (audioSrc) {
+      handlePlayPause();
+    }
   }, [audioSrc]);
 
   useEffect(() => {
@@ -30,7 +32,7 @@ export default function PlayBtn({
 
   const handlePlayPause = () => {
     const audio = audioContext.current;
-    if (!audio) return;
+    if (!audio || !audioSrc) return;
 
     try {
       if (audio.paused) {
