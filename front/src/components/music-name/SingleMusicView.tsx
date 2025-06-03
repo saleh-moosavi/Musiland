@@ -20,7 +20,7 @@ export default function SingleMusicView({ song }: any) {
         <div>
           <h3 className="font-semibold text-3xl">{song.singer?.name}</h3>
           <p className="font-semibold text-lg">
-            {song.name} (Album: {song.singer?.name || "Unknown"})
+            {song.name} (Album: {song.album?.name || "Unknown"})
           </p>
           <p className="font-semibold my-10">
             Genre:{" "}
