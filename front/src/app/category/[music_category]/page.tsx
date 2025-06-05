@@ -1,3 +1,4 @@
+import PlayButton from "@/components/shared/PlayButton";
 import Link from "next/link";
 
 interface PropsType {
@@ -31,22 +32,28 @@ export default async function MusicCategoryPage({
       </h2>
       <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-center justify-start gap-10">
         {songs.map((song: any) => (
-          <Link
-            className="self-start"
-            key={song.id}
-            href={`/music/${song.singer.name || "Unknown"} - ${
-              song.documentId
-            }`}
-          >
-            <img
-              src={song.coverUrl}
-              alt={song.name}
-              className="w-full object-cover rounded-xl h-44 bg-gray-200"
-              loading="lazy"
-            />
-            <p className="font-semibold mt-2">{song.name}</p>
-            <p className="text-sm">{song.singer.name || "Unknown Artist"}</p>
-          </Link>
+          <div className="self-start" key={song.id}>
+            <div className="relative group rounded-xl overflow-hidden">
+              <img
+                src={song.coverUrl}
+                alt={song.name}
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="w-full object-cover  h-44 bg-gray-200"
+                loading="lazy"
+              />
+              <p className="absolute inset-0 flex justify-center items-center bg-black/30 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                <PlayButton song={song} icon />
+              </p>
+            </div>
+            <Link
+              href={`/music/${song.singer.name || "Unknown"} - ${
+                song.documentId
+              }`}
+            >
+              <p className="font-semibold mt-2">{song.name}</p>
+              <p className="text-sm">{song.singer.name || "Unknown Artist"}</p>
+            </Link>
+          </div>
         ))}
       </section>
     </>

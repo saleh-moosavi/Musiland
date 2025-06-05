@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import RangeInput from "./RangeInput";
-import useSameSongsStore from "@/store/sameSongStore";
 
 export default function ProgressBar({
   audioContext,
@@ -8,7 +7,6 @@ export default function ProgressBar({
   audioContext: React.MutableRefObject<HTMLAudioElement | null>;
 }) {
   const [progress, setProgress] = useState(0);
-  const { sameSongsList } = useSameSongsStore();
 
   useEffect(() => {
     const audio = audioContext.current;
