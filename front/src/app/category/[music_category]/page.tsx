@@ -1,4 +1,5 @@
 import PlayButton from "@/components/shared/PlayButton";
+import { objectToQueryString } from "@/libs/objectToQueryString";
 import Link from "next/link";
 
 interface PropsType {
@@ -12,9 +13,12 @@ export default async function MusicCategoryPage({
 }: PropsType) {
   const music_category = params.music_category;
   const decoded_music_category = decodeURIComponent(music_category);
+
+  const stringQuery = objectToQueryString(await searchParams);
   const res = await fetch(
-    `http://localhost:1337/api/songs?${searchParams}&populate=*`
+    `http://localhost:1337/api/songs?${stringQuery}&populate=*`
   );
+  console.log(stringQuery);
   const data = await res.json();
   const songs = await data.data;
   if (!songs) {

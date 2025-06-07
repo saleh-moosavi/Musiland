@@ -1,7 +1,46 @@
-import { LogIn, Menu, Moon } from "lucide-react";
+"use client";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { LogIn, Menu, Moon } from "lucide-react";
+import NavList from "./NavList";
 
 export default function Navbar() {
+  const [genres, setGenres] = useState<any>([]);
+  const [playlists, setPlaylists] = useState<any>([]);
+  const [navbarData, setNavbarData] = useState<any>([]);
+  const [showSubNav, setShowSubNav] = useState(false);
+  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    const fetchData = async (
+      url: string,
+      setter: React.Dispatch<React.SetStateAction<any>>
+    ) => {
+      const response = await fetch(url);
+      const data = await response.json();
+      setter(data.data);
+    };
+
+    fetchData(
+      `http://localhost:1337/api/genres?&populate=[genre][fields]=id,name`,
+      setGenres
+    );
+    fetchData(
+      `http://localhost:1337/api/playlists?&populate=[playlists][fields]=id,name`,
+      setPlaylists
+    );
+  }, []);
+
+  const handleMouseToggle = (show: boolean) => {
+    if (timeoutId) clearTimeout(timeoutId);
+    if (show) {
+      setShowSubNav(true);
+    } else {
+      const id = setTimeout(() => setShowSubNav(false), 300);
+      setTimeoutId(id);
+    }
+  };
+
   return (
     <header className="pt-2 fixed top-0 inset-x-0 z-50 max-w-[90rem] mx-5 xl:mx-auto">
       <section className="flex justify-between w-full gap-x-20 shadow-lg p-5 bg-slate-100 sticky inset-0 rounded-full">
@@ -20,9 +59,13 @@ export default function Navbar() {
               </div>
             </div>
           </Link>
-          <ul className="items-center gap-x-10 hidden lg:flex">
-            <li>Musics</li>
-            <li>Albums</li>
+          <ul
+            className="items-center gap-x-10 hidden lg:flex *:cursor-pointer"
+            onMouseEnter={() => handleMouseToggle(true)}
+            onMouseLeave={() => handleMouseToggle(false)}
+          >
+            <li onMouseEnter={() => setNavbarData(playlists)}>Playlists</li>
+            <li onMouseEnter={() => setNavbarData(genres)}>Genres</li>
           </ul>
         </div>
         <Link href="http://localhost:1337">
@@ -31,6 +74,13 @@ export default function Navbar() {
             <Menu className="lg:hidden" />
           </button>
         </Link>
+        {showSubNav && (
+          <NavList
+            navbarData={navbarData}
+            onMouseEnter={() => handleMouseToggle(true)}
+            onMouseLeave={() => handleMouseToggle(false)}
+          />
+        )}
       </section>
     </header>
   );

@@ -10,7 +10,7 @@ export default function error({ reset }: { reset: () => void }) {
         Go to Home
       </Link>
       <p>OR</p>
-      <button className="bg-gray-200 px-4 py-2 rounded-3xl" onClick={reset}>
+      <button className="bg-gray-200 px-4 py-2 rounded-3xl cursor-pointer" onClick={reset}>
         Retry
       </button>
     </div>
