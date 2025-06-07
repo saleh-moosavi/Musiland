@@ -1,3 +1,4 @@
+import Link from "next/link";
 import PlayButton from "../shared/PlayButton";
 
 export default function SingleMusicView({ song }: any) {
@@ -17,23 +18,46 @@ export default function SingleMusicView({ song }: any) {
         alt={song.name}
       />
       <section className="col-span-1 flex flex-col *:w-full h-full justify-between items-start">
-        <div>
+        <div className="space-y-2">
           <h3 className="font-semibold text-3xl">{song.singer?.name}</h3>
-          <p className="font-semibold text-lg">
-            {song.name} (Album: {song.album?.name || "Unknown"})
+          <p className="font-semibold">{song.name}</p>
+          <p className="font-semibold">
+            Album: {song.album?.name || "Unknown"}
           </p>
-          <p className="font-semibold my-10">
+          {/* genres section */}
+          <ul className="font-semibold my-10 flex items-center gap-3">
             Genre:{" "}
             {song.genres && song.genres.length > 0
-              ? song.genres?.map((g: any) => g.name).join(", ")
+              ? song.genres?.map((g: any) => (
+                  <li key={g.id}>
+                    <Link
+                      href={`/category/${
+                        g.name
+                      }?${`filters[genres][name][$in]=${g.name}`}`}
+                    >
+                      {g.name}
+                    </Link>
+                  </li>
+                ))
               : "Unknown"}
-          </p>
-          <p className="font-semibold my-10">
+          </ul>
+          {/* playlist section */}
+          <ul className="font-semibold my-10 flex items-center gap-3">
             playlist:{" "}
             {song.playlists && song.playlists.length > 0
-              ? song.playlists?.map((p: any) => p.name).join(", ")
+              ? song.playlists?.map((p: any) => (
+                  <li key={p.id}>
+                    <Link
+                      href={`/category/${
+                        p.name
+                      }?${`filters[playlists][name][$in]=${p.name}`}`}
+                    >
+                      {p.name}
+                    </Link>
+                  </li>
+                ))
               : "Unknown"}
-          </p>
+          </ul>
         </div>
         <div className="space-y-5">
           <a
