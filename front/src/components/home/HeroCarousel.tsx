@@ -29,25 +29,38 @@ export default function HeroCarousel() {
     fetchSongs();
   }, []);
 
-  return (
-    <Swiper
-      slidesPerView={2}
-      spaceBetween={20}
-      loop={true}
-      autoplay={{ delay: 5000, disableOnInteraction: false }}
-      modules={[Pagination, Autoplay]}
-      className="mySwiper w-full flex place-items-center *:w-full *:h-full"
-      breakpoints={CarouselResponsive}
-    >
-      {loading ? (
-        <SwiperSlide>
-          <p className="text-center">Loading...</p>
-        </SwiperSlide>
-      ) : (
-        songs.map((song: any) => (
+  if (loading) {
+    return (
+      <Swiper
+        slidesPerView={2}
+        spaceBetween={20}
+        className="mySwiper w-full flex place-items-center *:w-full *:h-full"
+        breakpoints={CarouselResponsive}
+      >
+        {[1, 2].map((index: any) => (
+          <SwiperSlide key={index}>
+            <div className="object-cover rounded-3xl w-full h-86 bg-gray-300 animate-pulse"></div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    );
+  } else {
+    return (
+      <Swiper
+        slidesPerView={2}
+        spaceBetween={20}
+        loop={true}
+        autoplay={{ delay: 3000, disableOnInteraction: false }}
+        modules={[Pagination, Autoplay]}
+        className="mySwiper w-full flex place-items-center *:w-full *:h-full"
+        breakpoints={CarouselResponsive}
+      >
+        {songs.map((song: any) => (
           <SwiperSlide className="relative" key={song.id}>
             <Link
-              href={`/music/${song.singer?.name || "Unknown"} - ${song.documentId}`}
+              href={`/music/${song.singer?.name || "Unknown"} - ${
+                song.documentId
+              }`}
             >
               <div className="flex flex-col gap-2 absolute bottom-5 left-1/2 -translate-x-1/2 text-white text-center bg-black/50 px-2 py-1 rounded-xl">
                 <p>{song.singer?.name || "Unknown Artist"}</p>
@@ -62,8 +75,8 @@ export default function HeroCarousel() {
               />
             </Link>
           </SwiperSlide>
-        ))
-      )}
-    </Swiper>
-  );
+        ))}
+      </Swiper>
+    );
+  }
 }

@@ -1,35 +1,14 @@
-import Slider from "@/components/shared/Slider";
-import SingleMusicView from "@/components/music-name/SingleMusicView";
+import SingleMusicViewPage from "@/components/music-name/SingleMusicViewPage";
+import Loading from "@/components/shared/Loading";
+import { Suspense } from "react";
 
 export default async function MusicNamePage({ params }: any) {
   const { music_name } = await params;
-  const [name, id] = decodeURIComponent(music_name).split(" - ");
-  const url = new URL(`http://localhost:1337/api/songs/${id}?populate=*`);
-  const response = await fetch(url);
-  const data: any = await response.json();
-  const song = data.data;
-
-  if (!song || typeof song !== "object" || Array.isArray(song)) {
-    return (
-      <div className="text-red-500 font-bold text-center mt-5">
-        Song not found
-      </div>
-    );
-  }
+  const [, id] = decodeURIComponent(music_name).split(" - ");
 
   return (
-    <>
-      <SingleMusicView song={song} />
-      <div className="space-y-10 mt-10">
-        <Slider
-          title="Related Songs"
-          query={`filters[$or][0][genres][name][$in]=${song.genres
-            .map((g: any) => g.name)
-            .join(",")}&filters[$or][1][playlists][name][$in]=${song.playlists
-            .map((p: any) => p.name)
-            .join(",")}`}
-        />
-      </div>
-    </>
+    <Suspense fallback={<Loading />}>
+      <SingleMusicViewPage id={id} />
+    </Suspense>
   );
 }
