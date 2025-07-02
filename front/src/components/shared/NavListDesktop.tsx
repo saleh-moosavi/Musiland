@@ -1,12 +1,12 @@
 import Link from "next/link";
 
-interface NavListProps {
+interface NavListDesktopProps {
   navbarData: any[];
   onMouseEnter: () => void;
   onMouseLeave: () => void;
 }
 
-const NavList: React.FC<NavListProps> = ({
+const NavListDesktop: React.FC<NavListDesktopProps> = ({
   navbarData,
   onMouseEnter,
   onMouseLeave,
@@ -31,4 +31,4 @@ const NavList: React.FC<NavListProps> = ({
   );
 };
 
-export default NavList;
+export default NavListDesktop;

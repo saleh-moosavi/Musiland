@@ -2,13 +2,21 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { LogIn, Menu, Moon } from "lucide-react";
-import NavList from "./NavList";
+import NavListMobile from "./NavListMobile";
+import NavListDesktop from "./NavListDesktop";
+import useWindowStore from "@/store/windowStore";
 
 export default function Navbar() {
   const [genres, setGenres] = useState<any>([]);
   const [playlists, setPlaylists] = useState<any>([]);
-  const [navbarData, setNavbarData] = useState<any>([]);
-  const [showSubNav, setShowSubNav] = useState(false);
+  const {
+    navbarData,
+    showSubNav,
+    showMobileMenuPanel,
+    setNavbarData,
+    setShowSubNav,
+    setShowMobileMenuPanel,
+  } = useWindowStore();
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
@@ -68,20 +76,30 @@ export default function Navbar() {
             <li onMouseEnter={() => setNavbarData(genres)}>Genres</li>
           </ul>
         </div>
-        <Link href="http://localhost:1337">
-          <button className="cursor-pointer">
+        <button className="cursor-pointer">
+          <Link href="http://localhost:1337">
             <LogIn className="hidden lg:block" />
-            <Menu className="lg:hidden" />
-          </button>
-        </Link>
+          </Link>
+          <Menu
+            className="lg:hidden"
+            onClick={() => setShowMobileMenuPanel(true)}
+          />
+        </button>
         {showSubNav && (
-          <NavList
+          <NavListDesktop
             navbarData={navbarData}
             onMouseEnter={() => handleMouseToggle(true)}
             onMouseLeave={() => handleMouseToggle(false)}
           />
         )}
       </section>
+
+      <NavListMobile
+        genres={genres}
+        playlists={playlists}
+        showMobileMenuPanel={showMobileMenuPanel}
+        setShowMobileMenuPanel={setShowMobileMenuPanel}
+      />
     </header>
   );
 }
