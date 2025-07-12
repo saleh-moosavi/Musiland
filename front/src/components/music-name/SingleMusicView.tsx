@@ -11,7 +11,7 @@ export default function SingleMusicView({ song }: any) {
   }
 
   return (
-    <div className="grid lg:grid-cols-3 items-start gap-10 w-full">
+    <div className="grid lg:grid-cols-3 items-start gap-10 w-full dark:text-white">
       <img
         className="col-span-1 lg:w-96 object-cover rounded-3xl h-full w-full"
         src={song.coverUrl}
@@ -64,7 +64,7 @@ export default function SingleMusicView({ song }: any) {
             download={true}
             href={song.audioUrl}
             target="_blank"
-            className="w-full text-center inline-block py-2 shadow-md hover:shadow-gray-300 cursor-pointer rounded-xl border-gray-400 text-sm"
+            className="w-full text-center inline-block py-2 shadow-md hover:shadow-gray-300 cursor-pointer rounded-xl border-gray-400 text-sm dark:bg-slate-700 dark:hover:shadow-slate-500"
           >
             Download
           </a>

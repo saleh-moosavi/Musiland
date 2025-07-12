@@ -32,7 +32,7 @@ export default function SliderView({ data }: any) {
             </p>
           </div>
           <Link
-            className="group"
+            className="group dark:text-white"
             href={`/music/${song.singer?.name} - ${song.documentId}`}
           >
             <p className="font-semibold mt-2">{song.name}</p>

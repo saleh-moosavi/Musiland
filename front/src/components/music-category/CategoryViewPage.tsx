@@ -19,7 +19,7 @@ export default async function CategoryViewPage({ query, title }: any) {
 
   return (
     <>
-      <h2 className="mb-5 text-center font-semibold text-lg">
+      <h2 className="mb-5 text-center font-semibold text-lg dark:text-white">
         {title.toLocaleLowerCase().includes("song") ? title : title + " Songs"}
       </h2>
       <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-center justify-start gap-10">
@@ -38,6 +38,7 @@ export default async function CategoryViewPage({ query, title }: any) {
               </p>
             </div>
             <Link
+              className="dark:text-white"
               href={`/music/${song.singer.name || "Unknown"} - ${
                 song.documentId
               }`}

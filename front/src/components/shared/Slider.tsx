@@ -17,7 +17,7 @@ export default async function Slider({
 
   return (
     <>
-      <div className="flex items-center w-full gap-5">
+      <div className="flex items-center w-full gap-5 dark:text-white dark:border-white">
         <p className="shrink-0 text-sm font-semibold">{title}</p>
         <span className="w-full shrink h-[1px] translate-y-full bg-gray-300"></span>
         <Link
