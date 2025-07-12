@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function not_found() {
   return (
-    <div className="flex flex-col items-center justify-center h-[65vh] gap-10 text-center">
+    <div className="flex flex-col items-center justify-center h-[65vh] gap-10 text-center dark:text-white">
       <h2 className="text-2xl font-bold">
         Sorry, There is no Song With This Name.
       </h2>

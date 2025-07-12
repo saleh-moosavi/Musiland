@@ -1,10 +1,11 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { LogIn, Menu, Moon } from "lucide-react";
+import { LogIn, Menu, Moon, Sun } from "lucide-react";
 import NavListMobile from "./NavListMobile";
 import NavListDesktop from "./NavListDesktop";
 import useWindowStore from "@/store/windowStore";
+import useTheme from "@/hooks/useTheme";
 
 export default function Navbar() {
   const [genres, setGenres] = useState<any>([]);
@@ -18,6 +19,7 @@ export default function Navbar() {
     setShowMobileMenuPanel,
   } = useWindowStore();
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
+  const { theme, handleTheme } = useTheme();
 
   useEffect(() => {
     const fetchData = async (
@@ -51,9 +53,9 @@ export default function Navbar() {
 
   return (
     <header className="pt-2 fixed top-0 inset-x-0 z-50 max-w-[90rem] mx-5 xl:mx-auto">
-      <section className="flex justify-between w-full gap-x-20 shadow-lg p-5 bg-slate-100 sticky inset-0 rounded-full">
-        <button>
-          <Moon />
+      <section className="flex justify-between w-full gap-x-20 shadow-lg p-5 bg-slate-100 dark:bg-gray-800 dark:text-white sticky inset-0 rounded-full">
+        <button className="cursor-pointer" onClick={handleTheme}>
+          {theme == "light" ? <Sun /> : <Moon />}
         </button>
         <div className="flex items-center justify-center">
           <ul className="items-center gap-x-10 hidden lg:flex">
@@ -62,7 +64,7 @@ export default function Navbar() {
           </ul>
           <Link href="/">
             <div className="relative lg:mx-20">
-              <div className="w-18 lg:w-20 h-18 lg:h-20 flex place-content-center p-2 absolute inset-0 -top-5 -translate-x-1/2 bg-slate-100 rounded-full shadow-lg">
+              <div className="w-18 lg:w-20 h-18 lg:h-20 flex place-content-center p-2 absolute inset-0 -top-5 -translate-x-1/2 bg-slate-100 dark:bg-gray-800 rounded-full shadow-lg">
                 <img src="/next.svg" alt="Logo" />
               </div>
             </div>

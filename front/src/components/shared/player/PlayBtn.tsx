@@ -53,7 +53,11 @@ export default function PlayBtn({
 
   return (
     <div onClick={handlePlayPause} className="cursor-pointer">
-      {isPlaying ? <Pause /> : <Play />}
+      {isPlaying ? (
+        <Pause className="dark:stroke-white" />
+      ) : (
+        <Play className="dark:stroke-white" />
+      )}
     </div>
   );
 }

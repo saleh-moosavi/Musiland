@@ -21,17 +21,20 @@ export default function VolumeBtn({
 
   return (
     <article className="flex items-center gap-x-3 group relative">
-      <div className="cursor-pointer" onClick={() => setIsRangeInputVisible(!isRangeInputVisible)}>
+      <div
+        className="cursor-pointer"
+        onClick={() => setIsRangeInputVisible(!isRangeInputVisible)}
+      >
         {volumeVal === 0 ? (
-          <Volume />
+          <Volume className="dark:stroke-white" />
         ) : volumeVal < 50 ? (
-          <Volume1 />
+          <Volume1 className="dark:stroke-white" />
         ) : (
-          <Volume2 />
+          <Volume2 className="dark:stroke-white" />
         )}
       </div>
       {isRangeInputVisible && (
-        <div className="absolute border border-purple-200 box-content -top-18 -right-2 w-24 lg:w-40 bg-gray-100 pb-2 px-2 rounded-full">
+        <div className="absolute box-content -top-18 -right-2 w-24 lg:w-40 bg-gray-100 dark:bg-slate-800 pb-2 px-2 rounded-full">
           <RangeInput
             progress={volumeVal}
             handleProgressChange={handleVolumeChange}
