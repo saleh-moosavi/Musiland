@@ -1,5 +1,5 @@
 import { Volume, Volume1, Volume2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import RangeInput from "./RangeInput";
 
 export default function VolumeBtn({
@@ -10,6 +10,27 @@ export default function VolumeBtn({
   const [volumeVal, setVolumeVal] = useState<number>(100);
   const [isRangeInputVisible, setIsRangeInputVisible] =
     useState<boolean>(false);
+
+  useEffect(() => {
+    const savedVolume = Number(localStorage.getItem("volume"));
+    setVolumeVal(savedVolume);
+    if (audioContext?.current) {
+      audioContext.current.volume = savedVolume / 100;
+    }
+  }, []);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      localStorage.setItem("volume", String(volumeVal));
+      if (audioContext.current) {
+        audioContext.current.volume = volumeVal / 100;
+      }
+    }, 500); // 500ms debounce
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [volumeVal]);
 
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newVolume = Number(e.target.value);
