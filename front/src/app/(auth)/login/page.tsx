@@ -1,8 +1,8 @@
 "use client";
-import CustomInput from "@/components/auth/CustomInput";
-import { validateSignUpForm } from "@/libs/validateSignUpForm";
-import { AtSign, LockIcon, MailIcon } from "lucide-react";
 import { useState } from "react";
+import CustomInput from "@/components/auth/CustomInput";
+import { AtSign, LockIcon, MailIcon } from "lucide-react";
+import { validateSignUpForm } from "@/libs/validateSignUpForm";
 
 const iconClasses =
   "absolute left-2 top-1/2 -translate-y-1/3 size-5 stroke-emerald-500";
@@ -14,12 +14,38 @@ export default function page() {
   const [error, setError] = useState<any>();
   const [IsPending, setIsPending] = useState<boolean>(false);
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     setIsPending(true);
-    const newErrors = validateSignUpForm(name, email, password);
 
+    const newErrors = validateSignUpForm(name, email, password);
     setError(newErrors);
+
+    if (Object.keys(newErrors).length === 0) {
+      try {
+        const res = await fetch("/api/register", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            username: name,
+            email,
+            password,
+          }),
+          credentials: "include",
+        });
+
+        const result = await res.json();
+
+        if (res.ok) {
+          console.log("Successful");
+        } else {
+          setError({ server: result.error });
+        }
+      } catch (err) {
+        setError({ server: "Server Error!" });
+      }
+    }
+
     setIsPending(false);
   };
 
@@ -32,7 +58,7 @@ export default function page() {
       <form onSubmit={handleSubmit} className="grid gap-y-5">
         <CustomInput
           icon={<AtSign className={iconClasses} />}
-          name="Name"
+          name="Username"
           value={name}
           valueSetter={setName}
           error={error?.name}
@@ -56,6 +82,7 @@ export default function page() {
           Do You Have an Account ?{" "}
           <span className="text-cyan-400 cursor-pointer">Sign In</span>
         </h3>
+        {error?.server && <p className="text-red-500">{error.server}</p>}
         <button
           disabled={IsPending}
           className="bg-gradient-to-r from-cyan-700 to-emerald-400 text-white px-4 py-2 w-full font-bold rounded-md hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
