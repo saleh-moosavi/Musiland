@@ -1,8 +1,9 @@
 "use client";
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 import CustomInput from "@/components/auth/CustomInput";
 import { AtSign, LockIcon, MailIcon } from "lucide-react";
 import { validateSignUpForm } from "@/libs/validateSignUpForm";
+import useCheckSavedData from "@/hooks/useCheckSavedData";
 
 const iconClasses =
   "absolute left-2 top-1/2 -translate-y-1/3 size-5 stroke-emerald-500";
@@ -13,6 +14,13 @@ export default function page() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<any>();
   const [IsPending, setIsPending] = useState<boolean>(false);
+  const { isUserData } = useCheckSavedData();
+
+  useLayoutEffect(() => {
+    if (isUserData) {
+      //navigate to Profile
+    }
+  }, []);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
