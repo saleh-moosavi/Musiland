@@ -48,8 +48,8 @@ export default function SameSongs() {
         isPanelVisible ? "" : "hidden"
       }`}
     >
-      <article className="max-w-[90rem] mx-auto w-full h-full bg-gray-200 rounded-3xl px-5 pb-5 overflow-y-scroll overscroll-y-contain shadow-md outline-gray-300 outline-1">
-        <div className="flex justify-between items-center sticky top-0 bg-gray-200 py-5 z-20">
+      <article className="max-w-[90rem] mx-auto w-full h-full bg-gray-200 dark:bg-gray-800 rounded-3xl px-5 pb-5 overflow-y-scroll overscroll-y-contain shadow-md outline-gray-300 dark:outline-gray-400 outline-1">
+        <div className="flex justify-between items-center sticky top-0 bg-gray-200 dark:bg-gray-800 dark:text-white py-5 z-20">
           <p className="select-none font-semibold">Similar Songs</p>
           <X
             className="hover:stroke-red-600 transition-all duration-200 cursor-pointer"
@@ -59,8 +59,10 @@ export default function SameSongs() {
         {sameSongsList ? (
           sameSongsList.map((song: any) => (
             <section
-              className={`flex justify-start items-center gap-2 mb-5 md:gap-10 w-full p-2 rounded-2xl overflow-hidden hover:bg-gray-100 select-none transition-all duration-200 ${
-                audioSrc == song.audioUrl ? "bg-gray-300" : "bg-white"
+              className={`flex justify-start items-center gap-2 mb-5 md:gap-10 w-full p-2 rounded-2xl overflow-hidden hover:bg-gray-100 dark:hover:bg-gray-400 dark:text-white select-none transition-all duration-200 ${
+                audioSrc == song.audioUrl
+                  ? "bg-gray-300 dark:bg-gray-600"
+                  : "bg-white dark:bg-gray-500"
               }`}
               key={song.id}
             >
@@ -83,7 +85,7 @@ export default function SameSongs() {
                   {song.singer?.name || "Unknown Artist"}
                 </p>
               </div>
-              <Heart className="ms-auto md:me-5 cursor-pointer stroke-gray-400 hover:fill-red-400 hover:stroke-red-400 hover:scale-125 transition-all duration-200" />
+              <Heart className="ms-auto md:me-5 cursor-pointer stroke-gray-400 dark:stroke-gray-200 hover:fill-red-400 hover:stroke-red-400 hover:scale-125 transition-all duration-200" />
             </section>
           ))
         ) : (
