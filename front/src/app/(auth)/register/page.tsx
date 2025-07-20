@@ -1,16 +1,17 @@
 "use client";
 import { useLayoutEffect, useState } from "react";
 import CustomInput from "@/components/auth/CustomInput";
-import { LockIcon, MailIcon } from "lucide-react";
+import { AtSign, LockIcon, MailIcon } from "lucide-react";
+import { validateSignUpForm } from "@/libs/validateSignUpForm";
 import useCheckSavedData from "@/hooks/useCheckSavedData";
 import { useRouter } from "next/navigation";
-import { validateSignInForm } from "@/libs/validateSignInForm";
 import Link from "next/link";
 
 const iconClasses =
   "absolute left-2 top-1/2 -translate-y-1/3 size-5 stroke-emerald-500";
 
 export default function page() {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<any>();
@@ -22,42 +23,37 @@ export default function page() {
     if (userData) {
       router.push("/profile"); // Navigate to Profile page
     }
-  }, [userData]); // Add isUserData as a dependency
+  }, [userData]);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    console.log(userData);
     setIsPending(true);
 
-    const newErrors = validateSignInForm(email, password);
+    const newErrors = validateSignUpForm(name, email, password);
     setError(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
       try {
-        const res = await fetch("http://localhost:1337/api/auth/local", {
+        const res = await fetch("/api/register", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            identifier: email, // می‌تونه username یا email باشه
+            username: name,
+            email,
             password,
           }),
+          credentials: "include",
         });
 
         const result = await res.json();
 
         if (res.ok) {
-          // توکن JWT دریافتی رو ذخیره کن، مثلاً:
-          localStorage.setItem("token", result.jwt);
-
-          // یا به context یا cookie بفرست برای session
-          router.push("/profile"); // هدایت به صفحه پروفایل
+          console.log("Successful");
         } else {
-          setError({
-            server: result.error?.message || "نام کاربری یا رمز اشتباه است",
-          });
+          setError({ server: result.error });
         }
       } catch (err) {
-        setError({ server: "خطا در ارتباط با سرور!" });
+        setError({ server: "Server Error!" });
       }
     }
 
@@ -71,6 +67,13 @@ export default function page() {
       </h2>
 
       <form onSubmit={handleSubmit} className="grid gap-y-5">
+        <CustomInput
+          icon={<AtSign className={iconClasses} />}
+          name="Username"
+          value={name}
+          valueSetter={setName}
+          error={error?.name}
+        />
         <CustomInput
           icon={<MailIcon className={iconClasses} />}
           name="Email"
@@ -87,9 +90,9 @@ export default function page() {
         />
 
         <h3 className="text-white">
-          Don`t` Have an Account ?{" "}
-          <Link href={`/register`} className="text-cyan-400 cursor-pointer">
-            Sign Up
+          Do You Have an Account ?{" "}
+          <Link href={`/login`} className="text-cyan-400 cursor-pointer">
+            Sign In
           </Link>
         </h3>
         {error?.server && <p className="text-red-500">{error.server}</p>}

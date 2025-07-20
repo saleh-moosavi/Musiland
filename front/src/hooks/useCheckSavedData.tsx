@@ -1,8 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function useCheckSavedData() {
-  let isUserData;
-  let userData;
+  const [userData, setUserData] = useState<any>(null);
   useEffect(() => {
     const checkData = async () => {
       const res = await fetch("/api/getUserData", {
@@ -11,14 +10,10 @@ export default function useCheckSavedData() {
       });
       const data = await res.json();
       if (data) {
-        userData = data;
-        isUserData = true;
-      } else {
-        userData = null;
-        isUserData = false;
+        setUserData(data.user);
       }
     };
     checkData();
   }, []);
-  return { isUserData, userData };
+  return { userData };
 }
