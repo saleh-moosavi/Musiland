@@ -53,7 +53,7 @@ export default function NavListMobile({
   return (
     <>
       <aside
-        className={`fixed inset-x-5 bottom-0 h-4/5 bg-gray-200 rounded-t-3xl overscroll-y-contain overflow-y-scroll pb-20 ${
+        className={`fixed inset-x-5 bottom-0 h-4/5 bg-gray-200 dark:bg-gray-900 dark:text-white rounded-t-3xl overscroll-y-contain overflow-y-scroll pb-20 ${
           showMobileMenuPanel ? "" : "translate-y-full"
         } lg:hidden transition-all duration-300 z-50`}
       >

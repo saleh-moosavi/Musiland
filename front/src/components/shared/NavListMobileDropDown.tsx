@@ -1,6 +1,6 @@
-import useWindowStore from "@/store/windowStore";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import useWindowStore from "@/store/windowStore";
 
 export default function NavListMobileDropDown({ item }: any) {
   const [showSubNav, setShowSubNav] = useState(false);
@@ -13,7 +13,7 @@ export default function NavListMobileDropDown({ item }: any) {
   return (
     <li>
       <p
-        className="font-semibold p-2 w-full shadow space-y-2 rounded-xl hover:shadow-md transition-all duration-300"
+        className="font-semibold p-2 w-full shadow space-y-2 rounded-xl hover:shadow-md dark:shadow-white transition-all duration-300"
         onClick={() => setShowSubNav(!showSubNav)}
       >
         {item.title}
@@ -22,7 +22,7 @@ export default function NavListMobileDropDown({ item }: any) {
         <div
           className={
             showSubNav
-              ? "font-semibold p-2 bg-gray-300 mt-2 w-full shadow space-y-2 rounded-xl hover:shadow-md transition-all duration-300"
+              ? "font-semibold p-2 bg-gray-300 dark:bg-gray-700 mt-2 w-full shadow space-y-2 rounded-xl hover:shadow-md transition-all duration-300"
               : "hidden"
           }
         >

@@ -7,7 +7,7 @@ const Slider = lazy(() => import("@/components/shared/Slider"));
 export default function Home() {
   return (
     <div className="w-full h-full flex flex-col items-center justify-center gap-10 mb-5">
-      <p className="font-semibold">Feel The Soul of Music</p>
+      <p className="font-semibold dark:text-white">Feel The Soul of Music</p>
       <HeroCarousel />
       <Suspense fallback={<Loading />}>
         <Slider
