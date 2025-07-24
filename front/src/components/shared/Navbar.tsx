@@ -65,7 +65,11 @@ export default function Navbar() {
           <Link href="/">
             <div className="relative lg:mx-20">
               <div className="w-18 lg:w-20 h-18 lg:h-20 flex place-content-center p-2 absolute inset-0 -top-5 -translate-x-1/2 bg-slate-100 dark:bg-gray-800 rounded-full shadow-lg">
-                <img src="/next.svg" alt="Logo" />
+                <img
+                  src={theme == "light" ? "/Logo-light.png" : "/Logo-dark.png"}
+                  className="scale-50"
+                  alt="Logo"
+                />
               </div>
             </div>
           </Link>
