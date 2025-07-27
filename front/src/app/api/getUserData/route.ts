@@ -20,5 +20,5 @@ export async function GET() {
 
   const fullUser = await userDetailsRes.json();
 
-  return NextResponse.json({ user: fullUser });
+  return NextResponse.json({ user: fullUser, ok: true });
 }

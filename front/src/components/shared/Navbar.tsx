@@ -1,11 +1,13 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { LogIn, Menu, Moon, Sun } from "lucide-react";
+import { LogIn, LogOut, Menu, Moon, Sun, User } from "lucide-react";
 import NavListMobile from "./NavListMobile";
 import NavListDesktop from "./NavListDesktop";
 import useWindowStore from "@/store/windowStore";
 import useTheme from "@/hooks/useTheme";
+import useUserStore from "@/store/userStore";
+import checkSavedData from "@/libs/checkSavedData";
 
 export default function Navbar() {
   const [genres, setGenres] = useState<any>([]);
@@ -18,6 +20,7 @@ export default function Navbar() {
     setShowSubNav,
     setShowMobileMenuPanel,
   } = useWindowStore();
+  const { isLoggedIn } = useUserStore();
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
   const { theme, handleTheme } = useTheme();
 
@@ -26,6 +29,7 @@ export default function Navbar() {
       url: string,
       setter: React.Dispatch<React.SetStateAction<any>>
     ) => {
+      await checkSavedData();
       const response = await fetch(url);
       const data = await response.json();
       setter(data.data);
@@ -83,9 +87,15 @@ export default function Navbar() {
           </ul>
         </div>
         <button className="cursor-pointer">
-          <Link href="http://localhost:1337">
-            <LogIn className="hidden lg:block" />
-          </Link>
+          {isLoggedIn ? (
+            <Link href="/profile">
+              <User className="hidden lg:block" />
+            </Link>
+          ) : (
+            <Link href="/register">
+              <LogIn className="hidden lg:block" />
+            </Link>
+          )}
           <Menu
             className="lg:hidden"
             onClick={() => setShowMobileMenuPanel(true)}

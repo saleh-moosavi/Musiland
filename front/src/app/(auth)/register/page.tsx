@@ -1,11 +1,11 @@
 "use client";
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import CustomInput from "@/components/auth/CustomInput";
 import { AtSign, LockIcon, MailIcon } from "lucide-react";
 import { validateSignUpForm } from "@/libs/validateSignUpForm";
-import useCheckSavedData from "@/hooks/useCheckSavedData";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import useUserStore from "@/store/userStore";
 
 const iconClasses =
   "absolute left-2 top-1/2 -translate-y-1/3 size-5 stroke-emerald-500";
@@ -16,14 +16,14 @@ export default function page() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<any>();
   const [IsPending, setIsPending] = useState<boolean>(false);
-  const { userData } = useCheckSavedData();
   const router = useRouter(); // Initialize the router
+  const { isLoggedIn } = useUserStore();
 
-  useLayoutEffect(() => {
-    if (userData) {
+  useEffect(() => {
+    if (isLoggedIn) {
       router.push("/profile"); // Navigate to Profile page
     }
-  }, [userData]);
+  }, [isLoggedIn]); // Add isUserData as a dependency
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -63,7 +63,7 @@ export default function page() {
   return (
     <div className="max-w-md mx-auto overflow-hidden p-5 rounded-3xl bg-slate-800">
       <h2 className="text-2xl font-bold text-white mb-6 text-center">
-        Sign Up
+        Register
       </h2>
 
       <form onSubmit={handleSubmit} className="grid gap-y-5">
@@ -92,7 +92,7 @@ export default function page() {
         <h3 className="text-white">
           Do You Have an Account ?{" "}
           <Link href={`/login`} className="text-cyan-400 cursor-pointer">
-            Sign In
+            Log In
           </Link>
         </h3>
         {error?.server && <p className="text-red-500">{error.server}</p>}
