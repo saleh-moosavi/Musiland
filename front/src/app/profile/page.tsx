@@ -50,7 +50,7 @@ export default function Page() {
 
   return (
     <div className="p-2 flex flex-col items-center gap-10 dark:text-white">
-      <h1>Your Profile</h1>
+      <h1 className="text-xl font-semibold">Your Profile</h1>
       <section className="grid grid-cols-5 w-full">
         <ul className="list-none flex flex-col gap-10 col-span-4">
           <li>
@@ -65,17 +65,17 @@ export default function Page() {
           </li>
         </ul>
         <article className="col-span-1 p-5 flex flex-col *:hover:cursor-pointer gap-5 bg-gray-500 rounded-3xl">
-          <button className="bg-gray-800 px-4 py-2 min-w-52 rounded-s-full">
+          <button className="bg-gray-800 px-4 py-2 min-w-52 rounded-full">
             Account
           </button>
-          <button className="bg-gray-800 px-4 py-2 min-w-52 rounded-s-full">
+          <button className="bg-gray-800 px-4 py-2 min-w-52 rounded-full">
             Likes
           </button>
-          <button className="bg-gray-800 px-4 py-2 min-w-52 rounded-s-full">
+          <button className="bg-gray-800 px-4 py-2 min-w-52 rounded-full">
             Comments
           </button>
           <button
-            className="bg-red-400 px-4 py-2 min-w-52 rounded-s-full"
+            className="bg-red-400 px-4 py-2 min-w-52 rounded-full"
             onClick={handleLogOUt}
           >
             log out

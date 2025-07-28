@@ -13,7 +13,7 @@ const NavListDesktop: React.FC<NavListDesktopProps> = ({
 }) => {
   return (
     <article
-      className="hidden lg:flex absolute top-20 -z-10 inset-x-0 mx-10 p-5 rounded-full bg-slate-100 dark:bg-slate-800 shadow-md text-black dark:text-white"
+      className="hidden lg:flex absolute top-24 -z-10 inset-x-0 mx-10 p-5 rounded-full bg-slate-100 dark:bg-slate-800 shadow-md text-black dark:text-white"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >

@@ -1,17 +1,19 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { LogIn, LogOut, Menu, Moon, Sun, User } from "lucide-react";
+import { useState } from "react";
+import useTheme from "@/hooks/useTheme";
 import NavListMobile from "./NavListMobile";
+import useUserStore from "@/store/userStore";
 import NavListDesktop from "./NavListDesktop";
 import useWindowStore from "@/store/windowStore";
-import useTheme from "@/hooks/useTheme";
-import useUserStore from "@/store/userStore";
-import checkSavedData from "@/libs/checkSavedData";
+import { LogIn, Menu, Moon, Sun, User } from "lucide-react";
+import useNavbarData from "@/hooks/useNavbarData";
 
 export default function Navbar() {
-  const [genres, setGenres] = useState<any>([]);
-  const [playlists, setPlaylists] = useState<any>([]);
+  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
+  const { isLoggedIn } = useUserStore();
+  const { theme, handleTheme } = useTheme();
+  const { genres, playlists } = useNavbarData();
   const {
     navbarData,
     showSubNav,
@@ -20,30 +22,6 @@ export default function Navbar() {
     setShowSubNav,
     setShowMobileMenuPanel,
   } = useWindowStore();
-  const { isLoggedIn } = useUserStore();
-  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
-  const { theme, handleTheme } = useTheme();
-
-  useEffect(() => {
-    const fetchData = async (
-      url: string,
-      setter: React.Dispatch<React.SetStateAction<any>>
-    ) => {
-      await checkSavedData();
-      const response = await fetch(url);
-      const data = await response.json();
-      setter(data.data);
-    };
-
-    fetchData(
-      `http://localhost:1337/api/genres?&populate=[genre][fields]=id,name`,
-      setGenres
-    );
-    fetchData(
-      `http://localhost:1337/api/playlists?&populate=[playlists][fields]=id,name`,
-      setPlaylists
-    );
-  }, []);
 
   const handleMouseToggle = (show: boolean) => {
     if (timeoutId) clearTimeout(timeoutId);
