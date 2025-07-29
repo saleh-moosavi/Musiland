@@ -64,14 +64,14 @@ export default function Page() {
             {new Date(user.createdAt).toLocaleString()}
           </li>
         </ul>
-        <article className="col-span-1 p-5 flex flex-col *:hover:cursor-pointer gap-5 bg-gray-500 rounded-3xl">
-          <button className="bg-gray-800 px-4 py-2 min-w-52 rounded-full">
+        <article className="col-span-1 p-5 flex flex-col *:hover:cursor-pointer gap-5 bg-slate-100 dark:bg-gray-500 rounded-3xl">
+          <button className="bg-slate-300 dark:bg-gray-800 px-4 py-2 min-w-52 rounded-full">
             Account
           </button>
-          <button className="bg-gray-800 px-4 py-2 min-w-52 rounded-full">
+          <button className="bg-slate-300 dark:bg-gray-800 px-4 py-2 min-w-52 rounded-full">
             Likes
           </button>
-          <button className="bg-gray-800 px-4 py-2 min-w-52 rounded-full">
+          <button className="bg-slate-300 dark:bg-gray-800 px-4 py-2 min-w-52 rounded-full">
             Comments
           </button>
           <button

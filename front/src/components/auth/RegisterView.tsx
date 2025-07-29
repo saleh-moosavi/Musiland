@@ -94,7 +94,7 @@ export default function RegisterView() {
         error={error?.password}
       />
 
-      <h3 className="text-white">
+      <h3 className="text-black dark:text-white">
         Do You Have an Account?{" "}
         <Link href={`/login`} className="text-cyan-400 cursor-pointer">
           Log In

@@ -22,7 +22,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
         <input
           value={value}
           onChange={(e) => valueSetter(e.target.value)}
-          className="mt-1 p-3 ps-10 w-full bg-gray-700 outline-none border-none rounded-full text-emerald-500 caret-emerald-500 placeholder:text-gray-500"
+          className="mt-1 p-3 ps-10 w-full bg-slate-200 dark:bg-gray-700 outline-none border-none rounded-full text-emerald-500 caret-emerald-500 placeholder:text-gray-500"
           placeholder={name}
           type="text"
         />

@@ -16,7 +16,7 @@ export default function LoginView() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<any>();
   const [isPending, setIsPending] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState(true); // 👈 لودینگ اولیه
+  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   const { isLoggedIn, setIsLoggedIn } = useUserStore();
 
@@ -55,11 +55,11 @@ export default function LoginView() {
           router.push("/profile");
         } else {
           setError({
-            server: result.error?.message || "نام کاربری یا رمز اشتباه است",
+            server: result.error?.message || "Email Or Password Is Incorrect!",
           });
         }
       } catch (err) {
-        setError({ server: "خطا در ارتباط با سرور!" });
+        setError({ server: "Server Error!" });
       }
     }
 
@@ -87,7 +87,7 @@ export default function LoginView() {
         error={error?.password}
       />
 
-      <h3 className="text-white">
+      <h3 className="text-black dark:text-white">
         Don’t Have an Account?{" "}
         <Link href={`/register`} className="text-cyan-400 cursor-pointer">
           Register
