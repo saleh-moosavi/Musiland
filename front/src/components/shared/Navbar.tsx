@@ -40,9 +40,12 @@ export default function Navbar() {
           {theme == "light" ? <Sun /> : <Moon />}
         </button>
         <div className="flex items-center justify-center">
+          {/* left side of navbar */}
           <ul className="items-center gap-x-10 hidden lg:flex">
-            <li>About</li>
-            <li>Contact</li>
+            <li>
+              <Link href={"/about"}>About</Link>
+            </li>
+            <Link href={"/contact"}>Contact</Link>
           </ul>
           <Link href="/">
             <div className="relative lg:mx-20">
@@ -55,6 +58,7 @@ export default function Navbar() {
               </div>
             </div>
           </Link>
+          {/* right side of navbar */}
           <ul
             className="items-center gap-x-10 hidden lg:flex *:cursor-pointer"
             onMouseEnter={() => handleMouseToggle(true)}
