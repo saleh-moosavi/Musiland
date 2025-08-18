@@ -1,24 +1,28 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import CustomInput from "./CustomInput";
-import { LockIcon, MailIcon } from "lucide-react";
 import Link from "next/link";
+import CustomInput from "./CustomInput";
+import Loading from "../shared/Loading";
+import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import useUserStore from "@/store/userStore";
-import { validateSignInForm } from "@/libs/validateSignInForm";
-import Loading from "../shared/Loading";
+import { LockIcon, MailIcon } from "lucide-react";
+import React, { useEffect, useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signInSchema } from "@/constants/zodSchema";
 
 const iconClasses =
   "absolute left-2 top-1/2 -translate-y-1/3 size-5 stroke-emerald-500";
 
 export default function LoginView() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState<any>();
-  const [isPending, setIsPending] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
+  const [error, setError] = useState<any>();
+  const [isLoading, setIsLoading] = useState(true);
   const { isLoggedIn, setIsLoggedIn } = useUserStore();
+  const {
+    formState: { errors, isSubmitting },
+    register,
+    handleSubmit,
+  } = useForm({ resolver: zodResolver(signInSchema) });
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -28,42 +32,32 @@ export default function LoginView() {
     }
   }, [isLoggedIn]);
 
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    setIsPending(true);
+  const submitForm = async ({ email, password }: any) => {
+    try {
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+        credentials: "include",
+      });
 
-    const newErrors = validateSignInForm(email, password);
-    setError(newErrors);
+      const result = await res.json();
 
-    if (Object.keys(newErrors).length === 0) {
-      try {
-        const res = await fetch("/api/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            email,
-            password,
-          }),
-          credentials: "include",
+      if (res.ok) {
+        localStorage.setItem("token", result.jwt);
+        setIsLoggedIn(true);
+        router.push("/profile");
+      } else {
+        setError({
+          server: result.error?.message || "Email Or Password Is Incorrect!",
         });
-
-        const result = await res.json();
-
-        if (res.ok) {
-          localStorage.setItem("token", result.jwt);
-          setIsLoggedIn(true);
-          router.push("/profile");
-        } else {
-          setError({
-            server: result.error?.message || "Email Or Password Is Incorrect!",
-          });
-        }
-      } catch (err) {
-        setError({ server: "Server Error!" });
       }
+    } catch (err) {
+      setError({ server: "Server Error!" });
     }
-
-    setIsPending(false);
   };
 
   if (isLoading) {
@@ -71,20 +65,18 @@ export default function LoginView() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="grid gap-y-5">
+    <form onSubmit={handleSubmit(submitForm)} className="grid gap-y-5">
       <CustomInput
+        register={register("email")}
         icon={<MailIcon className={iconClasses} />}
         name="Email"
-        value={email}
-        valueSetter={setEmail}
-        error={error?.email}
+        error={errors?.email?.message}
       />
       <CustomInput
+        register={register("password")}
         icon={<LockIcon className={iconClasses} />}
         name="Password"
-        value={password}
-        valueSetter={setPassword}
-        error={error?.password}
+        error={errors?.password?.message}
       />
 
       <h3 className="text-black dark:text-white">
@@ -95,7 +87,7 @@ export default function LoginView() {
       </h3>
       {error?.server && <p className="text-red-500">{error.server}</p>}
       <button
-        disabled={isPending}
+        disabled={isSubmitting}
         className="bg-gradient-to-r from-cyan-700 to-emerald-400 text-white px-4 py-2 w-full font-bold rounded-md hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
         type="submit"
       >

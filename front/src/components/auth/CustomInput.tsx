@@ -1,18 +1,16 @@
 import React from "react";
 
 interface CustomInputProps {
+  register: any;
   icon: React.ReactNode;
   name: string;
-  value: string;
-  valueSetter: React.Dispatch<React.SetStateAction<string>>;
   error?: string;
 }
 
 const CustomInput: React.FC<CustomInputProps> = ({
+  register,
   icon,
   name,
-  value,
-  valueSetter,
   error,
 }) => {
   return (
@@ -20,8 +18,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
       <div className="relative">
         {icon}
         <input
-          value={value}
-          onChange={(e) => valueSetter(e.target.value)}
+          {...register}
           className="mt-1 p-3 ps-10 w-full bg-slate-200 dark:bg-gray-700 outline-none border-none rounded-full text-emerald-500 caret-emerald-500 placeholder:text-gray-500"
           placeholder={name}
           type="text"

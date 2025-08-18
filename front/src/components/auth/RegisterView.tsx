@@ -1,25 +1,28 @@
 "use client";
-import { useEffect, useState } from "react";
-import CustomInput from "@/components/auth/CustomInput";
-import { AtSign, LockIcon, MailIcon } from "lucide-react";
-import { validateSignUpForm } from "@/libs/validateSignUpForm";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import useUserStore from "@/store/userStore";
 import Loading from "@/components/shared/Loading";
+import CustomInput from "@/components/auth/CustomInput";
+import { AtSign, LockIcon, MailIcon } from "lucide-react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signUpSchema } from "@/constants/zodSchema";
 
 const iconClasses =
   "absolute left-2 top-1/2 -translate-y-1/3 size-5 stroke-emerald-500";
 
 export default function RegisterView() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState<any>();
-  const [isPending, setIsPending] = useState<boolean>(false);
-  const [isLoading, setIsLoading] = useState<boolean>(true); // اضافه شد
   const router = useRouter();
   const { isLoggedIn } = useUserStore();
+  const [error, setError] = useState<any>();
+  const [isLoading, setIsLoading] = useState<boolean>(true); // اضافه شد
+  const {
+    formState: { errors, isSubmitting },
+    register,
+    handleSubmit,
+  } = useForm({ resolver: zodResolver(signUpSchema) });
 
   // بررسی وضعیت ورود و تعیین لودینگ
   useEffect(() => {
@@ -30,40 +33,30 @@ export default function RegisterView() {
     }
   }, [isLoggedIn]);
 
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    setIsPending(true);
+  const submitForm = async ({ username, email, password }: any) => {
+    try {
+      const res = await fetch("/api/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          username,
+          email,
+          password,
+        }),
+        credentials: "include",
+      });
 
-    const newErrors = validateSignUpForm(name, email, password);
-    setError(newErrors);
+      const result = await res.json();
 
-    if (Object.keys(newErrors).length === 0) {
-      try {
-        const res = await fetch("/api/register", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            username: name,
-            email,
-            password,
-          }),
-          credentials: "include",
-        });
-
-        const result = await res.json();
-
-        if (res.ok) {
-          console.log("Successful");
-          router.push("/profile");
-        } else {
-          setError({ server: result.error });
-        }
-      } catch (err) {
-        setError({ server: "Server Error!" });
+      if (res.ok) {
+        console.log("Successful");
+        router.push("/profile");
+      } else {
+        setError({ server: result.error });
       }
+    } catch (err) {
+      setError({ server: "Server Error!" });
     }
-
-    setIsPending(false);
   };
 
   if (isLoading) {
@@ -71,27 +64,24 @@ export default function RegisterView() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="grid gap-y-5">
+    <form onSubmit={handleSubmit(submitForm)} className="grid gap-y-5">
       <CustomInput
+        register={register("username")}
         icon={<AtSign className={iconClasses} />}
         name="Username"
-        value={name}
-        valueSetter={setName}
-        error={error?.name}
+        error={errors?.username?.message}
       />
       <CustomInput
+        register={register("email")}
         icon={<MailIcon className={iconClasses} />}
         name="Email"
-        value={email}
-        valueSetter={setEmail}
-        error={error?.email}
+        error={errors?.email?.message}
       />
       <CustomInput
+        register={register("password")}
         icon={<LockIcon className={iconClasses} />}
         name="Password"
-        value={password}
-        valueSetter={setPassword}
-        error={error?.password}
+        error={errors?.password?.message}
       />
 
       <h3 className="text-black dark:text-white">
@@ -102,7 +92,7 @@ export default function RegisterView() {
       </h3>
       {error?.server && <p className="text-red-500">{error.server}</p>}
       <button
-        disabled={isPending}
+        disabled={isSubmitting}
         className="bg-gradient-to-r from-cyan-700 to-emerald-400 text-white px-4 py-2 w-full font-bold rounded-md hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
         type="submit"
       >
