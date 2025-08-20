@@ -5,14 +5,17 @@ import useSameSongsStore from "@/store/sameSongStore";
 
 export default function MusicDetail() {
   const { audioCover, audioName } = useMusicStore();
-  const { setIsPanelVisible } = useSameSongsStore();
+  const { isPanelVisible, setIsPanelVisible } = useSameSongsStore();
+  const togglePanel = () => {
+    setIsPanelVisible(!isPanelVisible);
+  };
   return (
     <article className="flex items-center gap-x-3 min-w-fit group">
       {audioCover ? (
         <img
           src={audioCover}
           alt={audioName || "Song"}
-          onClick={() => setIsPanelVisible(true)}
+          onClick={togglePanel}
           className="w-10 aspect-square object-cover rounded-full cursor-pointer"
         />
       ) : (
