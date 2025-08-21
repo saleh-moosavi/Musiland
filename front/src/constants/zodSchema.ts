@@ -10,3 +10,7 @@ export const signInSchema = z.object({
   email: z.string().email("Please Enter Your email"),
   password: z.string().min(1, "Please Enter Your Password"),
 });
+
+export const addSingerSchema = z.object({
+  name: z.string().min(1, "Please Enter Singer Name"),
+});

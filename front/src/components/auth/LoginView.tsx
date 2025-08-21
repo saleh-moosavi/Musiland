@@ -7,8 +7,8 @@ import { useRouter } from "next/navigation";
 import useUserStore from "@/store/userStore";
 import { LockIcon, MailIcon } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { signInSchema } from "@/constants/zodSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 const iconClasses =
   "absolute left-2 top-1/2 -translate-y-1/3 size-5 stroke-emerald-500";
