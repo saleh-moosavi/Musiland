@@ -1,60 +1,70 @@
 "use client";
 
-import useTheme from "@/hooks/useTheme";
-import { Moon, Sun } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-const links = [
-  { name: "Song", path: "song" },
-  { name: "Singer", path: "singer" },
-  { name: "Genre", path: "genre" },
-  { name: "Playlist", path: "playlist" },
-  { name: "Album", path: "album" },
-  { name: "User", path: "user" },
-];
+import useTheme from "@/hooks/useTheme";
+import { links } from "@/constants/sidebarMenu";
+import { ChevronsLeft, ChevronsRight, HomeIcon, Moon, Sun } from "lucide-react";
 
 export default function SideBar() {
   const { theme, handleTheme } = useTheme();
   const [isOpen, setIsOpen] = useState(false);
 
-  if (isOpen) {
-    return (
-      <menu
-        className={`transition-all duration-300 h-full bg-amber-300 rounded-xl p-2 ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
+  return (
+    <menu
+      className={`transition-all duration-300 h-full bg-slate-100 dark:bg-slate-800 dark:text-white rounded-xl p-5 flex flex-col justify-between overflow-hidden ${
+        isOpen ? "w-52" : "w-20"
+      }`}
+    >
+      <ul className="felx items-center gap-20 *:cursor-pointer">
+        <li
+          className={`flex hover:bg-black/20 dark:hover:bg-white/20 transition-all duration-300 rounded-xl p-2 items-center ${
+            isOpen ? "justify-start" : " justify-center"
+          }`}
+        >
+          <Link
+            href={`/admin/dashboard`}
+            className="p-2 rounded flex justify-center items-center gap-5"
+          >
+            <p className="*:size-5">
+              <HomeIcon />
+            </p>
+            <p className={isOpen ? "" : "hidden"}>Home</p>
+          </Link>
+        </li>
+        <hr />
+        {links.map((link) => (
+          <li
+            key={link.path}
+            className={`flex hover:bg-black/20 dark:hover:bg-white/20 transition-all duration-300 rounded-xl p-2 items-center ${
+              isOpen ? "justify-start" : " justify-center"
+            }`}
+          >
+            <Link
+              href={`/admin/dashboard/${link.path}`}
+              className="p-2 rounded flex justify-center items-center gap-5"
+            >
+              <p className="*:size-5">{link.icon}</p>
+              <p className={isOpen ? "" : "hidden"}>{link.name}</p>
+            </Link>
+          </li>
+        ))}
+      </ul>
+      <article
+        className={`flex justify-between items-center ${
+          isOpen ? "p-2 " : "flex-col gap-5"
         }`}
       >
-        <div className="flex justify-between items-center gap-20">
-          <h3>Menu</h3>
-          <button className="cursor-pointer" onClick={() => setIsOpen(false)}>
-            close
-          </button>
-        </div>
-        <hr />
-        <ul className="felx items-center gap-20">
-          {links.map((link) => (
-            <li key={link.path}>
-              <Link
-                href={`/dashboard/${link.path}`}
-                className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded"
-              >
-                {link.name}
-              </Link>
-            </li>
-          ))}
-        </ul>
-        <button className="cursor-pointer" onClick={handleTheme}>
+        <button className="cursor-pointer *:size-5" onClick={handleTheme}>
           {theme == "light" ? <Sun /> : <Moon />}
         </button>
-      </menu>
-    );
-  }
-  return (
-    <p
-      className="h-full bg-yellow-500 cursor-pointer rounded-xl p-2"
-      onClick={() => setIsOpen(true)}
-    >
-      open
-    </p>
+        <button
+          className="cursor-pointer animate-pulse"
+          onClick={() => setIsOpen((prevValue) => !prevValue)}
+        >
+          {isOpen ? <ChevronsLeft /> : <ChevronsRight />}
+        </button>
+      </article>
+    </menu>
   );
 }
