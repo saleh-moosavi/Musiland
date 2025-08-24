@@ -43,7 +43,7 @@ export default function AddSinger() {
   };
 
   return (
-    <article className="max-w-md mx-auto overflow-hidden p-5 rounded-3xl bg-slate-100 dark:bg-slate-800 mt-10 shadow dark:shadow-white/30 text-black dark:text-white">
+    <article className="max-w-md min-w-md mx-auto overflow-hidden p-5 rounded-3xl bg-slate-100 dark:bg-slate-800 mt-10 shadow dark:shadow-white/30 text-black dark:text-white">
       <form onSubmit={handleSubmit(submitForm)} className="grid gap-y-10">
         <h3 className="text-center">Add Singer</h3>
         <CustomInput

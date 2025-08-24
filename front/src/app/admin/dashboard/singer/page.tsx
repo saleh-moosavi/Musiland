@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function SingerList() {
   return (
-    <ul className="grid grid-cols-2 *:col-span-1 gap-5">
+    <ul className="grid grid-cols-4 *:col-span-1 gap-5">
       {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(
         (item) => {
           return (

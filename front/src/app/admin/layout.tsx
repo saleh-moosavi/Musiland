@@ -15,11 +15,13 @@ export default function RootLayout({
   return (
     <html>
       <body className="bg-white dark:bg-gray-600">
-        <div className="flex w-full h-full items-center gap-5">
-          <section className="bg-white sticky left-0 inset-y-0">
+        <div className="flex gap-5 h-screen">
+          <section className="h-full p-2">
             <SideBar />
           </section>
-          <section className="w-full">{children}</section>
+          <section className="p-10 w-full h-full flex justify-center items-center">
+            {children}
+          </section>
         </div>
       </body>
     </html>
