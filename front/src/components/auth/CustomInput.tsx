@@ -2,7 +2,7 @@ interface CustomInputProps {
   register: any;
   icon: React.ReactNode;
   name: string;
-  error?: string;
+  error?: React.ReactNode | string;
 }
 
 const CustomInput: React.FC<CustomInputProps> = ({
@@ -22,7 +22,9 @@ const CustomInput: React.FC<CustomInputProps> = ({
           type="text"
         />
       </div>
-      {error && <p className="text-red-500 ml-5">{error}</p>}
+      {error && typeof error === "string" && (
+        <p className="text-red-500 ml-5">{error}</p>
+      )}
     </section>
   );
 };
