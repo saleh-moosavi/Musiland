@@ -1,7 +1,7 @@
 interface CustomInputProps {
+  name: string;
   register: any;
   icon: React.ReactNode;
-  name: string;
   error?: React.ReactNode | string;
 }
 

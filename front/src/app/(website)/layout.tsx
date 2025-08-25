@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
 import "../globals.css";
+import type { Metadata } from "next";
 import Navbar from "@/components/shared/Navbar";
 import Player from "@/components/shared/Player";
 import SameSongs from "@/components/shared/SameSongs";

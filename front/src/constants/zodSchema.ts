@@ -14,3 +14,7 @@ export const signInSchema = z.object({
 export const addSingerSchema = z.object({
   name: z.string().min(1, "Please Enter Singer Name"),
 });
+
+export const addGenreSchema = z.object({
+  name: z.string().min(1, "Please Enter Genre Name"),
+});

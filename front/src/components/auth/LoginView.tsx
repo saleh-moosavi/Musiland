@@ -4,9 +4,9 @@ import CustomInput from "./CustomInput";
 import Loading from "../shared/Loading";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import useUserStore from "@/store/userStore";
 import { LockIcon, MailIcon } from "lucide-react";
-import React, { useEffect, useState } from "react";
 import { signInSchema } from "@/constants/zodSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 
