@@ -26,3 +26,14 @@ export const addPlaylistSchema = z.object({
 export const addAlbumSchema = z.object({
   name: z.string().min(1, "Please Enter Album Name"),
 });
+
+export const addSongSchema = z.object({
+  name: z.string().min(1, "Song name is required"),
+  lyric: z.string().optional(),
+  audioUrl: z.string().url().url(),
+  coverUrl: z.string().url().url(),
+  singerId: z.string(),
+  albumId: z.string(),
+  genreIds: z.array(z.string()),
+  playlistIds: z.array(z.string()),
+});

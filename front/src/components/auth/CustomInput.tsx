@@ -14,7 +14,9 @@ const CustomInput: React.FC<CustomInputProps> = ({
   return (
     <section>
       <div className="relative">
-        {icon}
+        <span className="absolute left-2 top-1/2 -translate-y-1/3 *:size-5 *:stroke-emerald-500">
+          {icon}
+        </span>
         <input
           {...register}
           className="mt-1 p-3 ps-10 w-full bg-slate-200 dark:bg-gray-700 outline-none border-none rounded-full text-emerald-500 caret-emerald-500 placeholder:text-gray-500"
@@ -23,7 +25,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
         />
       </div>
       {error && typeof error === "string" && (
-        <p className="text-red-500 ml-5">{error}</p>
+        <p className="text-red-500 text-xs font-semibold mt-2 ml-5">{error}</p>
       )}
     </section>
   );

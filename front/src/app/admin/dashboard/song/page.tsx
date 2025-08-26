@@ -1,0 +1,72 @@
+import { Edit, Trash } from "lucide-react";
+import Link from "next/link";
+
+export default async function SongList() {
+  const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/songs`, {
+    cache: "no-store", // Ensure fresh data
+  });
+  const songs = await data.json();
+
+  return (
+    <section className="h-full w-full flex flex-col justify-start gap-10">
+      <Link
+        href="/admin/dashboard/song/add"
+        className="w-fit bg-gradient-to-r from-cyan-700 to-emerald-400 text-white px-4 py-2 font-bold rounded-md hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer self-end"
+      >
+        Add Song
+      </Link>
+      {songs.length > 0 ? (
+        <ul className="grid grid-cols-2 gap-5 w-full">
+          {songs.map((song: any) => (
+            <li
+              className="w-full flex justify-between items-center gap-5 bg-white p-2 rounded-3xl"
+              key={song._id}
+            >
+              <article className="flex gap-5 h-full">
+                <img
+                  src={song.coverUrl || "/placeholder.jpg"} // Fallback image
+                  alt="Song Image Cover"
+                  className="object-cover max-w-40 rounded-2xl"
+                />
+                <div className="flex flex-col justify-between h-full">
+                  <p className="font-bold text-xl">{song.name}</p>
+                  <p className="text-sm text-gray-600">
+                    Singer: {song.singer?.name || "Unknown"}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    Album: {song.album?.name || "None"}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    Genres:{" "}
+                    {song.genres?.map((g: any) => g.name).join(", ") || "None"}
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    Playlists:{" "}
+                    {song.playlists?.map((p: any) => p.name).join(", ") ||
+                      "None"}
+                  </p>
+                </div>
+              </article>
+              <article className="h-full flex flex-col justify-between gap-2 p-2">
+                <Link
+                  className="text-sky-500"
+                  href={`/admin/dashboard/song/edit?songId=${song._id}`}
+                >
+                  <Edit />
+                </Link>
+                <Link
+                  className="text-red-500 flex"
+                  href={`/admin/dashboard/song/delete?songId=${song._id}`}
+                >
+                  <Trash />
+                </Link>
+              </article>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p className="text-center dark:text-white">Sorry, there are no songs</p>
+      )}
+    </section>
+  );
+}
