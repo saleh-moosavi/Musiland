@@ -22,3 +22,7 @@ export const addGenreSchema = z.object({
 export const addPlaylistSchema = z.object({
   name: z.string().min(1, "Please Enter Playlist Name"),
 });
+
+export const addAlbumSchema = z.object({
+  name: z.string().min(1, "Please Enter Album Name"),
+});
