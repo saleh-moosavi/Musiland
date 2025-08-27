@@ -1,11 +1,10 @@
 import Slider from "../shared/Slider";
 import SingleMusicView from "./SingleMusicView";
 
-export default async function SingleMusicViewPage({ id }: any) {
-  const url = new URL(`http://localhost:1337/api/songs/${id}?populate=*`);
+export default async function SingleMusicViewPage({ id }: { id: string }) {
+  const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/songs/${id}`);
   const response = await fetch(url);
-  const data: any = await response.json();
-  const song = data.data;
+  const song: any = await response.json();
 
   if (!song || typeof song !== "object" || Array.isArray(song)) {
     return (
@@ -21,9 +20,9 @@ export default async function SingleMusicViewPage({ id }: any) {
       <div className="space-y-10 mt-10">
         <Slider
           title="Related Songs"
-          query={`filters[$or][0][genres][name][$in]=${song.genres
+          query={`genre=${song.genres
             .map((g: any) => g.name)
-            .join(",")}&filters[$or][1][playlists][name][$in]=${song.playlists
+            .join(",")}&playlist=${song.playlists
             .map((p: any) => p.name)
             .join(",")}`}
         />

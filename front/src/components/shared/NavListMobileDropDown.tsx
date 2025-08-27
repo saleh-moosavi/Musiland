@@ -29,10 +29,10 @@ export default function NavListMobileDropDown({ item }: any) {
           {item.content.map((item: any) => (
             <Link
               onClick={() => setShowMobileMenuPanel(false)}
-              key={item.id}
-              href={`/category/${item.name}?filters[$or][0][genres][name][$in]=${item.name}&filters[$or][1][playlists][name][$in]=${item.name}`}
+              key={item._id}
+              href={`/category/${item.name}?genres=${item.name}&playlist=${item.name}`}
             >
-              <p key={item.id}>{item.name}</p>
+              <p>{item.name}</p>
             </Link>
           ))}
         </div>

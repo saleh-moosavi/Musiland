@@ -1,7 +1,7 @@
 "use client";
 import "swiper/css";
-import "swiper/css/pagination";
 import Link from "next/link";
+import "swiper/css/pagination";
 import { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
@@ -15,11 +15,11 @@ export default function HeroCarousel() {
     async function fetchSongs() {
       try {
         const response = await fetch(
-          "http://localhost:1337/api/songs?filters[likes][$gt]=-1&pagination[limit]=5&sort=publishedAt:desc&populate=*"
+          `${process.env.NEXT_PUBLIC_API_URL}/songs?page=1,10&sort=date`
         );
         if (!response.ok) throw new Error("Failed to fetch songs");
         const data = await response.json();
-        setSongs(data.data);
+        setSongs(data);
       } catch (error: any) {
         console.error("Error fetching songs:", error.message);
       } finally {
@@ -55,27 +55,26 @@ export default function HeroCarousel() {
         className="mySwiper w-full flex place-items-center *:w-full *:h-full"
         breakpoints={CarouselResponsive}
       >
-        {songs.map((song: any) => (
-          <SwiperSlide className="relative" key={song.id}>
-            <Link
-              href={`/music/${song.singer?.name || "Unknown"} - ${
-                song.documentId
-              }`}
-            >
-              <div className="flex flex-col gap-2 absolute bottom-5 left-1/2 -translate-x-1/2 text-white text-center bg-black/50 px-2 py-1 rounded-xl">
-                <p>{song.singer?.name || "Unknown Artist"}</p>
-                <p>{song.name}</p>
-              </div>
-              <img
-                src={song.coverUrl}
-                alt={song.name}
-                sizes="(max-width: 768px) 100vw, 50vw"
-                className="object-cover rounded-3xl w-full h-86"
-                loading="lazy"
-              />
-            </Link>
-          </SwiperSlide>
-        ))}
+        {songs &&
+          songs?.map((song: any) => (
+            <SwiperSlide className="relative" key={song.id}>
+              <Link
+                href={`/music/${song.singer?.name || "Unknown"}-${song._id}`}
+              >
+                <div className="flex flex-col gap-2 absolute bottom-5 left-1/2 -translate-x-1/2 text-white text-center bg-black/50 px-2 py-1 rounded-xl">
+                  <p>{song.singer?.name || "Unknown Artist"}</p>
+                  <p>{song.name}</p>
+                </div>
+                <img
+                  src={song.coverUrl}
+                  alt={song.name}
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  className="object-cover rounded-3xl w-full h-86"
+                  loading="lazy"
+                />
+              </Link>
+            </SwiperSlide>
+          ))}
       </Swiper>
     );
   }

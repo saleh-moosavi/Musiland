@@ -10,18 +10,9 @@ export default function Home() {
       <p className="font-semibold dark:text-white">Feel The Soul of Music</p>
       <HeroCarousel />
       <Suspense fallback={<Loading />}>
-        <Slider
-          title="Special Songs"
-          query="filters[likes][$gt]=-1&pagination[limit]=10&sort=publishedAt:desc"
-        />
-        <Slider
-          title="Newest Songs"
-          query="filters[likes][$gt]=-1&pagination[limit]=10&sort=publishedAt:desc"
-        />
-        <Slider
-          title="Most Popular Songs"
-          query="filters[likes][$gt]=-1&pagination[limit]=10&sort=publishedAt:desc"
-        />
+        <Slider title="Special Songs" query="" />
+        <Slider title="Newest Songs" query="" />
+        <Slider title="Most Popular Songs" query="" />
       </Suspense>
     </div>
   );

@@ -20,8 +20,8 @@ const NavListDesktop: React.FC<NavListDesktopProps> = ({
       <ul className="grid grid-cols-4 gap-2 *:row-span-1 *:col-span-1 *:justify-self-center w-full">
         {navbarData.map((item) => (
           <Link
-            key={item.id}
-            href={`/category/${item.name}?filters[$or][0][genres][name][$in]=${item.name}&filters[$or][1][playlists][name][$in]=${item.name}`}
+            key={item._id}
+            href={`/category/${item.name}?genre=${item.name}&playlist=${item.name}`}
           >
             <li className="cursor-pointer">{item.name}</li>
           </Link>

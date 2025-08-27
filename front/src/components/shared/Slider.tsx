@@ -9,11 +9,10 @@ export default async function Slider({
   title: string;
   query: string;
 }) {
-  const url = new URL(`http://localhost:1337/api/songs?${query}&populate=*
-`);
-  const response = await fetch(url);
-  const data: any = await response.json();
-  const songs: any = data.data;
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/songs?${query}&page=1,10&sort=date`
+  );
+  const songs: any = await response.json();
 
   return (
     <>
@@ -21,7 +20,7 @@ export default async function Slider({
         <p className="shrink-0 text-sm font-semibold">{title}</p>
         <span className="w-full shrink h-[1px] translate-y-full bg-gray-300"></span>
         <Link
-          href={`/category/${title}?${query}`}
+          href={`/category/${title}?${query}&sort=date`}
           className="border px-4 py-1 rounded-lg shrink-0 cursor-pointer"
         >
           See More

@@ -19,20 +19,18 @@ export default function SameSongs() {
 
   useEffect(() => {
     const fetchSongs = async () => {
-      const url = new URL(
-        `http://localhost:1337/api/songs?${query}&populate=*`
-      );
+      const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/songs`);
       const response = await fetch(url);
       const data: any = await response.json();
 
       // Sort the songs to ensure the currently playing song is first
-      const songs = data.data.sort((a: any, b: any) => {
-        if (a.audioUrl === audioSrc) return -1; // Move the currently playing song to the front
-        if (b.audioUrl === audioSrc) return 1; // Keep other songs in their order
-        return 0; // Maintain original order for other songs
-      });
+      // const songs = data.data.sort((a: any, b: any) => {
+      //   if (a.audioUrl === audioSrc) return -1; // Move the currently playing song to the front
+      //   if (b.audioUrl === audioSrc) return 1; // Keep other songs in their order
+      //   return 0; // Maintain original order for other songs
+      // });
 
-      setSameSongsList(songs);
+      setSameSongsList(data);
     };
     if (
       sameSongsList?.length < 1 ||
@@ -64,7 +62,7 @@ export default function SameSongs() {
                   ? "bg-gray-300 dark:bg-gray-600"
                   : "bg-white dark:bg-gray-500"
               }`}
-              key={song.id}
+              key={song._id}
             >
               <div className="relative group rounded-xl overflow-hidden">
                 <img

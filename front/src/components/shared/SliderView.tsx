@@ -1,11 +1,11 @@
 "use client";
 import "swiper/css";
-import "swiper/css/navigation";
 import Link from "next/link";
-import { Navigation } from "swiper/modules";
-import { SlidersResponsive } from "@/constants/window";
-import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css/navigation";
 import PlayButton from "./PlayButton";
+import { Navigation } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { SlidersResponsive } from "@/constants/window";
 
 export default function SliderView({ data }: any) {
   return (
@@ -18,7 +18,7 @@ export default function SliderView({ data }: any) {
       breakpoints={SlidersResponsive}
     >
       {data?.map((song: any) => (
-        <SwiperSlide key={song.id}>
+        <SwiperSlide key={song._id}>
           <div className="relative group rounded-xl overflow-hidden">
             <img
               src={song.coverUrl}
@@ -33,7 +33,7 @@ export default function SliderView({ data }: any) {
           </div>
           <Link
             className="group dark:text-white"
-            href={`/music/${song.singer?.name} - ${song.documentId}`}
+            href={`/music/${song.singer?.name}-${song._id}`}
           >
             <p className="font-semibold mt-2">{song.name}</p>
             <p className="text-sm">{song.singer?.name || "Unknown Artist"}</p>

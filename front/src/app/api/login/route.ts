@@ -5,7 +5,7 @@ export async function POST(req: NextRequest) {
   const { email, password } = await req.json();
 
   try {
-    const strapiRes = await fetch("http://localhost:1337/api/auth/local", {
+    const strapiRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

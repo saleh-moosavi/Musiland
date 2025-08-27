@@ -29,12 +29,8 @@ export default function SingleMusicView({ song }: any) {
             Genre:{" "}
             {song.genres && song.genres.length > 0
               ? song.genres?.map((g: any) => (
-                  <li key={g.id}>
-                    <Link
-                      href={`/category/${
-                        g.name
-                      }?${`filters[genres][name][$in]=${g.name}`}`}
-                    >
+                  <li key={g._id}>
+                    <Link href={`/category/${g.name}?${`genre=${g.name}`}`}>
                       {g.name}
                     </Link>
                   </li>
@@ -46,12 +42,8 @@ export default function SingleMusicView({ song }: any) {
             playlist:{" "}
             {song.playlists && song.playlists.length > 0
               ? song.playlists?.map((p: any) => (
-                  <li key={p.id}>
-                    <Link
-                      href={`/category/${
-                        p.name
-                      }?${`filters[playlists][name][$in]=${p.name}`}`}
-                    >
+                  <li key={p._id}>
+                    <Link href={`/category/${p.name}?${`playlist=${p.name}`}`}>
                       {p.name}
                     </Link>
                   </li>

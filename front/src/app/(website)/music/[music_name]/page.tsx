@@ -4,7 +4,7 @@ import { Suspense } from "react";
 
 export default async function MusicNamePage({ params }: any) {
   const { music_name } = await params;
-  const [, id] = decodeURIComponent(music_name).split(" - ");
+  const [, id] = decodeURIComponent(music_name).split("-");
 
   return (
     <Suspense fallback={<Loading />}>

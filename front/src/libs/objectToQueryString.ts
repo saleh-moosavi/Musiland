@@ -1,4 +1,4 @@
-export function objectToQueryString(obj: any, prefix = ""): any {
+export async function objectToQueryString(obj: any, prefix = ""): Promise<any> {
   const params = [];
 
   for (const key in obj) {

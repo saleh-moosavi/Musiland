@@ -6,8 +6,8 @@ import NavListMobile from "./NavListMobile";
 import useUserStore from "@/store/userStore";
 import NavListDesktop from "./NavListDesktop";
 import useWindowStore from "@/store/windowStore";
-import { LogIn, Menu, Moon, Sun, User } from "lucide-react";
 import useNavbarData from "@/hooks/useNavbarData";
+import { LogIn, Menu, Moon, Sun, User } from "lucide-react";
 
 export default function Navbar() {
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);

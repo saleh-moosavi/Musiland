@@ -8,11 +8,14 @@ export async function GET() {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const userDetailsRes = await fetch(`http://localhost:1337/api/users/me`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const userDetailsRes = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/users`,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
   if (!userDetailsRes.ok) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
