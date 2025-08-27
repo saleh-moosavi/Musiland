@@ -26,9 +26,6 @@ export default function AlbumForm({ mode }: { mode: Mode }) {
     reset,
   } = useForm({
     resolver: zodResolver(addAlbumSchema),
-    defaultValues: {
-      name: "",
-    },
   });
 
   useEffect(() => {

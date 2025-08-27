@@ -36,16 +36,6 @@ export default function SongForm({ mode }: { mode: Mode }) {
     setValue,
   } = useForm<SongFormData>({
     resolver: zodResolver(addSongSchema),
-    defaultValues: {
-      name: "",
-      lyric: "",
-      audioUrl: "",
-      coverUrl: "",
-      singerId: "",
-      albumId: "",
-      genreIds: [],
-      playlistIds: [],
-    },
   });
 
   // Populate form for edit mode

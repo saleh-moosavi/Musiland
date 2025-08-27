@@ -26,9 +26,6 @@ export default function SingerForm({ mode }: { mode: Mode }) {
     reset,
   } = useForm({
     resolver: zodResolver(addSingerSchema),
-    defaultValues: {
-      name: "",
-    },
   });
 
   useEffect(() => {

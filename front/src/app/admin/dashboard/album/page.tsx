@@ -1,4 +1,6 @@
 import Link from "next/link";
+import EditBtn from "@/components/admin/EditBtn";
+import DeleteBtn from "@/components/admin/DeleteBtn";
 
 export default async function AlbumList() {
   const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/albums`);
@@ -12,21 +14,17 @@ export default async function AlbumList() {
         Add Album
       </Link>
       {albums.length > 0 ? (
-        <ul className="grid grid-cols-2 *:col-span-1 gap-5 w-full">
+        <ul className="grid grid-cols-3 *:col-span-1 gap-5 w-full">
           {albums.map((album: any) => {
             return (
               <li
-                className="w-full flex justify-between items-center gap-5 bg-white p-2 rounded-full"
+                className="w-full flex justify-between items-center gap-5 bg-white p-5 rounded-xl"
                 key={album?._id}
               >
                 <p>{album.name}</p>
-                <article className="flex gap-2 items-center">
-                  <Link
-                    href={`/admin/dashboard/album/edit?albumId=${album._id}&albumName=${album.name}`}
-                  >
-                    Edit
-                  </Link>
-                  <Link href={"/dashboard/album"}>Delete</Link>
+                <article className="flex gap-5 items-center">
+                  <EditBtn id={album._id} name={album.name} type="album" />
+                  <DeleteBtn id={album._id} name={album.name} type="album" />
                 </article>
               </li>
             );

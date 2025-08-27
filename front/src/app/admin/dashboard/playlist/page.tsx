@@ -1,4 +1,6 @@
 import Link from "next/link";
+import EditBtn from "@/components/admin/EditBtn";
+import DeleteBtn from "@/components/admin/DeleteBtn";
 
 export default async function PlaylistList() {
   const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/playlists`);
@@ -12,21 +14,25 @@ export default async function PlaylistList() {
         Add Playlist
       </Link>
       {playlists.length > 0 ? (
-        <ul className="grid grid-cols-2 *:col-span-1 gap-5 w-full">
+        <ul className="grid grid-cols-3 *:col-span-1 gap-5 w-full">
           {playlists.map((playlist: any) => {
             return (
               <li
-                className="w-full flex justify-between items-center gap-5 bg-white p-2 rounded-full"
+                className="w-full flex justify-between items-center gap-5 bg-white p-5 rounded-xl"
                 key={playlist?._id}
               >
                 <p>{playlist.name}</p>
-                <article className="flex gap-2 items-center">
-                  <Link
-                    href={`/admin/dashboard/playlist/edit?playlistId=${playlist._id}&playlistName=${playlist.name}`}
-                  >
-                    Edit
-                  </Link>
-                  <Link href={"/dashboard/playlist"}>Delete</Link>
+                <article className="flex gap-5 items-center">
+                  <EditBtn
+                    id={playlist._id}
+                    name={playlist.name}
+                    type="playlist"
+                  />
+                  <DeleteBtn
+                    id={playlist._id}
+                    name={playlist.name}
+                    type="playlist"
+                  />
                 </article>
               </li>
             );

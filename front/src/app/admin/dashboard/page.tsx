@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function dashboardPage() {
   return (
-    <div className="flex flex-col justify-center items-center w-full h-full dark:text-white gap-20">
+    <div className="flex flex-col justify-center items-center w-full h-full dark:text-white gap-10">
       <p className="text-xl font-bold ">WellCome To Admin Page</p>
 
       <ul className="grid justify-center grid-cols-3 items-start gap-10 *:col-span-1 *:cursor-pointer bg-slate-100 dark:bg-slate-800 p-10 rounded-3xl">

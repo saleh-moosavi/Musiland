@@ -1,5 +1,6 @@
-import { Edit, Trash } from "lucide-react";
 import Link from "next/link";
+import EditBtn from "@/components/admin/EditBtn";
+import DeleteBtn from "@/components/admin/DeleteBtn";
 
 export default async function SongList() {
   const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/songs`, {
@@ -48,18 +49,8 @@ export default async function SongList() {
                 </div>
               </article>
               <article className="h-full flex flex-col justify-between gap-2 p-2">
-                <Link
-                  className="text-sky-500"
-                  href={`/admin/dashboard/song/edit?songId=${song._id}`}
-                >
-                  <Edit />
-                </Link>
-                <Link
-                  className="text-red-500 flex"
-                  href={`/admin/dashboard/song/delete?songId=${song._id}`}
-                >
-                  <Trash />
-                </Link>
+                <EditBtn id={song._id} type="song" />
+                <DeleteBtn id={song._id} name={song.name} type="song" />
               </article>
             </li>
           ))}

@@ -26,9 +26,6 @@ export default function GenreForm({ mode }: { mode: Mode }) {
     reset,
   } = useForm({
     resolver: zodResolver(addGenreSchema),
-    defaultValues: {
-      name: "",
-    },
   });
 
   useEffect(() => {

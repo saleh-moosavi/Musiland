@@ -26,9 +26,6 @@ export default function PlaylistForm({ mode }: { mode: Mode }) {
     reset,
   } = useForm({
     resolver: zodResolver(addPlaylistSchema),
-    defaultValues: {
-      name: "",
-    },
   });
 
   useEffect(() => {

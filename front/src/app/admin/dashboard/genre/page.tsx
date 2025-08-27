@@ -1,4 +1,6 @@
 import Link from "next/link";
+import EditBtn from "@/components/admin/EditBtn";
+import DeleteBtn from "@/components/admin/DeleteBtn";
 
 export default async function GenreList() {
   const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/genres`);
@@ -12,21 +14,17 @@ export default async function GenreList() {
         Add Genre
       </Link>
       {genres.length > 0 ? (
-        <ul className="grid grid-cols-2 *:col-span-1 gap-5 w-full">
+        <ul className="grid grid-cols-3 *:col-span-1 gap-5 w-full">
           {genres.map((genre: any) => {
             return (
               <li
-                className="w-full flex justify-between items-center gap-5 bg-white p-2 rounded-full"
+                className="w-full flex justify-between items-center gap-5 bg-white p-5 rounded-xl"
                 key={genre?._id}
               >
                 <p>{genre.name}</p>
-                <article className="flex gap-2 items-center">
-                  <Link
-                    href={`/admin/dashboard/genre/edit?genreId=${genre._id}&genreName=${genre.name}`}
-                  >
-                    Edit
-                  </Link>
-                  <Link href={"/dashboard/genre"}>Delete</Link>
+                <article className="flex gap-5 items-center">
+                  <EditBtn id={genre._id} name={genre.name} type="genre" />
+                  <DeleteBtn id={genre._id} name={genre.name} type="genre" />
                 </article>
               </li>
             );
