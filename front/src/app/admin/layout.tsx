@@ -1,6 +1,7 @@
 import "../globals.css";
 import type { Metadata } from "next";
 import SideBar from "@/components/admin/SideBar";
+import DeleteConfirm from "@/components/shared/PopUp";
 
 export const metadata: Metadata = {
   title: "Administrator",
@@ -22,6 +23,7 @@ export default function RootLayout({
           <section className="p-10 w-full h-full flex justify-center items-center">
             {children}
           </section>
+          <DeleteConfirm />
         </div>
       </body>
     </html>
