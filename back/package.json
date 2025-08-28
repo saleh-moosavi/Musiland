@@ -1,41 +1,25 @@
 {
-  "name": "strapi-cms",
-  "version": "0.1.0",
-  "private": true,
-  "description": "A Strapi application",
+  "name": "nodejs",
+  "version": "1.0.0",
+  "main": "dist/app.js",
+  "type": "module",
   "scripts": {
-    "build": "strapi build",
-    "console": "strapi console",
-    "deploy": "strapi deploy",
-    "dev": "strapi develop",
-    "develop": "strapi develop",
-    "start": "strapi start",
-    "strapi": "strapi",
-    "upgrade": "npx @strapi/upgrade latest",
-    "upgrade:dry": "npx @strapi/upgrade latest --dry"
+    "start": "node dist/app.js",
+    "build": "tsc",
+    "dev": "nodemon --exec tsx src/app.ts"
   },
   "dependencies": {
-    "@strapi/plugin-cloud": "5.14.0",
-    "@strapi/plugin-users-permissions": "5.14.0",
-    "@strapi/strapi": "5.14.0",
-    "better-sqlite3": "11.3.0",
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "react-router-dom": "^6.0.0",
-    "styled-components": "^6.0.0"
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "mongoose": "^8.17.2"
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "typescript": "^5"
-  },
-  "engines": {
-    "node": ">=18.0.0 <=22.x.x",
-    "npm": ">=6.0.0"
-  },
-  "strapi": {
-    "uuid": "6d7e4c63-a7cc-4ae3-8f1c-908b6057b8f8",
-    "installId": "751ae23ba52406055fcac8bcab00b3bf71e4169ee0a5fbf44398049ae9765164"
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.3.0",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.20.4",
+    "typescript": "^5.9.2"
   }
 }
