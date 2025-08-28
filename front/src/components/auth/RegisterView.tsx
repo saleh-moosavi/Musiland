@@ -17,14 +17,13 @@ export default function RegisterView() {
   const router = useRouter();
   const { isLoggedIn } = useUserStore();
   const [error, setError] = useState<any>();
-  const [isLoading, setIsLoading] = useState<boolean>(true); // اضافه شد
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const {
     formState: { errors, isSubmitting },
     register,
     handleSubmit,
   } = useForm({ resolver: zodResolver(signUpSchema) });
 
-  // بررسی وضعیت ورود و تعیین لودینگ
   useEffect(() => {
     if (isLoggedIn) {
       router.push("/profile");
@@ -38,24 +37,19 @@ export default function RegisterView() {
       const res = await fetch("/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          username,
-          email,
-          password,
-        }),
+        body: JSON.stringify({ username, email, password }),
         credentials: "include",
       });
 
       const result = await res.json();
 
       if (res.ok) {
-        console.log("Successful");
         router.push("/profile");
       } else {
-        setError({ server: result.error });
+        setError({ server: result.error || "Register failed" });
       }
     } catch (err) {
-      setError({ server: "Server Error!" });
+      setError({ server: `Server Error! : ${err}` });
     }
   };
 

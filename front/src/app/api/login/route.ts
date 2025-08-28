@@ -5,25 +5,28 @@ export async function POST(req: NextRequest) {
   const { email, password } = await req.json();
 
   try {
-    const strapiRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        identifier: email, // می‌تونه username یا email باشه
-        password,
-      }),
-    });
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      }
+    );
 
-    const result = await strapiRes.json();
+    const result = await response.json();
 
-    if (!strapiRes.ok) {
-      return NextResponse.json(
-        { error: result?.error?.message || "Signed Up Failed" },
-        { status: strapiRes.status }
-      );
+    if (!result.ok) {
+      return NextResponse.json({
+        ok: false,
+        error: result?.error || "Signed Up Failed",
+      });
     }
 
-    (await cookies()).set("token", result.jwt, {
+    (await cookies()).set("user", JSON.stringify(result.user), {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
@@ -31,8 +34,8 @@ export async function POST(req: NextRequest) {
       maxAge: 60 * 60 * 24 * 7, // یک هفته
     });
 
-    return NextResponse.json({ user: result.user, jwt: result.jwt });
+    return NextResponse.json({ ok: true });
   } catch (error) {
-    return NextResponse.json({ error: "Server Error" }, { status: 500 });
+    return NextResponse.json({ ok: false, error: "Server Error" });
   }
 }

@@ -47,12 +47,11 @@ export default function LoginView() {
       const result = await res.json();
 
       if (res.ok) {
-        localStorage.setItem("token", result.jwt);
         setIsLoggedIn(true);
         router.push("/profile");
       } else {
         setError({
-          server: result.error?.message || "Email Or Password Is Incorrect!",
+          server: result.error || "Email Or Password Is Incorrect!",
         });
       }
     } catch (err) {

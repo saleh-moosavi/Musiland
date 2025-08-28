@@ -12,9 +12,9 @@ export default async function checkSavedData() {
       const userStore = useUserStore.getState();
       userStore.setIsLoggedIn(true);
       userData = {
-        userName: data.user.username,
+        name: data.user.name,
         email: data.user.email,
-        createdAt: data.user.createdAt,
+        role: data.user.role,
       };
     }
   }

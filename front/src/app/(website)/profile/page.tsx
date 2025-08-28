@@ -2,14 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import checkSavedData from "@/libs/checkSavedData";
 import useUserStore from "@/store/userStore";
 import Loading from "@/components/shared/Loading";
+import checkSavedData from "@/libs/checkSavedData";
 
 type User = {
-  userName: string;
+  name: string;
   email: string;
-  createdAt: string;
+  role: string;
 };
 
 export default function Page() {
@@ -23,6 +23,7 @@ export default function Page() {
         router.push("/login");
       } else {
         const res = await checkSavedData();
+        console.log(res);
         res && setUser(res); // Make sure res matches User type
       }
     }
@@ -54,14 +55,14 @@ export default function Page() {
       <section className="grid grid-cols-5 w-full">
         <ul className="list-none flex flex-col gap-10 col-span-4">
           <li>
-            <strong>Username:</strong> {user.userName}
+            <strong>Username:</strong> {user.name}
           </li>
           <li>
             <strong>Email:</strong> {user.email}
           </li>
           <li>
-            <strong>Created At: </strong>
-            {new Date(user.createdAt).toLocaleString()}
+            <strong>Role: </strong>
+            {user.role}
           </li>
         </ul>
         <article className="col-span-1 p-5 flex flex-col *:hover:cursor-pointer gap-5 bg-slate-100 dark:bg-gray-500 rounded-3xl">

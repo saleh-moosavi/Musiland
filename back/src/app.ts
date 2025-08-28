@@ -1,8 +1,10 @@
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
+import { authRouter } from "@routes/auth.js";
 import { userRouter } from "./routes/user.js";
 import { connectToDB } from "./configs/db.js";
+import { authMiddleware } from "middlewares/auth.js";
 import { userMiddleware } from "middlewares/user.js";
 import type { Express, Request, Response } from "express";
 
@@ -24,6 +26,7 @@ connectToDB(app);
 
 // Routes And Middlewares
 app.use("/api/users", userMiddleware, userRouter);
+app.use("/api/auth", authMiddleware, authRouter);
 
 // 404 Route
 app.use((req: Request, res: Response) => {
