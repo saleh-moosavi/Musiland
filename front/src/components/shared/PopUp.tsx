@@ -2,18 +2,26 @@
 
 import { useRouter } from "next/navigation";
 import PopUpStore from "@/store/popUpStore";
+import useToastStore from "@/store/toastStore";
 
 export default function DeleteConfirm() {
   const { id, name, type, isOpen, setIsOpen } = PopUpStore();
+  const { setIsToastOpen, setToastTitle, setToastColor } = useToastStore();
   const router = useRouter();
 
   const handleDelete = async () => {
     try {
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${type}s/delete/${id}`, {
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${type}s/${id}`, {
         method: "DELETE",
       });
+      setIsToastOpen(true);
+      setToastTitle(`${name} Deleted Successfully`);
+      setToastColor("green");
     } catch (err) {
       alert("Failed to delete.");
+      setIsToastOpen(true);
+      setToastTitle(String(err));
+      setToastColor("red");
     } finally {
       setIsOpen(false);
       router.refresh();

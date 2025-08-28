@@ -3,6 +3,7 @@
 import { UserIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
+import useToastStore from "@/store/toastStore";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { iconClasses } from "@/constants/styleClasses";
 import CustomInput from "@/components/auth/CustomInput";
@@ -16,8 +17,8 @@ export default function SingerForm({ mode }: { mode: Mode }) {
   const searchParams = useSearchParams();
   const singerId = searchParams.get("singerId");
   const singerName = searchParams.get("singerName");
-
   const [error, setError] = useState<string | null>(null);
+  const { setIsToastOpen, setToastTitle, setToastColor } = useToastStore();
 
   const {
     formState: { errors, isSubmitting },
@@ -39,8 +40,8 @@ export default function SingerForm({ mode }: { mode: Mode }) {
 
     const url =
       mode === "add"
-        ? `${process.env.NEXT_PUBLIC_API_URL}/singers/add`
-        : `${process.env.NEXT_PUBLIC_API_URL}/singers/edit/${singerId}`;
+        ? `${process.env.NEXT_PUBLIC_API_URL}/singers`
+        : `${process.env.NEXT_PUBLIC_API_URL}/singers/${singerId}`;
 
     const method = mode === "add" ? "POST" : "PUT";
 
@@ -56,10 +57,17 @@ export default function SingerForm({ mode }: { mode: Mode }) {
 
       if (res.ok) {
         reset();
-        alert(`Singer ${mode === "add" ? "added" : "updated"} successfully!`);
+        setIsToastOpen(true);
+        setToastTitle(
+          `Singer ${mode === "add" ? "added" : "updated"} successfully!`
+        );
+        setToastColor("green");
         router.push("/admin/dashboard/singer");
       } else {
         setError(result.error?.message || "Operation failed.");
+        setIsToastOpen(true);
+        setToastTitle(result.error?.message || "Operation failed.");
+        setToastColor("red");
       }
     } catch (err) {
       setError("Server connection error.");

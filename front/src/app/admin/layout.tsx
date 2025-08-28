@@ -2,6 +2,7 @@ import "../globals.css";
 import type { Metadata } from "next";
 import SideBar from "@/components/admin/SideBar";
 import DeleteConfirm from "@/components/shared/PopUp";
+import Toast from "@/components/shared/Toast";
 
 export const metadata: Metadata = {
   title: "Administrator",
@@ -24,6 +25,7 @@ export default function RootLayout({
             {children}
           </section>
           <DeleteConfirm />
+          <Toast />
         </div>
       </body>
     </html>
