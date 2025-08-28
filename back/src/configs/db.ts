@@ -12,9 +12,9 @@ export const connectToDB = (app: Express) => {
     } as mongoose.ConnectOptions)
     .then(() => {
       console.log("✅ MongoDB Connected");
-      app.listen(process.env.PORT || 3000, () => {
+      app.listen(process.env.PORT || 8000, () => {
         console.log(
-          `Running at => http://localhost:${process.env.PORT || 3000}`
+          `Running at => http://localhost:${process.env.PORT || 8000}`
         );
       });
     })

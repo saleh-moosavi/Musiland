@@ -5,6 +5,6 @@ export const userMiddleware = (
   res: Response,
   next: NextFunction
 ) => {
-  console.log("This Is a Middleware");
+  console.log("Users Middleware");
   next();
 };
