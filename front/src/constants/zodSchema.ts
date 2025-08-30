@@ -11,23 +11,23 @@ export const signInSchema = z.object({
   password: z.string().min(1, "Please Enter Your Password"),
 });
 
-export const addSingerSchema = z.object({
+export const singerSchema = z.object({
   name: z.string().min(1, "Please Enter Singer Name"),
 });
 
-export const addGenreSchema = z.object({
+export const genreSchema = z.object({
   name: z.string().min(1, "Please Enter Genre Name"),
 });
 
-export const addPlaylistSchema = z.object({
+export const playlistSchema = z.object({
   name: z.string().min(1, "Please Enter Playlist Name"),
 });
 
-export const addAlbumSchema = z.object({
+export const albumSchema = z.object({
   name: z.string().min(1, "Please Enter Album Name"),
 });
 
-export const addSongSchema = z.object({
+export const songSchema = z.object({
   name: z.string().min(1, "Song name is required"),
   lyric: z.string().optional(),
   audioUrl: z.string().url().url(),
@@ -37,3 +37,13 @@ export const addSongSchema = z.object({
   genreIds: z.array(z.string()),
   playlistIds: z.array(z.string()),
 });
+
+export const formSchemas = {
+  singer: singerSchema,
+  album: albumSchema,
+  genre: genreSchema,
+  playlist: playlistSchema,
+};
+
+// نوع آن‌ها
+export type FormSchemaKey = keyof typeof formSchemas;

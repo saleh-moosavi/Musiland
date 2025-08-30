@@ -4,7 +4,7 @@ import DeleteBtn from "@/components/admin/DeleteBtn";
 
 export default async function PlaylistList() {
   const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/playlists`);
-  const playlists = await data.json();
+  const playlists = await data?.json();
   return (
     <section className="h-full w-full flex flex-col justify-start gap-10">
       <Link

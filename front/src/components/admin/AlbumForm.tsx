@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { iconClasses } from "@/constants/styleClasses";
-import { addAlbumSchema } from "@/constants/zodSchema";
+import { albumSchema } from "@/constants/zodSchema";
 import CustomInput from "@/components/auth/CustomInput";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -25,7 +25,7 @@ export default function AlbumForm({ mode }: { mode: Mode }) {
     handleSubmit,
     reset,
   } = useForm({
-    resolver: zodResolver(addAlbumSchema),
+    resolver: zodResolver(albumSchema),
   });
 
   useEffect(() => {

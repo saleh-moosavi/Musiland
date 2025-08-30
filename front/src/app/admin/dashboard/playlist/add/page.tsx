@@ -1,5 +1,15 @@
-import PlaylistForm from "@/components/admin/PlaylistForm";
+import GenericForm from "@/components/admin/SingerForm";
 
 export default function addPlaylistPage() {
-  return <PlaylistForm mode="add" />;
+  return (
+    <GenericForm
+      mode="add"
+      schemaKey="playlist"
+      baseUrl="/playlists"
+      redirectPath="/admin/dashboard/playlist"
+      itemName="Playlist"
+      idParamKey="playlistId"
+      nameParamKey="playlistName"
+    />
+  );
 }

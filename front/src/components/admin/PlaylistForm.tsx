@@ -36,6 +36,7 @@ export default function PlaylistForm({ mode }: { mode: Mode }) {
 
   const onSubmit = async (data: { name: string }) => {
     setError(null);
+    
 
     const url =
       mode === "add"

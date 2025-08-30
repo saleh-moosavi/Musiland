@@ -1,5 +1,15 @@
-import SingerForm from "@/components/admin/SingerForm";
+import GenericForm from "@/components/admin/SingerForm";
 
 export default function EditSingerPage() {
-  return <SingerForm mode="edit" />;
+  return (
+    <GenericForm
+      mode="edit"
+      schemaKey="singer"
+      baseUrl="/singers"
+      redirectPath="/admin/dashboard/singer"
+      itemName="Singer"
+      idParamKey="singerId"
+      nameParamKey="singerName"
+    />
+  );
 }

@@ -1,5 +1,15 @@
-import PlaylistForm from "@/components/admin/PlaylistForm";
+import GenericForm from "@/components/admin/SingerForm";
 
-export default function EditPlaylistPage() {
-  return <PlaylistForm mode="edit" />;
+export default function editPlaylistPage() {
+  return (
+    <GenericForm
+      mode="edit"
+      schemaKey="playlist"
+      baseUrl="/playlists"
+      redirectPath="/admin/dashboard/playlist"
+      itemName="Playlist"
+      idParamKey="playlistId"
+      nameParamKey="playlistName"
+    />
+  );
 }
