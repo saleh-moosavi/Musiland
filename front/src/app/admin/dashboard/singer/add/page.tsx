@@ -1,9 +1,9 @@
-import GenericForm from "@/components/admin/SingerForm";
+import GenericForm from "@/components/admin/GenericForm";
 
 export default function AddSingerPage() {
   return (
     <GenericForm
-      mode={"add"}
+      mode="add"
       schemaKey="singer"
       baseUrl="/singers"
       redirectPath="/admin/dashboard/singer"

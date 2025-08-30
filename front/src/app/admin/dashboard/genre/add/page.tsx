@@ -1,5 +1,15 @@
-import GenreForm from "@/components/admin/GenreForm";
+import GenericForm from "@/components/admin/GenericForm";
 
 export default function addGenrePage() {
-  return <GenreForm mode="add" />;
+  return (
+    <GenericForm
+      mode="add"
+      schemaKey="genre"
+      baseUrl="/genres"
+      redirectPath="/admin/dashboard/genre"
+      itemName="Genre"
+      idParamKey="genreId"
+      nameParamKey="genreName"
+    />
+  );
 }

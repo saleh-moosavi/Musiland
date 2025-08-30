@@ -4,6 +4,7 @@ import express from "express";
 import { authRouter } from "@routes/auth.js";
 import { userRouter } from "./routes/user.js";
 import { connectToDB } from "./configs/db.js";
+import { genreRouter } from "@routes/genre.js";
 import { singerRouter } from "@routes/singer.js";
 import { authMiddleware } from "middlewares/auth.js";
 import { userMiddleware } from "middlewares/user.js";
@@ -32,6 +33,7 @@ app.use("/api/auth", authMiddleware, authRouter);
 
 app.use("/api/singers", singerRouter);
 app.use("/api/playlists", playlistRouter);
+app.use("/api/genres", genreRouter);
 
 // 404 Route
 app.use((req: Request, res: Response) => {

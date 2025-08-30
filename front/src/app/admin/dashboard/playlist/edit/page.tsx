@@ -1,4 +1,4 @@
-import GenericForm from "@/components/admin/SingerForm";
+import GenericForm from "@/components/admin/GenericForm";
 
 export default function editPlaylistPage() {
   return (
