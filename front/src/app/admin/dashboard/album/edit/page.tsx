@@ -1,5 +1,15 @@
-import AlbumForm from "@/components/admin/AlbumForm";
+import GenericForm from "@/components/admin/GenericForm";
 
-export default function EditAlbumPage() {
-  return <AlbumForm mode="edit" />;
+export default function editAlbumPage() {
+  return (
+    <GenericForm
+      mode="edit"
+      schemaKey="album"
+      baseUrl="/albums"
+      redirectPath="/admin/dashboard/album"
+      itemName="Album"
+      idParamKey="albumId"
+      nameParamKey="albumName"
+    />
+  );
 }

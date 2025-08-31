@@ -10,6 +10,7 @@ import { authMiddleware } from "middlewares/auth.js";
 import { userMiddleware } from "middlewares/user.js";
 import { playlistRouter } from "@routes/playlist.js";
 import type { Express, Request, Response } from "express";
+import { albumRouter } from "@routes/album.js";
 
 const app: Express = express();
 
@@ -34,6 +35,7 @@ app.use("/api/auth", authMiddleware, authRouter);
 app.use("/api/singers", singerRouter);
 app.use("/api/playlists", playlistRouter);
 app.use("/api/genres", genreRouter);
+app.use("/api/albums", albumRouter);
 
 // 404 Route
 app.use((req: Request, res: Response) => {
