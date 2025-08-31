@@ -49,7 +49,7 @@ export default async function SongList() {
                 </div>
               </article>
               <article className="h-full flex flex-col justify-between gap-2 p-2">
-                <EditBtn id={song._id} type="song" />
+                <EditBtn id={song._id} name={song.name} type="song" />
                 <DeleteBtn id={song._id} name={song.name} type="song" />
               </article>
             </li>

@@ -1,16 +1,17 @@
 import cors from "cors";
 import dotenv from "dotenv";
 import express from "express";
+import { songRouter } from "@routes/song.js";
 import { authRouter } from "@routes/auth.js";
 import { userRouter } from "./routes/user.js";
 import { connectToDB } from "./configs/db.js";
 import { genreRouter } from "@routes/genre.js";
+import { albumRouter } from "@routes/album.js";
 import { singerRouter } from "@routes/singer.js";
 import { authMiddleware } from "middlewares/auth.js";
 import { userMiddleware } from "middlewares/user.js";
 import { playlistRouter } from "@routes/playlist.js";
 import type { Express, Request, Response } from "express";
-import { albumRouter } from "@routes/album.js";
 
 const app: Express = express();
 
@@ -32,10 +33,11 @@ connectToDB(app);
 app.use("/api/users", userMiddleware, userRouter);
 app.use("/api/auth", authMiddleware, authRouter);
 
+app.use("/api/songs", songRouter);
+app.use("/api/albums", albumRouter);
+app.use("/api/genres", genreRouter);
 app.use("/api/singers", singerRouter);
 app.use("/api/playlists", playlistRouter);
-app.use("/api/genres", genreRouter);
-app.use("/api/albums", albumRouter);
 
 // 404 Route
 app.use((req: Request, res: Response) => {

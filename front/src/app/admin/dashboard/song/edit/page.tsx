@@ -1,5 +1,5 @@
 import SongForm from "@/components/admin/SongForm";
 
-export default function AddSongPage() {
+export default function editSongPage() {
   return <SongForm mode="edit" />;
 }

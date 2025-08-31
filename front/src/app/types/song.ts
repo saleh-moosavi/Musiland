@@ -1,4 +1,3 @@
-// types/song.ts
 import { z } from "zod";
 
 export const addSongSchema = z.object({

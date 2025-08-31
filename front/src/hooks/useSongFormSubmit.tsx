@@ -1,4 +1,3 @@
-// hooks/useSongFormSubmit.ts
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { SongFormData } from "@/app/types/song";
@@ -28,8 +27,8 @@ export function useSongFormSubmit({
 
     const url =
       mode === "add"
-        ? `${process.env.NEXT_PUBLIC_API_URL}/songs/add`
-        : `${process.env.NEXT_PUBLIC_API_URL}/songs/edit/${songId}`;
+        ? `${process.env.NEXT_PUBLIC_API_URL}/songs`
+        : `${process.env.NEXT_PUBLIC_API_URL}/songs/${songId}`;
     const method = mode === "add" ? "POST" : "PUT";
 
     try {
