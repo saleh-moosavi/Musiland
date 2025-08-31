@@ -8,6 +8,7 @@ import { connectToDB } from "./configs/db.js";
 import { genreRouter } from "@routes/genre.js";
 import { albumRouter } from "@routes/album.js";
 import { singerRouter } from "@routes/singer.js";
+import { commentRouter } from "@routes/comment.js";
 import { authMiddleware } from "middlewares/auth.js";
 import { userMiddleware } from "middlewares/user.js";
 import { playlistRouter } from "@routes/playlist.js";
@@ -37,6 +38,7 @@ app.use("/api/songs", songRouter);
 app.use("/api/albums", albumRouter);
 app.use("/api/genres", genreRouter);
 app.use("/api/singers", singerRouter);
+app.use("/api/Comments", commentRouter);
 app.use("/api/playlists", playlistRouter);
 
 // 404 Route

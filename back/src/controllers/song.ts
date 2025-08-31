@@ -61,6 +61,7 @@ export const getAllSong = async (req: Request, res: Response) => {
       .populate("album")
       .populate("genres")
       .populate("playlists")
+      .populate("comments")
       .sort(sortOption)
       .skip(skip)
       .limit(limit);
@@ -79,7 +80,8 @@ export const getByIdSong = async (req: Request, res: Response) => {
       .populate("singer")
       .populate("album")
       .populate("genres")
-      .populate("playlists");
+      .populate("playlists")
+      .populate("comments");
     if (!song) return res.status(404).json({ error: "Song not found" });
     res.json(song);
   } catch (err: any) {
@@ -182,7 +184,8 @@ export const updateSong = async (req: Request, res: Response) => {
       .populate("singer")
       .populate("album")
       .populate("genres")
-      .populate("playlists");
+      .populate("playlists")
+      .populate("comments");
     if (!song) return res.status(404).json({ error: "Song not found" });
     res.json(song);
   } catch (err: any) {

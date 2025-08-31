@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import useToastStore from "@/store/toastStore";
 import { SongFormData } from "@/app/types/song";
 
 interface UseSongFormSubmitProps {
@@ -20,6 +21,7 @@ export function useSongFormSubmit({
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { setIsToastOpen, setToastTitle, setToastColor } = useToastStore();
 
   const submit = async (data: SongFormData) => {
     setError(null);
@@ -41,7 +43,11 @@ export function useSongFormSubmit({
 
       const result = await res.json();
       if (res.ok) {
-        alert(`Song ${mode === "add" ? "added" : "updated"} successfully!`);
+        setIsToastOpen(true);
+        setToastTitle(
+          `Song ${mode === "add" ? "added" : "updated"} successfully!`
+        );
+        setToastColor(mode === "add" ? "green" : "orange");
         router.push("/admin/dashboard/song");
       } else {
         setError(result.error?.message || "Operation failed.");

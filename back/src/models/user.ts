@@ -1,24 +1,15 @@
-import mongoose, { Schema, model, Document } from "mongoose";
+import { Schema, model } from "mongoose";
 
-// User Interface
-interface IUser extends Document {
-  name: string;
-  email: string;
-  password: string;
-  role: "admin" | "user" | "manager";
-  createdAt: Date;
-  updatedAt: Date;
-}
-
-// User Schema
-const userSchema = new Schema<IUser>(
+const userSchema = new Schema(
   {
     name: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
     role: { type: String, enum: ["user", "admin", "manager"], default: "user" },
+    likedSongs: [{ type: Schema.Types.ObjectId, ref: "Song" }],
+    comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
   },
   { timestamps: true }
 );
 
-export const User = model<IUser>("User", userSchema);
+export const User = model("User", userSchema);

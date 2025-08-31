@@ -1,9 +1,9 @@
-import { User } from "@models/user.js"; // Adjust path as needed
+import { User } from "@models/user.js";
 import type { Request, Response } from "express";
 
 export const getAllUsers = async (req: Request, res: Response) => {
   try {
-    const users = await User.find();
+    const users = await User.find().populate("likedSongs").populate("comments");
     res.json(users);
   } catch (err: any) {
     res.status(500).json({ error: err.message });
@@ -14,7 +14,9 @@ export const getByIdUser = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     if (!id) return res.status(400).json({ error: "ID required" });
-    const user = await User.findById(id);
+    const user = await User.findById(id)
+      .populate("likedSongs")
+      .populate("comments");
     if (!user) return res.status(404).json({ error: "User not found" });
     res.json(user);
   } catch (err: any) {
@@ -41,7 +43,9 @@ export const updateUser = async (req: Request, res: Response) => {
     const { role } = req.body;
     if (!role || !["admin", "user", "manager"].includes(role))
       return res.status(400).json({ error: "Valid role required" });
-    const user = await User.findByIdAndUpdate(id, { role }, { new: true });
+    const user = await User.findByIdAndUpdate(id, { role }, { new: true })
+      .populate("likedSongs")
+      .populate("comments");
     if (!user) return res.status(404).json({ error: "User not found" });
     res.json(user);
   } catch (err: any) {
