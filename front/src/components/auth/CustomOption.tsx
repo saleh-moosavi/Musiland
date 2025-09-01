@@ -8,15 +8,16 @@ export default function CustomOption({
   data,
   error,
   multiple = false,
+  classes,
 }: any) {
   const [isVisible, setIsVisible] = useState(false);
   const showSubMenu = () => {
     setIsVisible((perv) => !perv);
   };
   return (
-    <div className="relative">
+    <div className={`relative w-full ${classes && classes}`}>
       <label
-        className="flex items-center justify-between gap-2 bg-white/10 p-2 rounded-full cursor-pointer"
+        className="flex items-center justify-between bg-white/10 p-3 rounded-full cursor-pointer"
         onClick={showSubMenu}
       >
         <div className="flex items-center gap-3">
@@ -30,7 +31,7 @@ export default function CustomOption({
         )}
       </label>
       {isVisible && data && (
-        <div className="grid gap-2 p-2 absolute bg-slate-800 w-full rounded-2xl border z-50 overflow-y-scroll max-h-52">
+        <div className="grid gap-2 p-3 mt-3 absolute bg-slate-800 w-full rounded-2xl border z-50 overflow-y-scroll max-h-52">
           {data.map((item: any) => (
             <label key={item._id} className="flex items-center gap-2">
               <input
