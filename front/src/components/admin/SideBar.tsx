@@ -23,13 +23,16 @@ export default function SideBar() {
           }`}
         >
           <Link
-            href={`/admin/dashboard`}
+            href={`/`}
+            target="_blank"
             className="p-2 rounded flex justify-center items-center gap-5"
           >
-            <p className="*:size-5">
-              <HomeIcon />
-            </p>
-            <p className={isOpen ? "" : "hidden"}>Home</p>
+            <img
+              src={theme == "dark" ? "/Logo-dark.png" : "/Logo-light.png"}
+              alt="Site Logo"
+              className="min-w-5 w-5"
+            />
+            <p className={isOpen ? "" : "hidden"}>Musiland</p>
           </Link>
         </li>
         <hr />
