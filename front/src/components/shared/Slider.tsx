@@ -10,7 +10,7 @@ export default async function Slider({
   query: string;
 }) {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/songs?${query}&page=1,10&sort=date`
+    `${process.env.NEXT_PUBLIC_API_URL}/songs?${query}&page=1,10`
   );
   const songs: any = await response.json();
 

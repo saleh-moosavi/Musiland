@@ -14,11 +14,14 @@ export default async function MusicCategoryPage({
 }: PropsType) {
   const music_category = (await params).music_category;
   const decoded_music_category = decodeURIComponent(music_category);
-  const stringQuery = objectToQueryString(await searchParams);
+  const stringQuery = await objectToQueryString(await searchParams);
 
   return (
     <Suspense fallback={<Loading />}>
-      <CategoryViewPage query={stringQuery} title={decoded_music_category} />
+      <CategoryViewPage
+        query={stringQuery}
+        title={decoded_music_category}
+      />
     </Suspense>
   );
 }

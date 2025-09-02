@@ -4,12 +4,14 @@ interface NavListDesktopProps {
   navbarData: any[];
   onMouseEnter: () => void;
   onMouseLeave: () => void;
+  type: "genre" | "playlist";
 }
 
 const NavListDesktop: React.FC<NavListDesktopProps> = ({
   navbarData,
   onMouseEnter,
   onMouseLeave,
+  type,
 }) => {
   return (
     <article
@@ -21,7 +23,7 @@ const NavListDesktop: React.FC<NavListDesktopProps> = ({
         {navbarData.map((item) => (
           <Link
             key={item._id}
-            href={`/category/${item.name}?genre=${item.name}&playlist=${item.name}`}
+            href={`/category/${item.name}?${type}=${item.name}`}
           >
             <li className="cursor-pointer">{item.name}</li>
           </Link>

@@ -17,10 +17,12 @@ export default function Navbar() {
   const {
     navbarData,
     showSubNav,
+    navbarType,
     showMobileMenuPanel,
     setNavbarData,
     setShowSubNav,
     setShowMobileMenuPanel,
+    setNavbarType,
   } = useWindowStore();
 
   const handleMouseToggle = (show: boolean) => {
@@ -31,6 +33,11 @@ export default function Navbar() {
       const id = setTimeout(() => setShowSubNav(false), 300);
       setTimeoutId(id);
     }
+  };
+
+  const handleNavbarData = (type: "genre" | "playlist", data: any) => {
+    setNavbarData(data);
+    setNavbarType(type);
   };
 
   return (
@@ -64,8 +71,12 @@ export default function Navbar() {
             onMouseEnter={() => handleMouseToggle(true)}
             onMouseLeave={() => handleMouseToggle(false)}
           >
-            <li onMouseEnter={() => setNavbarData(playlists)}>Playlists</li>
-            <li onMouseEnter={() => setNavbarData(genres)}>Genres</li>
+            <li onMouseEnter={() => handleNavbarData("playlist", playlists)}>
+              Playlists
+            </li>
+            <li onMouseEnter={() => handleNavbarData("genre", genres)}>
+              Genres
+            </li>
           </ul>
         </div>
         <button className="cursor-pointer">
@@ -85,6 +96,7 @@ export default function Navbar() {
         </button>
         {showSubNav && (
           <NavListDesktop
+            type={navbarType}
             navbarData={navbarData}
             onMouseEnter={() => handleMouseToggle(true)}
             onMouseLeave={() => handleMouseToggle(false)}

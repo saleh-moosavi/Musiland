@@ -6,6 +6,14 @@ export default async function CategoryViewPage({ query, title }: any) {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/songs?${query}`);
   const songs = await res.json();
 
+  if (!Array.isArray(songs)) {
+    return (
+      <div className="text-red-500 font-bold text-center mt-5">
+        {songs.message || "Unexpected error"}
+      </div>
+    );
+  }
+
   if (songs.length < 1) {
     return (
       <div className="text-red-500 font-bold text-center mt-5">
@@ -20,7 +28,7 @@ export default async function CategoryViewPage({ query, title }: any) {
         {title.toLocaleLowerCase().includes("song") ? title : title + " Songs"}
       </h2>
       <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-center justify-start gap-10">
-        {songs.map((song: any) => (
+        {songs?.map((song: any) => (
           <div className="self-start" key={song._id}>
             <div className="relative group rounded-xl overflow-hidden">
               <img

@@ -26,19 +26,42 @@ export const getAllSong = async (req: Request, res: Response) => {
       if (albums.length) query.album = { $in: albums.map((a) => a._id) };
     }
     if (genre) {
-      const genreNames = (genre as string).split(",");
-      const genres = await Genre.find({ name: { $in: genreNames } }).select(
-        "_id"
-      );
-      if (genres.length) query.genres = { $in: genres.map((g) => g._id) };
+      // چندتا ژانر با کاما جدا شده
+      const genreNames = (genre as string).split(",").map((g) => g.trim());
+
+      // پیدا کردن همه آیدی‌های ژانر
+      const foundGenres = await Genre.find({
+        name: { $in: genreNames.map((g) => new RegExp(`^${g}$`, "i")) },
+      });
+
+      if (foundGenres.length === 0) {
+        return res.status(404).json({ message: "No genres found" });
+      }
+
+      const genreIds = foundGenres.map((g) => g._id);
+
+      // آهنگ‌هایی که حداقل یکی از این ژانرها رو دارن
+      query.genres = { $in: genreIds };
     }
     if (playlist) {
-      const playlistNames = (playlist as string).split(",");
-      const playlists = await Playlist.find({
-        name: { $in: playlistNames },
-      }).select("_id");
-      if (playlists.length)
-        query.playlists = { $in: playlists.map((p) => p._id) };
+      // چندتا ژانر با کاما جدا شده
+      const playlistNames = (playlist as string)
+        .split(",")
+        .map((g) => g.trim());
+
+      // پیدا کردن همه آیدی‌های ژانر
+      const foundPlaylists = await Playlist.find({
+        name: { $in: playlistNames.map((p) => new RegExp(`^${p}$`, "i")) },
+      });
+
+      if (foundPlaylists.length === 0) {
+        return res.status(404).json({ message: "No playlist found" });
+      }
+
+      const playlistIds = foundPlaylists.map((p) => p._id);
+
+      // آهنگ‌هایی که حداقل یکی از این ژانرها رو دارن
+      query.playlists = { $in: playlistIds };
     }
 
     let sortOption: any = {};

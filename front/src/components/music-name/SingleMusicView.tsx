@@ -28,7 +28,7 @@ export default function SingleMusicView({ song }: any) {
           <ul className="font-semibold my-10 flex items-center gap-3">
             Genre:{" "}
             {song.genres && song.genres.length > 0
-              ? song.genres?.map((g: any) => (
+              ? song.genres.map((g: any) => (
                   <li key={g._id}>
                     <Link href={`/category/${g.name}?${`genre=${g.name}`}`}>
                       {g.name}
@@ -65,7 +65,7 @@ export default function SingleMusicView({ song }: any) {
           <div className="flex gap-5 items-center text-sm justify-between">
             <p>{song.comments?.length} Comments</p>
             <p>{song.likes} Likes</p>
-            <p>Published at {song.releaseDate}</p>
+            <p>{song.createdAt.split("T")[0]}</p>
           </div>
         </div>
       </section>

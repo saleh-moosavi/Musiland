@@ -12,12 +12,18 @@ export default function NavListMobileDropDown({ item }: any) {
 
   return (
     <li>
-      <p
-        className="font-semibold p-2 w-full shadow space-y-2 rounded-xl hover:shadow-md dark:shadow-white transition-all duration-300"
-        onClick={() => setShowSubNav(!showSubNav)}
-      >
-        {item.title}
-      </p>
+      {item.content ? (
+        <p
+          className="font-semibold p-2 w-full shadow space-y-2 rounded-xl hover:shadow-md dark:shadow-white transition-all duration-300"
+          onClick={() => setShowSubNav(!showSubNav)}
+        >
+          {item.title}
+        </p>
+      ) : (
+        <Link onClick={() => setShowMobileMenuPanel(false)} href={item.link}>
+          {item.title}
+        </Link>
+      )}
       {item.content && (
         <div
           className={
@@ -26,13 +32,13 @@ export default function NavListMobileDropDown({ item }: any) {
               : "hidden"
           }
         >
-          {item.content.map((item: any) => (
+          {item.content.map((data: any) => (
             <Link
               onClick={() => setShowMobileMenuPanel(false)}
-              key={item._id}
-              href={`/category/${item.name}?genres=${item.name}&playlist=${item.name}`}
+              key={data._id}
+              href={`/category/${data.name}?${item.type}=${data.name}`}
             >
-              <p>{item.name}</p>
+              <p>{data.name}</p>
             </Link>
           ))}
         </div>
