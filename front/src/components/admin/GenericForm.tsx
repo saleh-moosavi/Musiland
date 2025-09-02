@@ -1,5 +1,6 @@
 "use client";
 
+import Button from "../shared/Button";
 import { UserIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
@@ -111,19 +112,15 @@ export default function GenericForm({
           }
         />
 
-        {error && <p className="text-red-500 text-sm ml-5">{error}</p>}
-
-        <button
-          disabled={isSubmitting}
-          className="bg-gradient-to-r from-cyan-700 to-emerald-400 text-white px-4 py-2 w-full font-bold rounded-md hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed"
-          type="submit"
-        >
-          {isSubmitting
-            ? "Saving..."
-            : mode === "add"
-            ? `Add ${itemName}`
-            : `Update ${itemName}`}
-        </button>
+        <div className="space-y-2">
+          <Button
+            type="submit"
+            text={itemName}
+            isSubmitting={isSubmitting}
+            mode={mode}
+          />
+          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+        </div>
       </form>
     </article>
   );

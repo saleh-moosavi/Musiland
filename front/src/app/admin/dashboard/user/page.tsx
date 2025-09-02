@@ -1,6 +1,7 @@
 import Link from "next/link";
 import EditBtn from "@/components/admin/EditBtn";
 import DeleteBtn from "@/components/admin/DeleteBtn";
+import Button from "@/components/shared/Button";
 
 export default async function page() {
   const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`);
@@ -8,11 +9,8 @@ export default async function page() {
 
   return (
     <section className="h-full w-full flex flex-col justify-start gap-10">
-      <Link
-        href="/admin/dashboard/user/add"
-        className="w-fit bg-gradient-to-r from-cyan-700 to-emerald-400 text-white px-4 py-2 font-bold rounded-md hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer self-end"
-      >
-        Add User
+      <Link href="/admin/dashboard/user/add" className="w-fit self-end">
+        <Button text="User" type="button" />
       </Link>
       {users.length > 0 ? (
         <ul className="grid grid-cols-3 *:col-span-1 gap-5 w-full">

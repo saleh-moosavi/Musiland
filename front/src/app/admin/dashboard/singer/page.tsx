@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Button from "@/components/shared/Button";
 import EditBtn from "@/components/admin/EditBtn";
 import DeleteBtn from "@/components/admin/DeleteBtn";
 
@@ -7,11 +8,8 @@ export default async function SingerList() {
   const singers = await data.json();
   return (
     <section className="h-full w-full flex flex-col justify-start gap-10">
-      <Link
-        href="/admin/dashboard/singer/add"
-        className="w-fit bg-gradient-to-r from-cyan-700 to-emerald-400 text-white px-4 py-2 font-bold rounded-md hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer self-end"
-      >
-        Add Singer
+      <Link href="/admin/dashboard/singer/add" className="w-fit self-end">
+        <Button text="Singer" type="button" />
       </Link>
       <ul className="grid grid-cols-3 *:col-span-1 gap-5 w-full">
         {singers.map((singer: any) => {

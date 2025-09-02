@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import Button from "../shared/Button";
 import { useForm } from "react-hook-form";
 import { useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -56,87 +57,78 @@ export default function SongForm({ mode }: { mode: Mode }) {
       <h3 className="text-center">{mode === "add" ? "Add" : "Edit"} Song</h3>
       <form
         onSubmit={handleSubmit(submit)}
-        className="grid grid-cols-4 *:col-span-1 gap-6 w-full *:w-full"
+        className="w-full space-y-5 flex flex-col"
       >
-        <CustomInput
-          register={register("name")}
-          icon={<Music />}
-          name="Song Name"
-          error={errors.name?.message}
-        />
+        <article className="grid grid-cols-4 *:col-span-1 gap-5">
+          <CustomInput
+            register={register("name")}
+            icon={<Music />}
+            name="Song Name"
+            error={errors.name?.message}
+          />
+          <CustomInput
+            register={register("lyric")}
+            icon={<FileText />}
+            name="Lyric"
+            error={errors.lyric?.message}
+          />
+          <CustomInput
+            register={register("audioUrl")}
+            icon={<Music />}
+            name="Audio URL"
+            error={errors.audioUrl?.message}
+          />
+          <CustomInput
+            register={register("coverUrl")}
+            icon={<Image />}
+            name="Cover URL"
+            error={errors.coverUrl?.message}
+          />
+          <CustomOption
+            title="Singer"
+            icon={<Mic />}
+            register={register("singerId")}
+            data={singers}
+            error={errors.singerId?.message}
+          />
+          <CustomOption
+            title="Album"
+            icon={<Disc />}
+            register={register("albumId")}
+            data={albums}
+            error={errors.albumId?.message}
+          />
+          <CustomOption
+            multiple
+            title="Genres"
+            icon={<List />}
+            register={register("genreIds")}
+            data={genres}
+            error={errors.genreIds?.message}
+          />
+          <CustomOption
+            multiple
+            title="Playlists"
+            icon={<List />}
+            register={register("playlistIds")}
+            data={playlists}
+            error={errors.playlistIds?.message}
+          />
+        </article>
 
-        <CustomInput
-          register={register("lyric")}
-          icon={<FileText />}
-          name="Lyric"
-          error={errors.lyric?.message}
-        />
-
-        <CustomInput
-          register={register("audioUrl")}
-          icon={<Music />}
-          name="Audio URL"
-          error={errors.audioUrl?.message}
-        />
-
-        <CustomInput
-          register={register("coverUrl")}
-          icon={<Image />}
-          name="Cover URL"
-          error={errors.coverUrl?.message}
-        />
-
-        <CustomOption
-          title="Singer"
-          icon={<Mic />}
-          register={register("singerId")}
-          data={singers}
-          error={errors.singerId?.message}
-        />
-
-        <CustomOption
-          title="Album"
-          icon={<Disc />}
-          register={register("albumId")}
-          data={albums}
-          error={errors.albumId?.message}
-        />
-
-        <CustomOption
-          multiple
-          title="Genres"
-          icon={<List />}
-          register={register("genreIds")}
-          data={genres}
-          error={errors.genreIds?.message}
-        />
-
-        <CustomOption
-          multiple
-          title="Playlists"
-          icon={<List />}
-          register={register("playlistIds")}
-          data={playlists}
-          error={errors.playlistIds?.message}
-        />
-
-        {(fetchError || submitError) && (
-          <p className="text-red-500 text-sm col-span-4">
-            {fetchError || submitError}
-          </p>
-        )}
-
-        <button
-          disabled={isSubmitting}
-          className="bg-gradient-to-r col-span-4 from-cyan-700 to-emerald-400 text-white px-4 py-2 w-full font-bold rounded-md hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed"
-          type="submit"
-        >
-          {isSubmitting
-            ? "Saving..."
-            : mode === "add"
-            ? "Add Song"
-            : "Update Song"}
-        </button>
+        <div className="w-1/2 mx-auto space-y-2">
+          <Button
+            isSubmitting={isSubmitting}
+            text="Song"
+            mode={mode}
+            type="submit"
+          />
+          {(fetchError || submitError) && (
+            <p className="text-red-500 text-sm text-center">
+              {fetchError || submitError}
+            </p>
+          )}
+        </div>
       </form>
     </article>
   );
