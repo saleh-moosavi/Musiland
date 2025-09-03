@@ -28,10 +28,10 @@ export default function Toast() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 z-[100000]">
+    <div className="flex flex-col items-center justify-center min-h-screen z-[100000]">
       <div
         style={{ backgroundColor: colorClasses[toastColor] }}
-        className={`fixed top-4 right-4 text-white px-4 py-2 rounded-xl shadow-lg transition-all duration-300 text-sm ${
+        className={`fixed top-4 right-4 text-my-white-low px-4 py-2 rounded-xl shadow-lg transition-all duration-300 text-sm ${
           isToastOpen
             ? "opacity-100 translate-x-0"
             : "opacity-0 translate-x-full"

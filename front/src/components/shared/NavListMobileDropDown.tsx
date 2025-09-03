@@ -1,10 +1,13 @@
 import Link from "next/link";
+import { ChevronDown } from "lucide-react";
 import { useEffect, useState } from "react";
 import useWindowStore from "@/store/windowStore";
 
 export default function NavListMobileDropDown({ item }: any) {
   const [showSubNav, setShowSubNav] = useState(false);
   const { setShowMobileMenuPanel } = useWindowStore();
+  const SharedClasses =
+    "font-semibold block p-2 w-full shadow-sm space-y-2 rounded-xl hover:shadow-md dark:shadow-my-white-high transition-all duration-300";
 
   useEffect(() => {
     setShowSubNav(item.show);
@@ -14,13 +17,18 @@ export default function NavListMobileDropDown({ item }: any) {
     <li>
       {item.content ? (
         <p
-          className="font-semibold p-2 w-full shadow space-y-2 rounded-xl hover:shadow-md dark:shadow-white transition-all duration-300"
+          className={`flex justify-between items-center ${SharedClasses}`}
           onClick={() => setShowSubNav(!showSubNav)}
         >
           {item.title}
+          <ChevronDown className="size-5" />
         </p>
       ) : (
-        <Link onClick={() => setShowMobileMenuPanel(false)} href={item.link}>
+        <Link
+          href={item.link}
+          className={SharedClasses}
+          onClick={() => setShowMobileMenuPanel(false)}
+        >
           {item.title}
         </Link>
       )}
@@ -28,7 +36,7 @@ export default function NavListMobileDropDown({ item }: any) {
         <div
           className={
             showSubNav
-              ? "font-semibold p-2 bg-gray-300 dark:bg-gray-700 mt-2 w-full shadow space-y-2 rounded-xl hover:shadow-md transition-all duration-300"
+              ? "font-semibold p-2 bg-my-white-low dark:bg-my-black-high mt-2 w-full space-y-2 rounded-xl"
               : "hidden"
           }
         >

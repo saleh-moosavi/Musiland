@@ -19,7 +19,7 @@ const NavListDesktop: React.FC<NavListDesktopProps> = ({
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <ul className="flex gap-x-10 gap-y-5 flex-wrap justify-between *:justify-self-center w-1/2 mx-auto p-5 rounded-2xl bg-slate-100 dark:bg-slate-800 shadow dark:shadow-white/20 text-black dark:text-white">
+      <ul className="flex gap-x-10 gap-y-5 flex-wrap justify-between *:justify-self-center w-1/2 mx-auto p-5 rounded-2xl bg-my-white-low dark:bg-my-black-max shadow-md shadow-my-white-high dark:shadow-my-black-med text-my-black-max dark:text-my-white-low">
         {navbarData.map((item) => (
           <Link
             key={item._id}

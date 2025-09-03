@@ -19,9 +19,9 @@ export default function MusicDetail() {
           className="w-10 aspect-square object-cover rounded-lg cursor-pointer"
         />
       ) : (
-        <div className="w-10 aspect-square object-cover rounded-lg bg-gradient-to-br from-gray-200 to-gray-500"></div>
+        <div className="w-10 aspect-square object-cover rounded-lg bg-gradient-to-br from-my-black-high to-my-black-low "></div>
       )}
-      <p className="absolute top-8 left-16 px-2 py-1 -translate-x-1/4 group-hover:translate-x-0 opacity-0 group-hover:opacity-100 text-xs bg-gray-600 w-fit font-semibold text-white rounded-md transition-all duration-300">
+      <p className="absolute top-8 left-16 px-2 py-1 -translate-x-1/4 group-hover:translate-x-0 opacity-0 group-hover:opacity-100 text-xs bg-my-black-med w-fit font-semibold text-my-white-low rounded-md transition-all duration-300">
         {audioName || "Song Name"}
       </p>
     </article>

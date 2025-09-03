@@ -19,3 +19,20 @@ nextjs-portal {
 ::-webkit-scrollbar-track {
   margin: 2rem;
 }
+
+@theme {
+  --color-my-black-max: #212529;
+  --color-my-black-high: #343a40;
+  --color-my-black-med: #6c757d;
+  --color-my-black-low: #adb5bd;
+  --color-my-white-high: #ced4da;
+  --color-my-white-med: #e9ecef;
+  --color-my-white-low: #f5f5f5;
+  --color-my-green-high: #009966;
+  --color-my-green-med: #00d492;
+  --color-my-green-low: #a4f4cf;
+  --color-my-blue-high: #0092b8;
+  --color-my-blue-med: #00d3f2;
+  --color-my-blue-low: #a2f4fd;
+  --color-my-red-med: #ff006e;
+}

@@ -42,7 +42,7 @@ export default function Navbar() {
 
   return (
     <header className="pt-2 fixed top-0 inset-x-0 z-50 max-w-[90rem] mx-5 xl:mx-auto">
-      <section className="flex justify-between w-full gap-x-20 shadow-lg p-5 bg-slate-100 dark:bg-gray-800 dark:text-white sticky inset-0 rounded-2xl">
+      <section className="flex justify-between w-full gap-x-20 shadow-md shadow-my-black-max/20 dark:shadow-my-white-high/30 p-5 bg-my-white-low dark:bg-my-black-max dark:text-my-white-low sticky inset-0 rounded-2xl">
         <button className="cursor-pointer" onClick={handleTheme}>
           {theme == "light" ? <Sun /> : <Moon />}
         </button>
@@ -56,7 +56,7 @@ export default function Navbar() {
           </ul>
           <Link href="/">
             <div className="relative lg:mx-20">
-              <div className="w-18 lg:w-20 h-18 lg:h-20 flex place-content-center p-2 absolute inset-0 -top-5 -translate-x-1/2 bg-slate-100 dark:bg-gray-800 rounded-full shadow-lg">
+              <div className="w-18 lg:w-20 h-18 lg:h-20 flex place-content-center p-2 absolute inset-0 -top-5 -translate-x-1/2 bg-my-white-low dark:bg-my-black-max rounded-full shadow-md shadow-my-black-max/30 dark:shadow-my-white-high/30">
                 <img
                   src={theme == "light" ? "/Logo-light.png" : "/Logo-dark.png"}
                   className="scale-50"

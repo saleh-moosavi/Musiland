@@ -15,20 +15,20 @@ export default function RangeInput({
       value={progress}
       onChange={handleProgressChange}
       style={{
-        background: `linear-gradient(to right, #a21caf 0%, #a21caf ${Math.round(
+        background: `linear-gradient(to right, #00d492 0%, #00d492 ${Math.round(
           progress
-        )}%, #e5e7eb ${progress}%, #e5e7eb 100%)`,
+        )}%, #ced4da ${progress}%, #ced4da 100%)`,
       }}
       className="w-full h-1 appearance-none rounded outline-none
     [&::-webkit-slider-thumb]:appearance-none
     [&::-webkit-slider-thumb]:w-3
     [&::-webkit-slider-thumb]:h-3
-    [&::-webkit-slider-thumb]:bg-purple-600
+    [&::-webkit-slider-thumb]:bg-my-green-med
     [&::-webkit-slider-thumb]:rounded-full
     [&::-webkit-slider-thumb]:cursor-pointer
     [&::-moz-range-thumb]:w-3
     [&::-moz-range-thumb]:h-3
-    [&::-moz-range-thumb]:bg-purple-600
+    [&::-moz-range-thumb]:bg-my-green-med
     [&::-moz-range-thumb]:rounded-full
     [&::-moz-range-thumb]:cursor-pointer
     cursor-pointer

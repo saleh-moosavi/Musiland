@@ -1,11 +1,11 @@
 "use client";
-import { SkipBack, SkipForward } from "lucide-react";
-import { useEffect, useRef } from "react";
 import PlayBtn from "./player/PlayBtn";
+import { useEffect, useRef } from "react";
 import VolumeBtn from "./player/VolumeBtn";
 import ProgressBar from "./player/ProgressBar";
 import useMusicStore from "@/store/musicStore";
 import MusicDetail from "./player/MusicDetail";
+import { SkipBack, SkipForward } from "lucide-react";
 import useSameSongsStore from "@/store/sameSongStore";
 
 export default function Player() {
@@ -83,7 +83,7 @@ export default function Player() {
         suppressHydrationWarning
         onError={() => alert("Audio playback failed. Please try another song.")}
       ></audio>
-      <section className="flex flex-col justify-between w-full gap-3 shadow-lg p-3 bg-slate-100 dark:bg-gray-800 sticky inset-0 rounded-2xl">
+      <section className="flex flex-col justify-between w-full gap-3 shadow-md shadow-my-black-low/50 p-3 bg-my-white-low dark:bg-my-black-max sticky inset-0 rounded-2xl">
         <div className="flex gap-x-5 items-center w-full relative">
           <div className="absolute -top-5 inset-x-10">
             <ProgressBar audioContext={audioRef} />
@@ -93,10 +93,10 @@ export default function Player() {
           <div className="flex gap-x-5 items-center">
             <MusicDetail />
           </div>
-          <div className="flex gap-x-5 items-center justify-self-center">
-            <SkipBack className="cursor-pointer dark:stroke-white" onClick={handlePrevSong} />
+          <div className="flex gap-x-5 items-center justify-self-center *:cursor-pointer *:dark:stroke-my-white-low *:stroke-my-black-high *:hover:stroke-my-green-med *:transition-all *:duration-300">
+            <SkipBack onClick={handlePrevSong} />
             <PlayBtn audioContext={audioRef} />
-            <SkipForward className="cursor-pointer dark:stroke-white" onClick={handleNextSong} />
+            <SkipForward onClick={handleNextSong} />
           </div>
           <div className="flex gap-x-5 items-center justify-self-end">
             <VolumeBtn audioContext={audioRef} />

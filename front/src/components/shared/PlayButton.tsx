@@ -1,6 +1,6 @@
 "use client";
-import useMusicStore from "@/store/musicStore";
 import { PlayCircleIcon } from "lucide-react";
+import useMusicStore from "@/store/musicStore";
 
 export default function PlayButton({ song, icon }: any) {
   const {
@@ -22,7 +22,7 @@ export default function PlayButton({ song, icon }: any) {
     return (
       <button
         onClick={handlePlaySong}
-        className="scale-150 cursor-pointer text-white"
+        className="scale-150 cursor-pointer text-my-white-low"
       >
         <PlayCircleIcon />
       </button>
@@ -31,7 +31,7 @@ export default function PlayButton({ song, icon }: any) {
     return (
       <button
         onClick={handlePlaySong}
-        className="w-full py-2 shadow-md hover:shadow-gray-300 rounded-lg border-gray-400 text-sm cursor-pointer dark:bg-slate-700 dark:hover:shadow-slate-500"
+        className="w-full py-2 shadow-md shadow-my-black-low/50 dark:shadow-my-black-med/50 hover:shadow-my-black-low dark:hover:shadow-my-black-med rounded-lg text-sm cursor-pointer bg-my-white-low dark:bg-my-black-max transition-all duration-300"
       >
         Play
       </button>

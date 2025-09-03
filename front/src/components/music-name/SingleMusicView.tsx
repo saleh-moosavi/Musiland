@@ -4,14 +4,14 @@ import PlayButton from "../shared/PlayButton";
 export default function SingleMusicView({ song }: any) {
   if (!song) {
     return (
-      <div className="text-red-500 font-bold text-center mt-5">
+      <div className="text-my-red-med font-bold text-center mt-5">
         آهنگ پیدا نشد
       </div>
     );
   }
 
   return (
-    <div className="grid lg:grid-cols-3 items-start gap-10 w-full dark:text-white">
+    <div className="grid lg:grid-cols-3 items-start gap-10 w-full dark:text-my-white-low">
       <img
         className="col-span-1 lg:w-96 object-cover rounded-3xl h-full w-full"
         src={song.coverUrl}
@@ -56,7 +56,7 @@ export default function SingleMusicView({ song }: any) {
             download={true}
             href={song.audioUrl}
             target="_blank"
-            className="w-full text-center inline-block py-2 shadow-md hover:shadow-gray-300 cursor-pointer rounded-lg border-gray-400 text-sm dark:bg-slate-700 dark:hover:shadow-slate-500 transition-all duration-300"
+            className="w-full text-center inline-block py-2 shadow-md shadow-my-black-low/50 dark:shadow-my-black-med/50 hover:shadow-my-black-low dark:hover:shadow-my-black-med rounded-lg text-sm cursor-pointer bg-my-white-low dark:bg-my-black-max transition-all duration-300"
           >
             Download
           </a>

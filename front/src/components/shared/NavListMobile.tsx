@@ -55,7 +55,7 @@ export default function NavListMobile({
   return (
     <>
       <aside
-        className={`fixed inset-x-5 bottom-0 h-4/5 bg-gray-200 dark:bg-gray-900 dark:text-white rounded-t-3xl overscroll-y-contain overflow-y-scroll pb-20 ${
+        className={`fixed inset-x-5 bottom-0 h-4/5 bg-my-white-med dark:bg-my-black-max dark:text-my-white-low rounded-t-2xl overscroll-y-contain overflow-y-scroll overscroll-contain pb-20 ${
           showMobileMenuPanel ? "" : "translate-y-full"
         } lg:hidden transition-all duration-300 z-50`}
       >
@@ -64,7 +64,7 @@ export default function NavListMobile({
           onClick={() => setShowMobileMenuPanel(false)}
           onTouchStart={handleDragStart}
           onTouchMove={handleDrag}
-          className="w-1/2 mx-auto h-1.5 bg-gray-400 rounded-full"
+          className="w-1/2 mx-auto h-1.5 bg-my-black-low rounded-full sticky top-0"
         ></div>
         <ul className="p-5 pt-10 space-y-2">
           {menuItems.map((item, index) => (
@@ -73,7 +73,7 @@ export default function NavListMobile({
         </ul>
       </aside>
       <div
-        className={`fixed inset-0 bg-black/30 z-10 ${
+        className={`fixed inset-0 bg-my-black-max/40 dark:bg-my-black-low/20 z-10 ${
           showMobileMenuPanel ? "" : "hidden"
         }`}
         onClick={() => setShowMobileMenuPanel(false)}
