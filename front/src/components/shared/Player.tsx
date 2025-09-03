@@ -83,7 +83,7 @@ export default function Player() {
         suppressHydrationWarning
         onError={() => alert("Audio playback failed. Please try another song.")}
       ></audio>
-      <section className="flex flex-col justify-between w-full gap-3 shadow-lg p-3 bg-slate-100 dark:bg-gray-800 sticky inset-0 rounded-full">
+      <section className="flex flex-col justify-between w-full gap-3 shadow-lg p-3 bg-slate-100 dark:bg-gray-800 sticky inset-0 rounded-2xl">
         <div className="flex gap-x-5 items-center w-full relative">
           <div className="absolute -top-5 inset-x-10">
             <ProgressBar audioContext={audioRef} />

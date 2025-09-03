@@ -31,7 +31,7 @@ export default function PlayButton({ song, icon }: any) {
     return (
       <button
         onClick={handlePlaySong}
-        className="w-full py-2 shadow-md hover:shadow-gray-300 rounded-xl border-gray-400 text-sm cursor-pointer dark:bg-slate-700 dark:hover:shadow-slate-500"
+        className="w-full py-2 shadow-md hover:shadow-gray-300 rounded-lg border-gray-400 text-sm cursor-pointer dark:bg-slate-700 dark:hover:shadow-slate-500"
       >
         Play
       </button>

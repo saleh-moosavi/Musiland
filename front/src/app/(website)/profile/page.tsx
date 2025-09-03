@@ -65,23 +65,23 @@ export default function Page() {
             {user.role}
           </li>
         </ul>
-        <article className="col-span-1 p-5 flex flex-col *:hover:cursor-pointer gap-5 bg-slate-100 dark:bg-gray-500 rounded-3xl">
+        <article className="col-span-1 p-5 flex flex-col *:hover:cursor-pointer gap-5 bg-slate-100 dark:bg-gray-500 rounded-2xl">
           {user && (user.role === "admin" || user.role === "manager") && (
             <Link
-              className="bg-slate-300 dark:bg-gray-800 px-4 py-2 min-w-52 rounded-full text-center"
+              className="bg-slate-300 dark:bg-gray-800 px-4 py-2 min-w-52 rounded-xl text-center"
               href="/admin/dashboard"
             >
               Admin Panel
             </Link>
           )}
-          <button className="bg-slate-300 dark:bg-gray-800 px-4 py-2 min-w-52 rounded-full">
+          <button className="bg-slate-300 dark:bg-gray-800 px-4 py-2 min-w-52 rounded-xl">
             Likes
           </button>
-          <button className="bg-slate-300 dark:bg-gray-800 px-4 py-2 min-w-52 rounded-full">
+          <button className="bg-slate-300 dark:bg-gray-800 px-4 py-2 min-w-52 rounded-xl">
             Comments
           </button>
           <button
-            className="bg-red-400 px-4 py-2 min-w-52 rounded-full"
+            className="bg-red-400 px-4 py-2 min-w-52 rounded-xl"
             onClick={handleLogOUt}
           >
             log out

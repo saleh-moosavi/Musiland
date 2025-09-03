@@ -15,11 +15,11 @@ const NavListDesktop: React.FC<NavListDesktopProps> = ({
 }) => {
   return (
     <article
-      className="hidden lg:flex absolute top-24 -z-10 inset-x-0 mx-10 p-5 rounded-full bg-slate-100 dark:bg-slate-800 shadow-md text-black dark:text-white"
+      className="hidden lg:flex absolute top-24 -z-10 inset-x-0"
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
     >
-      <ul className="grid grid-cols-4 gap-2 *:row-span-1 *:col-span-1 *:justify-self-center w-full">
+      <ul className="flex gap-x-10 gap-y-5 flex-wrap justify-between *:justify-self-center w-1/2 mx-auto p-5 rounded-2xl bg-slate-100 dark:bg-slate-800 shadow dark:shadow-white/20 text-black dark:text-white">
         {navbarData.map((item) => (
           <Link
             key={item._id}

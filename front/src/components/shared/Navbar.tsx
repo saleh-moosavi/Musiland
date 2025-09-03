@@ -42,7 +42,7 @@ export default function Navbar() {
 
   return (
     <header className="pt-2 fixed top-0 inset-x-0 z-50 max-w-[90rem] mx-5 xl:mx-auto">
-      <section className="flex justify-between w-full gap-x-20 shadow-lg p-5 bg-slate-100 dark:bg-gray-800 dark:text-white sticky inset-0 rounded-full">
+      <section className="flex justify-between w-full gap-x-20 shadow-lg p-5 bg-slate-100 dark:bg-gray-800 dark:text-white sticky inset-0 rounded-2xl">
         <button className="cursor-pointer" onClick={handleTheme}>
           {theme == "light" ? <Sun /> : <Moon />}
         </button>

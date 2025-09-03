@@ -73,7 +73,7 @@ export default function NavListMobile({
         </ul>
       </aside>
       <div
-        className={`fixed inset-0 bg-black/20 z-10 ${
+        className={`fixed inset-0 bg-black/30 z-10 ${
           showMobileMenuPanel ? "" : "hidden"
         }`}
         onClick={() => setShowMobileMenuPanel(false)}
