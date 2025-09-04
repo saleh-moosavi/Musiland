@@ -6,6 +6,7 @@ import PlayButton from "./PlayButton";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { SlidersResponsive } from "@/constants/window";
+import Image from "next/image";
 
 export default function SliderView({ data }: any) {
   return (
@@ -20,11 +21,13 @@ export default function SliderView({ data }: any) {
       {data?.map((song: any) => (
         <SwiperSlide key={song._id}>
           <div className="relative group rounded-xl overflow-hidden">
-            <img
+            <Image
               src={song.coverUrl}
               alt={song.name}
+              width={100}
+              height={100}
               sizes="(max-width: 768px) 100vw, 50vw"
-              className="w-full object-cover  h-44 bg-gray-200"
+              className="w-full object-cover h-44"
               loading="lazy"
             />
             <p className="absolute inset-0 flex justify-center items-center bg-black/30 opacity-0 group-hover:opacity-100 transition-all duration-300">

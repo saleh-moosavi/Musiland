@@ -50,7 +50,7 @@ export default function Page() {
   }
 
   return (
-    <div className="p-2 flex flex-col items-center gap-10 dark:text-white">
+    <div className="p-2 flex flex-col items-center gap-10 dark:text-my-white-low">
       <h1 className="text-xl font-semibold">Your Profile</h1>
       <section className="grid grid-cols-5 w-full">
         <ul className="list-none flex flex-col gap-10 col-span-4">
@@ -65,23 +65,23 @@ export default function Page() {
             {user.role}
           </li>
         </ul>
-        <article className="col-span-1 p-5 flex flex-col *:hover:cursor-pointer gap-5 bg-slate-100 dark:bg-gray-500 rounded-2xl">
+        <article className="col-span-1 p-5 flex flex-col *:hover:cursor-pointer gap-5 bg-my-white-low dark:bg-my-black-max shadow-md shadow-my-black-low/50 rounded-2xl">
           {user && (user.role === "admin" || user.role === "manager") && (
             <Link
-              className="bg-slate-300 dark:bg-gray-800 px-4 py-2 min-w-52 rounded-xl text-center"
+              className="bg-my-white-med dark:bg-my-black-med px-4 py-2 min-w-52 rounded-xl text-center shadow-md shadow-my-black-low/50"
               href="/admin/dashboard"
             >
               Admin Panel
             </Link>
           )}
-          <button className="bg-slate-300 dark:bg-gray-800 px-4 py-2 min-w-52 rounded-xl">
+          <button className="bg-my-white-med dark:bg-my-black-med px-4 py-2 min-w-52 rounded-xl shadow-md shadow-my-black-low/50">
             Likes
           </button>
-          <button className="bg-slate-300 dark:bg-gray-800 px-4 py-2 min-w-52 rounded-xl">
+          <button className="bg-my-white-med dark:bg-my-black-med px-4 py-2 min-w-52 rounded-xl shadow-md shadow-my-black-low/50">
             Comments
           </button>
           <button
-            className="bg-red-400 px-4 py-2 min-w-52 rounded-xl"
+            className="bg-my-red-med px-4 py-2 min-w-52 rounded-xl shadow-md shadow-my-black-low/50"
             onClick={handleLogOUt}
           >
             log out

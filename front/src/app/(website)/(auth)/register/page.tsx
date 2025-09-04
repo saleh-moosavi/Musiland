@@ -4,8 +4,8 @@ const RegisterView = lazy(() => import("@/components/auth/RegisterView"));
 
 export default function Page() {
   return (
-    <div className="max-w-md mx-auto overflow-hidden p-5 rounded-3xl bg-slate-100 dark:bg-slate-800 mt-10 shadow dark:shadow-white/30">
-      <h2 className="text-2xl font-bold text-black dark:text-white mb-6 text-center">
+    <div className="max-w-md mx-auto overflow-hidden p-5 rounded-3xl bg-my-white-low dark:bg-my-black-max mt-10 shadow-md dark:shadow-my-black-low/50">
+      <h2 className="text-2xl font-bold text-my-black-max dark:text-my-white-low mb-6 text-center">
         Register
       </h2>
       <Suspense fallback={<Loading />}>

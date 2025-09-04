@@ -11,7 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { signUpSchema } from "@/constants/zodSchema";
 
 const iconClasses =
-  "absolute left-2 top-1/2 -translate-y-1/3 size-5 stroke-emerald-500";
+  "absolute left-2 top-1/2 -translate-y-1/2 size-5 stroke-emerald-500";
 
 export default function RegisterView() {
   const router = useRouter();
@@ -78,16 +78,16 @@ export default function RegisterView() {
         error={errors?.password?.message}
       />
 
-      <h3 className="text-black dark:text-white">
+      <h3 className="text-my-black-max dark:text-my-white-low">
         Do You Have an Account?{" "}
-        <Link href={`/login`} className="text-cyan-400 cursor-pointer">
+        <Link href={`/login`} className="text-my-blue-high cursor-pointer">
           Log In
         </Link>
       </h3>
-      {error?.server && <p className="text-red-500">{error.server}</p>}
+      {error?.server && <p className="text-my-red-med">{error.server}</p>}
       <button
         disabled={isSubmitting}
-        className="bg-gradient-to-r from-cyan-700 to-emerald-400 text-white px-4 py-2 w-full font-bold rounded-md hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+        className="bg-gradient-to-r from-my-blue-high to-my-green-high text-my-white-low px-4 py-2 w-full font-bold rounded-md hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
         type="submit"
       >
         Submit

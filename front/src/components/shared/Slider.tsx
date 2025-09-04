@@ -1,4 +1,3 @@
-import "swiper/css";
 import Link from "next/link";
 import SliderView from "./SliderView";
 
