@@ -1,7 +1,7 @@
 import Slider from "../shared/Slider";
 import SingleMusicView from "./SingleMusicView";
 
-export default async function SingleMusicViewPage({ id }: { id: string }) {
+export default async function SingleMusicWrapper({ id }: { id: string }) {
   const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/songs/${id}`);
   const response = await fetch(url);
   const song: any = await response.json();

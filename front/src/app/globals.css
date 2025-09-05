@@ -36,3 +36,9 @@ nextjs-portal {
   --color-my-blue-low: #a2f4fd;
   --color-my-red-med: #ff006e;
 }
+
+@layer components {
+  .playdownloadbtn {
+    @apply w-full text-center inline-block py-2 shadow-md shadow-my-black-low/50 dark:shadow-my-black-med/50 hover:shadow-my-black-low dark:hover:shadow-my-black-med rounded-lg text-sm cursor-pointer bg-my-white-low dark:bg-my-black-max transition-all duration-300;
+  }
+}

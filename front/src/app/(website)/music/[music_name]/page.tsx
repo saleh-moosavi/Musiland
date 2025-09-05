@@ -1,6 +1,6 @@
-import SingleMusicViewPage from "@/components/music-name/SingleMusicViewPage";
-import Loading from "@/components/shared/Loading";
 import { Suspense } from "react";
+import Loading from "@/components/shared/Loading";
+import SingleMusicWrapper from "@/components/music-name/SingleMusicWrapper";
 
 export default async function MusicNamePage({ params }: any) {
   const { music_name } = await params;
@@ -8,7 +8,7 @@ export default async function MusicNamePage({ params }: any) {
 
   return (
     <Suspense fallback={<Loading />}>
-      <SingleMusicViewPage id={id} />
+      <SingleMusicWrapper id={id} />
     </Suspense>
   );
 }

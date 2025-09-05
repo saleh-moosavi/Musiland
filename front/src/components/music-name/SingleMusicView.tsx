@@ -56,7 +56,7 @@ export default function SingleMusicView({ song }: any) {
             download={true}
             href={song.audioUrl}
             target="_blank"
-            className="w-full text-center inline-block py-2 shadow-md shadow-my-black-low/50 dark:shadow-my-black-med/50 hover:shadow-my-black-low dark:hover:shadow-my-black-med rounded-lg text-sm cursor-pointer bg-my-white-low dark:bg-my-black-max transition-all duration-300"
+            className="playdownloadbtn"
           >
             Download
           </a>
