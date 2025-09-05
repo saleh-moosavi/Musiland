@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { UserFormData } from "@/app/types/user";
+import { UserFormData } from "@/types/user";
 
 export function useUserFormData({
   mode,

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import useToastStore from "@/store/toastStore";
-import { SongFormData } from "@/app/types/song";
+import { SongFormData } from "@/types/song";
 
 interface UseSongFormSubmitProps {
   mode: "add" | "edit";

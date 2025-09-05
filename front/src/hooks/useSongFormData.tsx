@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { OptionData, SongFormData } from "@/app/types/song";
+import { OptionData, SongFormData } from "@/types/song";
 
 interface UseSongFormDataProps {
   mode: "add" | "edit";

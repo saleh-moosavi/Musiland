@@ -1,14 +1,14 @@
 "use client";
 
 import { useEffect } from "react";
-import { Mode } from "@/app/types/song";
+import { Mode } from "@/types/song";
 import { useSearchParams } from "next/navigation";
 import { Resolver, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import CustomInput from "@/components/auth/CustomInput";
 import CustomOption from "@/components/auth/CustomOption";
 import { useUserFormData } from "@/hooks/useUserFormData";
-import { userSchema, UserFormData } from "@/app/types/user";
+import { userSchema, UserFormData } from "@/types/user";
 import { useUserFormSubmit } from "@/hooks/useUserFormSubmit";
 import { User, Shield, MailIcon, EyeClosed } from "lucide-react";
 import Button from "../shared/Button";

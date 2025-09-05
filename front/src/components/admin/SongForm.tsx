@@ -9,7 +9,7 @@ import CustomInput from "@/components/auth/CustomInput";
 import CustomOption from "@/components/auth/CustomOption";
 import { useSongFormData } from "@/hooks/useSongFormData";
 import { useSongFormSubmit } from "@/hooks/useSongFormSubmit";
-import { addSongSchema, Mode, SongFormData } from "@/app/types/song";
+import { addSongSchema, Mode, SongFormData } from "@/types/song";
 import { Music, FileText, Image, Mic, Disc, List } from "lucide-react";
 
 export default function SongForm({ mode }: { mode: Mode }) {
