@@ -2,16 +2,16 @@
 
 import { useEffect } from "react";
 import { Mode } from "@/types/song";
+import Button from "../shared/Button";
 import { useSearchParams } from "next/navigation";
 import { Resolver, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { userSchema, UserFormData } from "@/types/user";
 import CustomInput from "@/components/auth/CustomInput";
 import CustomOption from "@/components/auth/CustomOption";
 import { useUserFormData } from "@/hooks/useUserFormData";
-import { userSchema, UserFormData } from "@/types/user";
 import { useUserFormSubmit } from "@/hooks/useUserFormSubmit";
 import { User, Shield, MailIcon, EyeClosed } from "lucide-react";
-import Button from "../shared/Button";
 
 export default function UserForm({ mode }: { mode: Mode }) {
   const searchParams = useSearchParams();

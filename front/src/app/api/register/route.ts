@@ -20,10 +20,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         {
           ok: false,
-          error: result?.error || "Signed Up Failed",
+          error: result?.error || "Register Failed",
         },
-        { status: response.status }
-      ); // 👈 استاتوس اصلی);
+        { status: result.status }
+      );
     }
 
     (await cookies()).set("user", JSON.stringify(result.user), {
@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       path: "/",
-      maxAge: 60 * 60 * 24 * 7, // یک هفته
+      maxAge: 60 * 60 * 24 * 7,
     });
 
     return NextResponse.json({ ok: true });

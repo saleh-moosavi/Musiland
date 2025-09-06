@@ -1,3 +1,4 @@
+import bcrypt from "bcrypt";
 import { User } from "@models/user.js";
 import type { Request, Response } from "express";
 
@@ -31,7 +32,15 @@ export const createUser = async (req: Request, res: Response) => {
       return res
         .status(400)
         .json({ error: "Name, email, password and role required" });
-    const user = await User.create({ name, email, password, role });
+    const saltRounds = 12;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+
+    const user = await User.create({
+      name,
+      email,
+      password: hashedPassword,
+      role,
+    });
     res.status(201).json(user);
   } catch (err: any) {
     res.status(400).json({ error: err.message });

@@ -46,16 +46,15 @@ export default function LoginView() {
 
       const result = await res.json();
 
-      if (res.ok) {
+      if (result.ok) {
         setIsLoggedIn(true);
         router.push("/profile");
       } else {
-        setError({
-          server: result.error || "Email Or Password Is Incorrect!",
-        });
+        setError(result.error || "Email Or Password Is Incorrect!");
       }
     } catch (err) {
-      setError({ server: "Server Error!" });
+      setIsLoggedIn(false);
+      setError("Server Error!");
     }
   };
 
@@ -84,7 +83,7 @@ export default function LoginView() {
           Register
         </Link>
       </h3>
-      {error?.server && <p className="text-my-red-med">{error.server}</p>}
+      {error && <p className="text-my-red-med">{error}</p>}
       <button
         disabled={isSubmitting}
         className="bg-gradient-to-r from-my-blue-high to-my-green-high text-my-white-low px-4 py-2 w-full font-bold rounded-md hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"

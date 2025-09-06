@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
     if (!result.ok) {
       return NextResponse.json({
         ok: false,
-        error: result?.error || "Signed Up Failed",
+        error: result?.error || "Login Failed",
       });
     }
 
@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       path: "/",
-      maxAge: 60 * 60 * 24 * 7, // یک هفته
+      maxAge: 60 * 60 * 24 * 7,
     });
 
     return NextResponse.json({ ok: true });
