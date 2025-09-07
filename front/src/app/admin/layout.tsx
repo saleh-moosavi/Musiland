@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html>
-      <body className="bg-white dark:bg-gray-600">
+      <body className="bg-my-white-med dark:bg-my-black-high">
         <div className="flex gap-5 h-screen relative">
           <section className="h-full p-2">
             <SideBar />

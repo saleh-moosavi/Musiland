@@ -53,7 +53,7 @@ export default function SongForm({ mode }: { mode: Mode }) {
   }, [song, mode, setValue]);
 
   return (
-    <article className="mx-auto p-5 rounded-3xl bg-slate-100 dark:bg-slate-800 mt-10 shadow dark:shadow-white/30 text-black dark:text-white space-y-5">
+    <article className="mx-auto p-5 rounded-3xl bg-my-white-low dark:bg-my-black-max mt-10 shadow-md dark:shadow-my-black-low/30 text-my-black-max dark:text-my-white-low space-y-5">
       <h3 className="text-center">{mode === "add" ? "Add" : "Edit"} Song</h3>
       <form
         onSubmit={handleSubmit(submit)}
@@ -124,7 +124,7 @@ export default function SongForm({ mode }: { mode: Mode }) {
             type="submit"
           />
           {(fetchError || submitError) && (
-            <p className="text-red-500 text-sm text-center">
+            <p className="text-my-red-med text-sm text-center">
               {fetchError || submitError}
             </p>
           )}

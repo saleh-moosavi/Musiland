@@ -18,29 +18,27 @@ export default async function SongList() {
         <ul className="grid grid-cols-2 gap-5 w-full">
           {songs.map((song: any) => (
             <li
-              className="w-full flex justify-between items-center gap-5 bg-white p-2 rounded-3xl"
+              className="w-full flex justify-between items-center gap-5 bg-my-white-low dark:bg-my-black-max p-2 rounded-3xl shadow-md shadow-my-black-low/20"
               key={song._id}
             >
               <article className="flex gap-5 h-full">
                 <img
                   src={song.coverUrl || "/placeholder.jpg"} // Fallback image
                   alt="Song Image Cover"
-                  className="object-cover max-w-40 rounded-2xl"
+                  className="object-cover max-w-40 rounded-2xl hover:grayscale-75 transition-all duration-500"
                 />
-                <div className="flex flex-col justify-between h-full">
-                  <p className="font-bold text-xl">{song.name}</p>
-                  <p className="text-sm text-gray-600">
-                    Singer: {song.singer?.name || "Unknown"}
+                <div className="flex flex-col justify-between h-full text-my-black-high dark:text-my-white-high text-sm">
+                  <p className="font-bold text-xl text-my-black-max dark:text-my-white-low">
+                    {song.name}
                   </p>
-                  <p className="text-sm text-gray-600">
-                    Album: {song.album?.name || "None"}
-                  </p>
-                  <p className="text-sm text-gray-600">
-                    Genres:{" "}
+                  <p>Singer : {song.singer?.name || "Unknown"}</p>
+                  <p>Album : {song.album?.name || "None"}</p>
+                  <p>
+                    Genre :{" "}
                     {song.genres?.map((g: any) => g.name).join(", ") || "None"}
                   </p>
-                  <p className="text-sm text-gray-600">
-                    Playlists:{" "}
+                  <p>
+                    Playlist :{" "}
                     {song.playlists?.map((p: any) => p.name).join(", ") ||
                       "None"}
                   </p>
@@ -54,7 +52,7 @@ export default async function SongList() {
           ))}
         </ul>
       ) : (
-        <p className="text-center dark:text-white">Sorry, there are no songs</p>
+        <p className="text-center dark:text-my-white-low">Sorry, there are no songs</p>
       )}
     </section>
   );

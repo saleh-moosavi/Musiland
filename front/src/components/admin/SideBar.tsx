@@ -12,13 +12,13 @@ export default function SideBar() {
 
   return (
     <menu
-      className={`transition-all duration-300 h-full bg-slate-100 dark:bg-slate-800 dark:text-white rounded-xl p-5 flex flex-col justify-between overflow-hidden ${
+      className={`transition-all duration-300 h-full bg-my-white-low dark:bg-my-black-max dark:text-my-white-low rounded-xl p-5 flex flex-col justify-between overflow-hidden shadow-md shadow-my-black-low/50 ${
         isOpen ? "w-52" : "w-20"
       }`}
     >
       <ul className="felx items-center gap-20 *:cursor-pointer">
         <li
-          className={`flex hover:bg-black/20 dark:hover:bg-white/20 transition-all duration-300 rounded-xl p-2 items-center ${
+          className={`flex hover:bg-my-black-low/30 transition-all duration-300 rounded-xl p-2 items-center ${
             isOpen ? "justify-start" : " justify-center"
           }`}
         >
@@ -39,7 +39,7 @@ export default function SideBar() {
         {links.map((link) => (
           <li
             key={link.path}
-            className={`flex hover:bg-black/20 dark:hover:bg-white/20 transition-all duration-300 rounded-xl p-2 items-center ${
+            className={`flex hover:bg-my-black-low/30 transition-all duration-300 rounded-xl p-2 items-center ${
               isOpen ? "justify-start" : " justify-center"
             }`}
           >
