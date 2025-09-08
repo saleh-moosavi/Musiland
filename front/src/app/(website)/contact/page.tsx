@@ -1,4 +1,10 @@
 import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Contact US",
+  description: "Contact To Musiland",
+};
 
 export default function ContactPage() {
   return (

@@ -1,3 +1,10 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About US",
+  description: "About Musiland",
+};
+
 export default function AboutPage() {
   return (
     <main className="flex items-center justify-center mt-10 text-my-black-max dark:text-my-white-low">

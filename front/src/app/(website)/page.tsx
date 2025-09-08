@@ -1,5 +1,11 @@
+import { Metadata } from "next";
 import Slider from "@/components/shared/Slider";
 import HeroCarousel from "@/components/home/HeroCarousel";
+
+export const metadata: Metadata = {
+  title: "Musiland | Home",
+  description: "Newest Song and Musics",
+};
 
 export default function Home() {
   return (
