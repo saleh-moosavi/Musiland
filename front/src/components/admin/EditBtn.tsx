@@ -12,7 +12,7 @@ export default function EditBtn({
 }) {
   return (
     <Link
-      className="text-sky-500 size-5"
+      className="text-my-blue-med size-5"
       href={`/admin/dashboard/${type}/edit?${type}Id=${id}&${type}Name=${name}`}
     >
       <Edit />

@@ -46,29 +46,26 @@ export default function UserForm({ mode }: { mode: Mode }) {
   }, [user, mode, setValue]);
 
   return (
-    <article className="p-6 rounded-3xl bg-slate-100 dark:bg-slate-800 mt-10 shadow dark:shadow-white/30 text-black dark:text-white space-y-6">
+    <article className="p-6 rounded-3xl bg-my-white-low dark:bg-my-black-max mt-10 shadow-md dark:shadow-my-black-low/30 text-my-black-max dark:text-my-white-low space-y-6">
       <h3 className="text-center text-2xl font-semibold">
         {mode === "add" ? "Add New User" : "Edit User"}
       </h3>
 
       <form onSubmit={handleSubmit(submit)} className="space-y-5">
-        <article className="grid grid-cols-2 justify-items-center gap-5">
+        <article className="grid grid-cols-2 *:col-span-1 justify-items-center gap-5">
           <CustomInput
-            classes="col-span-1"
             register={register("name")}
             icon={<User />}
             name="Full Name"
             error={errors.name?.message}
           />
           <CustomInput
-            classes="col-span-1"
             register={register("email")}
             icon={<MailIcon />}
             name="Email"
             error={errors.email?.message}
           />
           <CustomInput
-            classes="col-span-1"
             register={register("password")}
             icon={<EyeClosed />}
             name="Password"
@@ -76,7 +73,6 @@ export default function UserForm({ mode }: { mode: Mode }) {
           />
 
           <CustomOption
-            classes="col-span-1"
             title="Role"
             icon={<Shield />}
             register={register("role")}
@@ -96,7 +92,7 @@ export default function UserForm({ mode }: { mode: Mode }) {
             mode={mode}
           />
           {(fetchError || submitError) && (
-            <p className="text-red-500 text-sm text-center">
+            <p className="text-my-red-med text-sm text-center">
               {fetchError || submitError}
             </p>
           )}

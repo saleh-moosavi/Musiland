@@ -10,7 +10,7 @@ export default async function SongList() {
   const songs = await data.json();
 
   return (
-    <section className="h-full w-full flex flex-col justify-start gap-10">
+    <section className="h-full w-full flex flex-col justify-start gap-10 dark:text-my-white-low">
       <Link href="/admin/dashboard/song/add" className="w-fit self-end">
         <Button text="Song" type="button" />
       </Link>
@@ -52,7 +52,7 @@ export default async function SongList() {
           ))}
         </ul>
       ) : (
-        <p className="text-center dark:text-my-white-low">Sorry, there are no songs</p>
+        <p className="text-center">Sorry, There Is No Song</p>
       )}
     </section>
   );

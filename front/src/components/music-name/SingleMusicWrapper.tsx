@@ -8,7 +8,7 @@ export default async function SingleMusicWrapper({ id }: { id: string }) {
 
   if (!song || typeof song !== "object" || Array.isArray(song)) {
     return (
-      <div className="text-red-500 font-bold text-center mt-5">
+      <div className="text-my-red-med font-bold text-center mt-5">
         Song not found
       </div>
     );

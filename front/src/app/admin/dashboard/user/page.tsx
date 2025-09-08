@@ -1,14 +1,14 @@
 import Link from "next/link";
+import Button from "@/components/shared/Button";
 import EditBtn from "@/components/admin/EditBtn";
 import DeleteBtn from "@/components/admin/DeleteBtn";
-import Button from "@/components/shared/Button";
 
 export default async function page() {
   const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`);
   const users = await data.json();
 
   return (
-    <section className="h-full w-full flex flex-col justify-start gap-10">
+    <section className="h-full w-full flex flex-col justify-start gap-10 dark:text-my-white-low">
       <Link href="/admin/dashboard/user/add" className="w-fit self-end">
         <Button text="User" type="button" />
       </Link>
@@ -17,7 +17,7 @@ export default async function page() {
           {users.map((user: any) => {
             return (
               <li
-                className="w-full flex justify-between items-center gap-5 bg-white p-5 rounded-xl"
+                className="w-full flex justify-between items-center gap-5 bg-my-white-low dark:bg-my-black-max shadow-md shadow-my-black-low/30 p-5 rounded-xl"
                 key={user?._id}
               >
                 <p>
@@ -35,9 +35,7 @@ export default async function page() {
           })}
         </ul>
       ) : (
-        <p className="text-center dark:text-white">
-          Sorry There Is No Playlist
-        </p>
+        <p className="text-center">Sorry There Is No User</p>
       )}
     </section>
   );
