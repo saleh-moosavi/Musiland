@@ -45,5 +45,4 @@ export const formSchemas = {
   playlist: playlistSchema,
 };
 
-// نوع آن‌ها
 export type FormSchemaKey = keyof typeof formSchemas;

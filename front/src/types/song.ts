@@ -13,9 +13,4 @@ export const addSongSchema = z.object({
 
 export type SongFormData = z.infer<typeof addSongSchema>;
 
-export interface OptionData {
-  _id: string;
-  name: string;
-}
-
 export type Mode = "add" | "edit";

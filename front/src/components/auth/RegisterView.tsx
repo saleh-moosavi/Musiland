@@ -5,10 +5,10 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import useUserStore from "@/store/userStore";
 import Loading from "@/components/shared/Loading";
+import { signUpSchema } from "@/constants/zodSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
 import CustomInput from "@/components/auth/CustomInput";
 import { AtSign, LockIcon, MailIcon } from "lucide-react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { signUpSchema } from "@/constants/zodSchema";
 
 const iconClasses =
   "absolute left-2 top-1/2 -translate-y-1/2 size-5 stroke-emerald-500";
@@ -16,7 +16,7 @@ const iconClasses =
 export default function RegisterView() {
   const router = useRouter();
   const { isLoggedIn } = useUserStore();
-  const [error, setError] = useState<any>();
+  const [error, setError] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const {
     formState: { errors, isSubmitting },
@@ -32,7 +32,15 @@ export default function RegisterView() {
     }
   }, [isLoggedIn]);
 
-  const submitForm = async ({ username, email, password }: any) => {
+  const submitForm = async ({
+    username,
+    email,
+    password,
+  }: {
+    username: string;
+    email: string;
+    password: string;
+  }) => {
     try {
       const res = await fetch("/api/register", {
         method: "POST",
@@ -46,10 +54,10 @@ export default function RegisterView() {
       if (res.ok) {
         router.push("/profile");
       } else {
-        setError({ server: result.error || "Register failed" });
+        setError(result.error || "Register failed");
       }
     } catch (err) {
-      setError({ server: `Server Error! : ${err}` });
+      setError(`Server Error! : ${err}`);
     }
   };
 
@@ -84,7 +92,7 @@ export default function RegisterView() {
           Log In
         </Link>
       </h3>
-      {error?.server && <p className="text-my-red-med">{error.server}</p>}
+      {error && <p className="text-my-red-med">{error}</p>}
       <button
         disabled={isSubmitting}
         className="bg-gradient-to-r from-my-blue-high to-my-green-high text-my-white-low px-4 py-2 w-full font-bold rounded-md hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"

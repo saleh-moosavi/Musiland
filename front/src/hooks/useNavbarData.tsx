@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react";
 import checkSavedData from "@/libs/checkSavedData";
+import { generalItems } from "@/types/generalItems";
 
 export default function useNavbarData() {
-  const [genres, setGenres] = useState<any>([]);
-  const [playlists, setPlaylists] = useState<any>([]);
+  const [genres, setGenres] = useState<generalItems[]>([]);
+  const [playlists, setPlaylists] = useState<generalItems[]>([]);
 
   useEffect(() => {
     const fetchData = async (
       url: string,
-      setter: React.Dispatch<React.SetStateAction<any>>
+      setter: React.Dispatch<React.SetStateAction<generalItems[]>>
     ) => {
       await checkSavedData();
       const response = await fetch(url);

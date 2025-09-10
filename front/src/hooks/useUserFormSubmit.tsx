@@ -1,6 +1,6 @@
-import useToastStore from "@/store/toastStore";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import useToastStore from "@/store/toastStore";
 
 export function useUserFormSubmit({
   mode,
@@ -14,7 +14,12 @@ export function useUserFormSubmit({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { setIsToastOpen, setToastColor, setToastTitle } = useToastStore();
 
-  const submit = async (data: any) => {
+  const submit = async (data: {
+    name: string;
+    password: string;
+    email: string;
+    role: string;
+  }) => {
     setIsSubmitting(true);
     setError(null);
 
@@ -38,8 +43,8 @@ export function useUserFormSubmit({
         `User ${mode === "add" ? "Added" : "Updated"} Successfully`
       );
       router.push("/admin/dashboard/user");
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      setError(err as string);
       setIsToastOpen(true);
       setToastColor("red");
       setToastTitle(`SomeThing Went Wrong!`);

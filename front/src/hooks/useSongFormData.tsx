@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { OptionData, SongFormData } from "@/types/song";
+import { SongFormData } from "@/types/song";
+import { GenericFormData } from "@/types/inputTypes";
 
 interface UseSongFormDataProps {
   mode: "add" | "edit";
@@ -7,10 +8,10 @@ interface UseSongFormDataProps {
 }
 
 interface UseSongFormDataResult {
-  singers: OptionData[];
-  albums: OptionData[];
-  genres: OptionData[];
-  playlists: OptionData[];
+  singers: GenericFormData[];
+  albums: GenericFormData[];
+  genres: GenericFormData[];
+  playlists: GenericFormData[];
   song: SongFormData | null;
   error: string | null;
 }
@@ -19,10 +20,10 @@ export function useSongFormData({
   mode,
   songId,
 }: UseSongFormDataProps): UseSongFormDataResult {
-  const [singers, setSingers] = useState<OptionData[]>([]);
-  const [albums, setAlbums] = useState<OptionData[]>([]);
-  const [genres, setGenres] = useState<OptionData[]>([]);
-  const [playlists, setPlaylists] = useState<OptionData[]>([]);
+  const [singers, setSingers] = useState<GenericFormData[]>([]);
+  const [albums, setAlbums] = useState<GenericFormData[]>([]);
+  const [genres, setGenres] = useState<GenericFormData[]>([]);
+  const [playlists, setPlaylists] = useState<GenericFormData[]>([]);
   const [song, setSong] = useState<SongFormData | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -58,8 +59,9 @@ export function useSongFormData({
             coverUrl: songData.coverUrl || "",
             singerId: songData.singer?._id || "",
             albumId: songData.album?._id || "",
-            genreIds: songData.genres?.map((g: any) => g._id) || [],
-            playlistIds: songData.playlists?.map((p: any) => p._id) || [],
+            genreIds: songData.genres?.map((g: GenericFormData) => g._id) || [],
+            playlistIds:
+              songData.playlists?.map((p: GenericFormData) => p._id) || [],
           });
         }
       } catch (err) {

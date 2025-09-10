@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { GetUser } from "@/types/user";
 import Button from "@/components/shared/Button";
 import EditBtn from "@/components/admin/EditBtn";
 import DeleteBtn from "@/components/admin/DeleteBtn";
@@ -14,7 +15,7 @@ export default async function page() {
       </Link>
       {users.length > 0 ? (
         <ul className="grid grid-cols-3 *:col-span-1 gap-5 w-full">
-          {users.map((user: any) => {
+          {users.map((user: GetUser) => {
             return (
               <li
                 className="w-full flex justify-between items-center gap-5 bg-my-white-low dark:bg-my-black-max shadow-md shadow-my-black-low/30 p-5 rounded-xl"

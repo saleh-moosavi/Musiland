@@ -5,22 +5,12 @@ import { UserIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import useToastStore from "@/store/toastStore";
+import { formSchemas } from "@/constants/zodSchema";
+import { GenericFormProps } from "@/types/inputTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { iconClasses } from "@/constants/styleClasses";
 import CustomInput from "@/components/auth/CustomInput";
 import { useRouter, useSearchParams } from "next/navigation";
-import { FormSchemaKey, formSchemas } from "@/constants/zodSchema";
-
-interface GenericFormProps {
-  mode: "add" | "edit";
-  schemaKey: FormSchemaKey;
-  baseUrl: string;
-  redirectPath: string;
-  itemName: string;
-  idParamKey: string;
-  nameParamKey: string;
-  onSuccess?: () => void;
-}
 
 export default function GenericForm({
   mode,

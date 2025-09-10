@@ -11,3 +11,7 @@ export const userSchema = z.object({
 });
 
 export type UserFormData = z.infer<typeof userSchema>;
+
+export interface GetUser extends UserFormData {
+  _id: string;
+}

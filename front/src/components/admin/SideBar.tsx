@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import useTheme from "@/hooks/useTheme";
 import { links } from "@/constants/sidebarMenu";
-import { ChevronsLeft, ChevronsRight, HomeIcon, Moon, Sun } from "lucide-react";
+import { ChevronsLeft, ChevronsRight, Moon, Sun } from "lucide-react";
 
 export default function SideBar() {
   const { theme, handleTheme } = useTheme();

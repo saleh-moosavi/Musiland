@@ -15,7 +15,7 @@ const iconClasses =
 
 export default function LoginView() {
   const router = useRouter();
-  const [error, setError] = useState<any>();
+  const [error, setError] = useState<string>();
   const [isLoading, setIsLoading] = useState(true);
   const { isLoggedIn, setIsLoggedIn } = useUserStore();
   const {
@@ -32,7 +32,13 @@ export default function LoginView() {
     }
   }, [isLoggedIn]);
 
-  const submitForm = async ({ email, password }: any) => {
+  const submitForm = async ({
+    email,
+    password,
+  }: {
+    email: string;
+    password: string;
+  }) => {
     try {
       const res = await fetch("/api/login", {
         method: "POST",

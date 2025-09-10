@@ -1,20 +1,15 @@
-interface CustomInputProps {
-  name: string;
-  register: any;
-  icon: React.ReactNode;
-  error?: React.ReactNode | string;
-  classes?: string;
-}
+import { FieldValues } from "react-hook-form";
+import { CustomInputProps } from "@/types/inputTypes";
 
-const CustomInput: React.FC<CustomInputProps> = ({
+const CustomInput = <TFieldValues extends FieldValues>({
   register,
   icon,
   name,
   error,
   classes,
-}) => {
+}: CustomInputProps<TFieldValues>) => {
   return (
-    <section className={classes ? classes : ""}>
+    <section className={classes || ""}>
       <div className="relative w-full">
         <span
           className={

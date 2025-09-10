@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { FieldValues } from "react-hook-form";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import { CustomOptionProps, GenericFormData } from "@/types/inputTypes";
 
-export default function CustomOption({
+export default function CustomOption<TFieldValues extends FieldValues>({
   title,
   icon,
   register,
@@ -9,7 +11,7 @@ export default function CustomOption({
   error,
   multiple = false,
   classes,
-}: any) {
+}: CustomOptionProps<TFieldValues>) {
   const [isVisible, setIsVisible] = useState(false);
   const showSubMenu = () => {
     setIsVisible((perv) => !perv);
@@ -37,7 +39,7 @@ export default function CustomOption({
         </label>
         {isVisible && data && (
           <div className="grid gap-2 p-3 mt-3 absolute bg-my-white-med dark:bg-my-black-high w-full rounded-2xl border z-50 overflow-y-scroll max-h-52">
-            {data.map((item: any) => (
+            {data.map((item: GenericFormData) => (
               <label key={item._id} className="flex items-center gap-2">
                 <input
                   type={multiple ? "checkbox" : "radio"}
