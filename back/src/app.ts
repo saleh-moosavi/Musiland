@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import express from "express";
 import { songRouter } from "@routes/song.js";
 import { authRouter } from "@routes/auth.js";
+import { likeRouter } from "@routes/like.js";
 import { userRouter } from "./routes/user.js";
 import { connectToDB } from "./configs/db.js";
 import { genreRouter } from "@routes/genre.js";
@@ -34,6 +35,7 @@ connectToDB(app);
 app.use("/api/users", userMiddleware, userRouter);
 app.use("/api/auth", authMiddleware, authRouter);
 
+app.use("/api/likes", likeRouter);
 app.use("/api/songs", songRouter);
 app.use("/api/albums", albumRouter);
 app.use("/api/genres", genreRouter);
