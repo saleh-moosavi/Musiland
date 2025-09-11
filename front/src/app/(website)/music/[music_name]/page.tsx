@@ -15,7 +15,11 @@ export async function generateMetadata({
   };
 }
 
-export default async function MusicNamePage({ params }: any) {
+export default async function MusicNamePage({
+  params,
+}: {
+  params: { music_name: string };
+}) {
   const { music_name } = await params;
   const [, id] = decodeURIComponent(music_name).split("-");
 

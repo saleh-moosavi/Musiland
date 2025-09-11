@@ -1,12 +1,19 @@
 import { useRef } from "react";
+import { generalItems } from "@/types/generalItems";
 import NavListMobileDropDown from "./NavListMobileDropDown";
+import { menuItems } from "@/constants/menuItems";
 
 export default function NavListMobile({
   genres,
   playlists,
   showMobileMenuPanel,
   setShowMobileMenuPanel,
-}: any) {
+}: {
+  genres: generalItems[];
+  playlists: generalItems[];
+  showMobileMenuPanel: boolean;
+  setShowMobileMenuPanel: (showSubNav: boolean) => void;
+}) {
   const menuRef = useRef<HTMLDivElement>(null);
   let initialY: number = 0;
 
@@ -34,24 +41,6 @@ export default function NavListMobile({
     }
   };
 
-  const menuItems = [
-    {
-      title: "Playlists",
-      type: "playlist",
-      show: false,
-      content: playlists,
-    },
-    {
-      title: "Genres",
-      type: "genre",
-      show: false,
-      content: genres,
-    },
-    { title: "About Us", content: null, show: true, link: "/about" },
-    { title: "Contact US", content: null, show: true, link: "/contact" },
-    { title: "Register", content: null, show: true, link: "/register" },
-  ];
-
   return (
     <>
       <aside
@@ -67,7 +56,7 @@ export default function NavListMobile({
           className="w-1/2 mx-auto h-1.5 bg-my-black-low rounded-full sticky top-0"
         ></div>
         <ul className="p-5 pt-10 space-y-2">
-          {menuItems.map((item, index) => (
+          {menuItems(playlists, genres).map((item, index) => (
             <NavListMobileDropDown item={item} key={index} />
           ))}
         </ul>

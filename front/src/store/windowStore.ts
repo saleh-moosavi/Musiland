@@ -1,11 +1,12 @@
 import { create } from "zustand";
+import { generalItems } from "@/types/generalItems";
 
 interface WindowStore {
-  navbarData: any[];
+  navbarData: generalItems[];
   showSubNav: boolean;
   showMobileMenuPanel: boolean;
   navbarType: "genre" | "playlist";
-  setNavbarData: (navbarData: any[]) => void;
+  setNavbarData: (navbarData: generalItems[]) => void;
   setShowSubNav: (showSubNav: boolean) => void;
   setShowMobileMenuPanel: (showSubNav: boolean) => void;
   setNavbarType: (navbarType: "genre" | "playlist") => void;

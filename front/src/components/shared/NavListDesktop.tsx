@@ -1,7 +1,8 @@
 import Link from "next/link";
+import { generalItems } from "@/types/generalItems";
 
 interface NavListDesktopProps {
-  navbarData: any[];
+  navbarData: generalItems[];
   onMouseEnter: () => void;
   onMouseLeave: () => void;
   type: "genre" | "playlist";

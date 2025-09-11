@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { generalItems } from "./generalItems";
 
 export const addSongSchema = z.object({
   name: z.string().min(1, "Song name is required"),
@@ -12,5 +13,22 @@ export const addSongSchema = z.object({
 });
 
 export type SongFormData = z.infer<typeof addSongSchema>;
+
+export interface GetSong {
+  _id: string;
+  name: string;
+  lyric: string;
+  audioUrl: string;
+  coverUrl: string;
+  createdAt: string;
+  likes: number;
+  comments: string[];
+  album: generalItems;
+  genres: generalItems[];
+  playlists: generalItems[];
+  singer: generalItems;
+  updatedAt: string;
+  __v: number;
+}
 
 export type Mode = "add" | "edit";

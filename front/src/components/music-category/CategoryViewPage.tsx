@@ -1,9 +1,16 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { GetSong } from "@/types/song";
 import PlayButton from "../shared/PlayButton";
 
-export default async function CategoryViewPage({ query, title }: any) {
+export default async function CategoryViewPage({
+  query,
+  title,
+}: {
+  query: string;
+  title: string;
+}) {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/songs?${query}`);
   const songs = await res.json();
 
@@ -29,7 +36,7 @@ export default async function CategoryViewPage({ query, title }: any) {
         {title.toLocaleLowerCase().includes("song") ? title : title + " Songs"}
       </h2>
       <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-center justify-start gap-10">
-        {songs?.map((song: any) => (
+        {songs?.map((song: GetSong) => (
           <div className="self-start" key={song._id}>
             <div className="relative group rounded-xl overflow-hidden">
               <Image

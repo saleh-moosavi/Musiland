@@ -1,10 +1,12 @@
 import Slider from "../shared/Slider";
+import { GetSong } from "@/types/song";
 import SingleMusicView from "./SingleMusicView";
+import { generalItems } from "@/types/generalItems";
 
 export default async function SingleMusicWrapper({ id }: { id: string }) {
   const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/songs/${id}`);
   const response = await fetch(url);
-  const song: any = await response.json();
+  const song: GetSong = await response.json();
 
   if (!song || typeof song !== "object" || Array.isArray(song)) {
     return (
@@ -21,9 +23,9 @@ export default async function SingleMusicWrapper({ id }: { id: string }) {
         <Slider
           title="Related Songs"
           query={`genre=${song.genres
-            .map((g: any) => g.name)
+            .map((g: generalItems) => g.name)
             .join(",")}&playlist=${song.playlists
-            .map((p: any) => p.name)
+            .map((p: generalItems) => p.name)
             .join(",")}`}
         />
       </div>

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import SliderView from "./SliderView";
+import { GetSong } from "@/types/song";
 
 export default async function Slider({
   title,
@@ -11,7 +12,7 @@ export default async function Slider({
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/songs?${query}&page=1,10`
   );
-  const songs: any = await response.json();
+  const songs: GetSong[] = await response.json();
 
   return (
     <>

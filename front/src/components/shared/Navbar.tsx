@@ -7,6 +7,7 @@ import useUserStore from "@/store/userStore";
 import NavListDesktop from "./NavListDesktop";
 import useWindowStore from "@/store/windowStore";
 import useNavbarData from "@/hooks/useNavbarData";
+import { generalItems } from "@/types/generalItems";
 import { LogIn, Menu, Moon, Sun, User } from "lucide-react";
 
 export default function Navbar() {
@@ -35,7 +36,10 @@ export default function Navbar() {
     }
   };
 
-  const handleNavbarData = (type: "genre" | "playlist", data: any) => {
+  const handleNavbarData = (
+    type: "genre" | "playlist",
+    data: generalItems[]
+  ) => {
     setNavbarData(data);
     setNavbarType(type);
   };

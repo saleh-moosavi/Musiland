@@ -2,8 +2,10 @@
 
 import { useEffect } from "react";
 import PlayButton from "./PlayButton";
+import { GetSong } from "@/types/song";
 import { Heart, X } from "lucide-react";
 import useMusicStore from "@/store/musicStore";
+import { generalItems } from "@/types/generalItems";
 import useSameSongsStore from "@/store/sameSongStore";
 
 export default function SameSongs() {
@@ -12,14 +14,16 @@ export default function SameSongs() {
   const { audioSrc, audioGenres, audioPlaylists } = useMusicStore();
 
   const query = `genre=${audioGenres
-    .map((g: any) => g.name)
-    .join(",")}&playlist=${audioPlaylists.map((p: any) => p.name).join(",")}`;
+    .map((g: generalItems) => g.name)
+    .join(",")}&playlist=${audioPlaylists
+    .map((p: generalItems) => p.name)
+    .join(",")}`;
 
   useEffect(() => {
     const fetchSongs = async () => {
-      const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/songs`);
+      const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/songs?${query}`);
       const response = await fetch(url);
-      const data: any = await response.json();
+      const data: GetSong[] = await response.json();
 
       setSameSongsList(data);
     };
@@ -46,7 +50,7 @@ export default function SameSongs() {
           />
         </div>
         {sameSongsList ? (
-          sameSongsList.map((song: any) => (
+          sameSongsList.map((song: GetSong) => (
             <section
               className={`flex justify-start items-center gap-2 mb-5 md:gap-10 w-full p-2 rounded-2xl overflow-hidden dark:text-my-white-low select-none transition-all duration-200 ${
                 audioSrc == song.audioUrl

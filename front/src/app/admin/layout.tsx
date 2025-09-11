@@ -1,9 +1,8 @@
 import "../globals.css";
 import type { Metadata } from "next";
+import Toast from "@/components/shared/Toast";
 import SideBar from "@/components/admin/SideBar";
 import DeleteConfirm from "@/components/shared/PopUp";
-import Toast from "@/components/shared/Toast";
-import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Administrator",

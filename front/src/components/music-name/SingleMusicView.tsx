@@ -1,7 +1,9 @@
 import Link from "next/link";
+import { GetSong } from "@/types/song";
 import PlayButton from "../shared/PlayButton";
+import { generalItems } from "@/types/generalItems";
 
-export default function SingleMusicView({ song }: any) {
+export default function SingleMusicView({ song }: { song: GetSong }) {
   if (!song) {
     return (
       <div className="text-my-red-med font-bold text-center mt-5">
@@ -28,7 +30,7 @@ export default function SingleMusicView({ song }: any) {
           <ul className="font-semibold my-10 flex items-center gap-3">
             Genre:{" "}
             {song.genres && song.genres.length > 0
-              ? song.genres.map((g: any) => (
+              ? song.genres.map((g: generalItems) => (
                   <li key={g._id}>
                     <Link href={`/category/${g.name}?${`genre=${g.name}`}`}>
                       {g.name}
@@ -41,7 +43,7 @@ export default function SingleMusicView({ song }: any) {
           <ul className="font-semibold my-10 flex items-center gap-3">
             playlist:{" "}
             {song.playlists && song.playlists.length > 0
-              ? song.playlists?.map((p: any) => (
+              ? song.playlists?.map((p: generalItems) => (
                   <li key={p._id}>
                     <Link href={`/category/${p.name}?${`playlist=${p.name}`}`}>
                       {p.name}

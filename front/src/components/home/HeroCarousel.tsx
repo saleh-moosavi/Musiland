@@ -3,13 +3,14 @@ import "swiper/css";
 import Link from "next/link";
 import "swiper/css/pagination";
 import Image from "next/image";
+import { GetSong } from "@/types/song";
 import { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Autoplay } from "swiper/modules";
 import { CarouselResponsive } from "@/constants/window";
 
 export default function HeroCarousel() {
-  const [songs, setSongs] = useState<any>([]);
+  const [songs, setSongs] = useState<GetSong[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -21,8 +22,8 @@ export default function HeroCarousel() {
         if (!response.ok) throw new Error("Failed to fetch songs");
         const data = await response.json();
         setSongs(data);
-      } catch (error: any) {
-        console.error("Error fetching songs:", error.message);
+      } catch (error) {
+        console.error("Error fetching songs:", error as string);
       } finally {
         setLoading(false);
       }
@@ -49,8 +50,8 @@ export default function HeroCarousel() {
         breakpoints={CarouselResponsive}
       >
         {songs &&
-          songs?.map((song: any) => (
-            <SwiperSlide className="relative" key={song.id}>
+          songs?.map((song: GetSong) => (
+            <SwiperSlide className="relative" key={song._id}>
               <Link
                 href={`/music/${song.singer?.name || "Unknown"}-${song._id}`}
               >

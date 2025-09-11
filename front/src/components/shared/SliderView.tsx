@@ -1,14 +1,15 @@
 "use client";
 import "swiper/css";
 import Link from "next/link";
+import Image from "next/image";
 import "swiper/css/navigation";
 import PlayButton from "./PlayButton";
+import { GetSong } from "@/types/song";
 import { Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { SlidersResponsive } from "@/constants/window";
-import Image from "next/image";
 
-export default function SliderView({ data }: any) {
+export default function SliderView({ data }: { data: GetSong[] }) {
   return (
     <Swiper
       slidesPerView={5}
@@ -18,7 +19,7 @@ export default function SliderView({ data }: any) {
       className="mySwiper w-full flex place-items-center *:w-full *:h-full"
       breakpoints={SlidersResponsive}
     >
-      {data?.map((song: any) => (
+      {data?.map((song: GetSong) => (
         <SwiperSlide key={song._id}>
           <div className="relative group rounded-xl overflow-hidden">
             <Image

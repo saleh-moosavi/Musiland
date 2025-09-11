@@ -2,8 +2,27 @@ import Link from "next/link";
 import { ChevronDown } from "lucide-react";
 import { useEffect, useState } from "react";
 import useWindowStore from "@/store/windowStore";
+import { generalItems } from "@/types/generalItems";
 
-export default function NavListMobileDropDown({ item }: any) {
+export default function NavListMobileDropDown({
+  item,
+}: {
+  item:
+    | {
+        title: string;
+        type: string;
+        show: boolean;
+        content: generalItems[];
+        link?: undefined;
+      }
+    | {
+        title: string;
+        content: null;
+        show: boolean;
+        link: string;
+        type?: undefined;
+      };
+}) {
   const [showSubNav, setShowSubNav] = useState(false);
   const { setShowMobileMenuPanel } = useWindowStore();
   const SharedClasses =
@@ -40,7 +59,7 @@ export default function NavListMobileDropDown({ item }: any) {
               : "hidden"
           }
         >
-          {item.content.map((data: any) => (
+          {item.content.map((data: generalItems) => (
             <Link
               onClick={() => setShowMobileMenuPanel(false)}
               key={data._id}

@@ -1,8 +1,15 @@
 "use client";
 import { PlayCircleIcon } from "lucide-react";
 import useMusicStore from "@/store/musicStore";
+import { GetSong } from "@/types/song";
 
-export default function PlayButton({ song, icon }: any) {
+export default function PlayButton({
+  song,
+  icon,
+}: {
+  song: GetSong;
+  icon?: boolean;
+}) {
   const {
     setAudioSrc,
     setAudioCover,
