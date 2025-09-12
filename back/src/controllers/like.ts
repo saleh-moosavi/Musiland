@@ -72,6 +72,7 @@ export const changeLike = async (req: Request, res: Response) => {
       return res.json({
         message: "Like removed",
         ok: true,
+        newLikes: song.likes - 1,
       });
     } else {
       await User.findByIdAndUpdate(
@@ -89,6 +90,7 @@ export const changeLike = async (req: Request, res: Response) => {
       return res.json({
         message: "Like added",
         ok: true,
+        newLikes: song.likes + 1,
       });
     }
   } catch (err: any) {

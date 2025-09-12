@@ -1,3 +1,4 @@
+import Likes from "./Likes";
 import Link from "next/link";
 import { GetSong } from "@/types/song";
 import PlayButton from "../shared/PlayButton";
@@ -66,7 +67,7 @@ export default function SingleMusicView({ song }: { song: GetSong }) {
 
           <div className="flex gap-5 items-center text-sm justify-between">
             <p>{song.comments?.length} Comments</p>
-            <p>{song.likes} Likes</p>
+            <Likes count={song.likes} id={song._id} />
             <p>{song.createdAt.split("T")[0]}</p>
           </div>
         </div>
