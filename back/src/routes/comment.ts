@@ -1,10 +1,10 @@
 import { Router } from "express";
 import {
   getAllComment,
-  getByIdComment,
   createComment,
   updateComment,
   deleteComment,
+  getCommentsBySongId,
 } from "@controllers/comment.js";
 
 const commentRouter = Router();
@@ -12,7 +12,7 @@ const commentRouter = Router();
 commentRouter.route("/").get(getAllComment).post(createComment);
 commentRouter
   .route("/:id")
-  .get(getByIdComment)
+  .get(getCommentsBySongId)
   .put(updateComment)
   .delete(deleteComment);
 

@@ -2,9 +2,16 @@ import Likes from "./Likes";
 import Link from "next/link";
 import { GetSong } from "@/types/song";
 import PlayButton from "../shared/PlayButton";
+import { MessageSquareMore } from "lucide-react";
 import { generalItems } from "@/types/generalItems";
 
-export default function SingleMusicView({ song }: { song: GetSong }) {
+export default function SingleMusicView({
+  song,
+  commentCount,
+}: {
+  song: GetSong;
+  commentCount: number;
+}) {
   if (!song) {
     return (
       <div className="text-my-red-med font-bold text-center mt-5">
@@ -66,7 +73,9 @@ export default function SingleMusicView({ song }: { song: GetSong }) {
           <PlayButton song={song} />
 
           <div className="flex gap-5 items-center text-sm justify-between">
-            <p>{song.comments?.length} Comments</p>
+            <p className="flex items-center gap-2">
+              {commentCount} <MessageSquareMore className="size-4" />
+            </p>
             <Likes count={song.likes} id={song._id} />
             <p>{song.createdAt.split("T")[0]}</p>
           </div>

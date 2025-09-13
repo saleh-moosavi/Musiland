@@ -11,7 +11,6 @@ const SongSchema = new Schema(
     album: { type: Schema.Types.ObjectId, ref: "Album" },
     genres: [{ type: Schema.Types.ObjectId, ref: "Genre" }],
     playlists: [{ type: Schema.Types.ObjectId, ref: "Playlist" }],
-    comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
   },
   { timestamps: true }
 );

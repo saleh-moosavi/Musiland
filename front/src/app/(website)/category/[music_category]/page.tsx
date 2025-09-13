@@ -26,7 +26,6 @@ export default async function MusicCategoryPage({
   searchParams,
 }: PropsType) {
   const music_category = (await params).music_category;
-  console.log(await searchParams);
   const decoded_music_category = decodeURIComponent(music_category);
   const stringQuery = await objectToQueryString(await searchParams);
 
