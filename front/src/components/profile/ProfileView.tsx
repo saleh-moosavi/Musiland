@@ -25,7 +25,7 @@ export default function ProfileView() {
         router.push("/login");
       } else {
         const res = await checkSavedData();
-        res && setUser(res); // Make sure res matches User type
+        res && setUser(res);
       }
     }
 

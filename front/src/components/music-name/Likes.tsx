@@ -13,15 +13,19 @@ export default function Likes({ count, id }: { count: number; id: string }) {
   //get user id and user liked list
   useEffect(() => {
     fetch("/api/getUserData?like=true")
-      .then((res) => res.json())
+      .then(async (res) => await res.json())
       .then((data) => {
-        userIdRef.current = data?.user?.id;
-        setLikedSongs(data.user.likedSongs);
+        if (data.ok === true) {
+          userIdRef.current = data?.user?.id;
+          setLikedSongs(data.user.likedSongs);
+        } else {
+          setToastTitle(data.error || "Error");
+          setIsToastOpen(true);
+          setToastColor("orange");
+        }
       })
       .catch((err) => {
-        setIsToastOpen(true);
-        setToastColor("orange");
-        setToastTitle(err);
+        console.error(err);
       });
   }, []);
 
@@ -38,23 +42,27 @@ export default function Likes({ count, id }: { count: number; id: string }) {
     })
       .then((res) => res.json())
       .then((data) => {
-        setSyncCount(data.newLikes);
-        likedSongs.includes(id)
-          ? setLikedSongs(likedSongs.filter((item) => item !== id))
-          : setLikedSongs([...likedSongs, id]);
+        if (data.ok === true) {
+          setSyncCount(data.newLikes);
+          likedSongs.includes(id)
+            ? setLikedSongs(likedSongs.filter((item) => item !== id))
+            : setLikedSongs([...likedSongs, id]);
+        } else {
+          setToastTitle(data.error || "Error");
+          setIsToastOpen(true);
+          setToastColor("orange");
+        }
       })
       .catch((err) => {
-        setIsToastOpen(true);
-        setToastColor("orange");
-        setToastTitle(err);
+        console.log(err);
       });
   };
   return (
     <p className="flex items-center gap-2 cursor-pointer" onClick={toggleLike}>
-      {syncCount !== null ? syncCount : count}
+      {typeof syncCount === "number" ? syncCount : count}
       <Heart
         className={`size-4 ${
-          likedSongs.includes(id)
+          likedSongs && likedSongs.includes(id)
             ? "fill-my-red-med stroke-my-red-med"
             : "fill-my-black-low stroke-my-black-low"
         }`}

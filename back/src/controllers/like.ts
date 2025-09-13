@@ -41,17 +41,17 @@ export const changeLike = async (req: Request, res: Response) => {
     const { userId, songId } = req.body;
 
     if (!userId || !songId) {
-      return res.status(400).json({ error: "UserID and SongID are required" });
+      return res.status(400).json({ error: "Login required", ok: false });
     }
 
     const user = await User.findById(userId);
     const song = await Song.findById(songId);
 
     if (!user) {
-      return res.status(404).json({ error: "User not found" });
+      return res.status(404).json({ error: "User not found", ok: false });
     }
     if (!song) {
-      return res.status(404).json({ error: "Song not found" });
+      return res.status(404).json({ error: "Song not found", ok: false });
     }
 
     const isLiked = user.likedSongs.includes(songId);
@@ -94,6 +94,6 @@ export const changeLike = async (req: Request, res: Response) => {
       });
     }
   } catch (err: any) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: err.message, ok: false });
   }
 };
