@@ -17,7 +17,7 @@ export const getCommentsBySongId = async (req: Request, res: Response) => {
       return res.status(400).json({ error: "Song ID is required", ok: false });
 
     const comments = await Comment.find({ song: id })
-      .populate("user","name")
+      .populate("user", "name")
       .sort({ createdAt: -1 });
     res.json({
       ok: true,
@@ -37,10 +37,14 @@ export const createComment = async (req: Request, res: Response) => {
       return res
         .status(400)
         .json({ error: "Description, user, song required" });
-    const comment = await Comment.create({ description, user, song });
-    res.status(201).json(comment);
+    const created = await Comment.create({ description, user, song });
+    const comment = await Comment.findById(created._id).populate(
+      "user",
+      "name"
+    );
+    res.status(201).json({ comment: comment, ok: true });
   } catch (err: any) {
-    res.status(400).json({ error: err.message });
+    res.status(400).json({ error: err.message, ok: false });
   }
 };
 

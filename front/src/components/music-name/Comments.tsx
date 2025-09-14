@@ -1,8 +1,9 @@
 "use client";
 
-import { useRef, useState } from "react";
+import TimeAgo from "./TimeAgo";
 import { Comment } from "@/types/comment";
-import { formatTimeAgo } from "@/libs/timeAgo";
+import useSongStore from "@/store/songStore";
+import { useEffect, useRef, useState } from "react";
 
 export default function Comments({
   comments,
@@ -12,7 +13,12 @@ export default function Comments({
   commentCount: number;
 }) {
   const [showCount, setShowCount] = useState(5);
+  const { comments: commentsState, setComments } = useSongStore();
   const commentsLength = useRef(commentCount || 0);
+
+  useEffect(() => {
+    setComments(comments);
+  }, []);
 
   const showMoreComments = () => {
     setShowCount((prev) => prev + 10);
@@ -25,7 +31,7 @@ export default function Comments({
       <h3 className="text-xl font-semibold">Comments ({commentCount})</h3>
       {commentsLength.current > 0 ? (
         <ul className="space-y-2">
-          {comments?.map((comment, index) => {
+          {commentsState?.map((comment, index) => {
             if (index < showCount) {
               return (
                 <li
@@ -34,9 +40,7 @@ export default function Comments({
                 >
                   <p className="flex items-center gap-3 text-sm border-b w-fit pb-2 border-my-black-low">
                     <span>{comment.user.name}</span>
-                    <span className="text-xs text-my-black-med dark:text-my-black-low">
-                      ( {formatTimeAgo(comment.createdAt)} ago )
-                    </span>
+                    <TimeAgo date={comment.createdAt} />
                   </p>
                   <p>{comment.description}</p>
                 </li>
@@ -47,7 +51,7 @@ export default function Comments({
       ) : (
         <p className="text-sm">Be The First One Who Leave a Comment</p>
       )}
-      {commentsLength.current > 6 && (
+      {commentsLength.current > 5 && (
         <div className="flex justify-center *:w-fit">
           <button
             onClick={
