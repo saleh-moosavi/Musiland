@@ -5,16 +5,16 @@ import Link from "next/link";
 import Button from "../shared/Button";
 import { useForm } from "react-hook-form";
 import { useEffect, useRef } from "react";
-import useUserStore from "@/store/userStore";
 import useSongStore from "@/store/songStore";
 import useToastStore from "@/store/toastStore";
+import useAuthCheck from "@/hooks/useAuthCheck";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function AddComment({ id: songId }: { id: string }) {
-  const { isLoggedIn } = useUserStore();
   const userIdRef = useRef<null | string>(null);
-  const { setIsToastOpen, setToastColor, setToastTitle } = useToastStore();
   const { comments, setComments } = useSongStore();
+  const { isLoggedIn, userData, error, isLoading } = useAuthCheck();
+  const { setIsToastOpen, setToastColor, setToastTitle } = useToastStore();
   const {
     register,
     handleSubmit,
@@ -30,22 +30,18 @@ export default function AddComment({ id: songId }: { id: string }) {
 
   //get user id and user liked list
   useEffect(() => {
-    fetch("/api/getUserData")
-      .then(async (res) => await res.json())
-      .then((data) => {
-        if (data.ok === true) {
-          userIdRef.current = data?.user?.id;
-        } else {
-          setIsToastOpen(true);
-          setToastColor("orange");
-          setToastTitle(data.error || "Error");
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, []);
+    if (isLoading) return;
 
+    if (userData) {
+      userIdRef.current = userData.id;
+    } else {
+      setIsToastOpen(true);
+      setToastColor("orange");
+      setToastTitle(error || "Authentication required");
+    }
+  }, [isLoading, userData, error]);
+
+  //handle Send Comment
   const submitComment = async (data: { comment: string }) => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comments`, {
       method: "POST",
@@ -64,6 +60,7 @@ export default function AddComment({ id: songId }: { id: string }) {
       setComments([...comments, resData.comment]);
     }
   };
+
   if (isLoggedIn && userIdRef.current) {
     return (
       <section className="w-full p-3 flex flex-col items-center gap-2 text-my-black-max dark:text-my-white-low dark:bg-my-black-max bg-my-white-low rounded-xl">

@@ -3,8 +3,8 @@ import Link from "next/link";
 import { useState } from "react";
 import useTheme from "@/hooks/useTheme";
 import NavListMobile from "./NavListMobile";
-import useUserStore from "@/store/userStore";
 import NavListDesktop from "./NavListDesktop";
+import useAuthCheck from "@/hooks/useAuthCheck";
 import useWindowStore from "@/store/windowStore";
 import useNavbarData from "@/hooks/useNavbarData";
 import { generalItems } from "@/types/generalItems";
@@ -12,7 +12,7 @@ import { LogIn, Menu, Moon, Sun, User } from "lucide-react";
 
 export default function Navbar() {
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
-  const { isLoggedIn } = useUserStore();
+  const { isLoggedIn } = useAuthCheck();
   const { theme, handleTheme } = useTheme();
   const { genres, playlists } = useNavbarData();
   const {

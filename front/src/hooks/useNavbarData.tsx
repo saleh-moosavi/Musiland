@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import checkSavedData from "@/libs/checkSavedData";
 import { generalItems } from "@/types/generalItems";
 
 export default function useNavbarData() {
@@ -11,7 +10,6 @@ export default function useNavbarData() {
       url: string,
       setter: React.Dispatch<React.SetStateAction<generalItems[]>>
     ) => {
-      await checkSavedData();
       const response = await fetch(url);
       const data = await response.json();
       setter(data);

@@ -13,8 +13,8 @@ export default function Comments({
   commentCount: number;
 }) {
   const [showCount, setShowCount] = useState(5);
-  const { comments: commentsState, setComments } = useSongStore();
   const commentsLength = useRef(commentCount || 0);
+  const { comments: commentsState, setComments } = useSongStore();
 
   useEffect(() => {
     setComments(comments);

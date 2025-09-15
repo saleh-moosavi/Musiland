@@ -1,33 +1,28 @@
 "use client";
 import { Heart } from "lucide-react";
-import useUserStore from "@/store/userStore";
 import useToastStore from "@/store/toastStore";
+import useAuthCheck from "@/hooks/useAuthCheck";
 import { useEffect, useRef, useState } from "react";
 
 export default function Likes({ count, id }: { count: number; id: string }) {
   const userIdRef = useRef<null | string>(null);
-  const { likedSongs, setLikedSongs } = useUserStore();
+  const { likedSongs, isLoading, userData, error, setLikedSongs } =
+    useAuthCheck(true);
   const [syncCount, setSyncCount] = useState<number | null>(null);
   const { setIsToastOpen, setToastColor, setToastTitle } = useToastStore();
 
   //get user id and user liked list
   useEffect(() => {
-    fetch("/api/getUserData?like=true")
-      .then(async (res) => await res.json())
-      .then((data) => {
-        if (data.ok === true) {
-          userIdRef.current = data?.user?.id;
-          setLikedSongs(data.user.likedSongs);
-        } else {
-          setToastTitle(data.error || "Error");
-          setIsToastOpen(true);
-          setToastColor("orange");
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-      });
-  }, []);
+    if (isLoading) return;
+
+    if (userData) {
+      userIdRef.current = userData?.id;
+    } else {
+      setIsToastOpen(true);
+      setToastColor("orange");
+      setToastTitle(error || "Error");
+    }
+  }, [isLoading, userData]);
 
   //handle like button click event
   const toggleLike = async () => {
