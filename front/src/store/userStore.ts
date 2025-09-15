@@ -1,6 +1,8 @@
 import { create } from "zustand";
 
 interface UserStore {
+  userId: string;
+  setUserId: (userId: string) => void;
   isLoggedIn: boolean;
   setIsLoggedIn: (isLoggedIn: boolean) => void;
   likedSongs: string[];
@@ -8,6 +10,8 @@ interface UserStore {
 }
 
 const useUserStore = create<UserStore>((set) => ({
+  userId: "",
+  setUserId: (userId) => set({ userId }),
   isLoggedIn: false,
   setIsLoggedIn: (isLoggedIn) => set({ isLoggedIn }),
   likedSongs: [],

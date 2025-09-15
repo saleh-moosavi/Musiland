@@ -4,14 +4,18 @@ import { useEffect } from "react";
 import PlayButton from "./PlayButton";
 import { GetSong } from "@/types/song";
 import { Heart, X } from "lucide-react";
+import useUserStore from "@/store/userStore";
 import useMusicStore from "@/store/musicStore";
+import useToggleLike from "@/hooks/useToggleLike";
 import { generalItems } from "@/types/generalItems";
 import useSameSongsStore from "@/store/sameSongStore";
 
 export default function SameSongs() {
+  const { likedSongs } = useUserStore();
+  const { toggleLike } = useToggleLike();
+  const { audioSrc, audioGenres, audioPlaylists } = useMusicStore();
   const { isPanelVisible, sameSongsList, setIsPanelVisible, setSameSongsList } =
     useSameSongsStore();
-  const { audioSrc, audioGenres, audioPlaylists } = useMusicStore();
 
   const query = `genre=${audioGenres
     .map((g: generalItems) => g.name)
@@ -78,7 +82,16 @@ export default function SameSongs() {
                   {song.singer?.name || "Unknown Artist"}
                 </p>
               </div>
-              <Heart className="ms-auto md:me-5 cursor-pointer stroke-my-black-med dark:stroke-my-white-high hover:fill-my-red-med hover:stroke-my-red-med hover:scale-125 transition-all duration-200" />
+              <Heart
+                onClick={() => {
+                  toggleLike(song._id);
+                }}
+                className={`ms-auto md:me-5 cursor-pointer hover:scale-125 transition-all duration-200 ${
+                  likedSongs.includes(song._id)
+                    ? "fill-my-red-med stroke-my-red-med"
+                    : "stroke-my-black-med dark:stroke-my-white-high hover:fill-my-red-med hover:stroke-my-red-med"
+                }`}
+              />
             </section>
           ))
         ) : (

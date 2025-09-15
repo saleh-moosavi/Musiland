@@ -14,7 +14,7 @@ export default function useAuthCheck(likes?: boolean) {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { isLoggedIn, setIsLoggedIn, likedSongs, setLikedSongs } =
+  const { isLoggedIn, setIsLoggedIn, likedSongs, setLikedSongs, setUserId } =
     useUserStore();
   const [userData, setUserData] = useState<userDataType | null>(null);
 
@@ -50,6 +50,7 @@ export default function useAuthCheck(likes?: boolean) {
             setError(null);
             setIsLoggedIn(true);
             setUserData(data.user);
+            setUserId(data.user.id);
             likes && setLikedSongs(data.user.likedSongs);
           } else {
             setUserData(null);
