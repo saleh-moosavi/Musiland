@@ -1,7 +1,7 @@
+"use client";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import useUserStore from "@/store/userStore";
-import { userProfileType } from "@/types/user";
 
 export default function useAuthCheck(likes?: boolean) {
   const router = useRouter();
@@ -9,7 +9,7 @@ export default function useAuthCheck(likes?: boolean) {
   const [error, setError] = useState<string | null>(null);
   const { isLoggedIn, setIsLoggedIn, likedSongs, setLikedSongs, setUserId } =
     useUserStore();
-  const [userData, setUserData] = useState<userProfileType | null>(null);
+  const { userData, setUserData } = useUserStore();
 
   const logOut = async () => {
     const res = await fetch("/api/logout", {
