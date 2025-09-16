@@ -15,3 +15,11 @@ export type UserFormData = z.infer<typeof userSchema>;
 export interface GetUser extends UserFormData {
   _id: string;
 }
+
+export interface userProfileType {
+  id: string;
+  name: string;
+  email: string;
+  likedSongs?: string[];
+  role: "admin" | "user" | "manager";
+}
