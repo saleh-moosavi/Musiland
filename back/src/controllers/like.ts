@@ -26,12 +26,10 @@ export const getUserLiked = async (req: Request, res: Response) => {
       .populate("album")
       .populate("genres")
       .populate("playlists")
-      .populate("comments")
       .sort({ createdAt: -1 });
 
     res.json(likedSongs);
   } catch (err: any) {
-    console.error("Error in getUserLiked:", err); // برای دیباگ
     res.status(500).json({ error: err.message });
   }
 };

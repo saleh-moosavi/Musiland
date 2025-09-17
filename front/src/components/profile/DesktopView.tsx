@@ -20,7 +20,9 @@ export default function DesktopView({
       )}
 
       <ProfileBtn title="Comments" />
-      <ProfileBtn title="Likes" />
+      <Link href="/profile/like">
+        <ProfileBtn title="Likes" />
+      </Link>
       <ProfileBtn clickHandler={logOut} type="logout" title="log out" />
     </article>
   );

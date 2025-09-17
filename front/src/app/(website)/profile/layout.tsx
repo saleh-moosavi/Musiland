@@ -28,9 +28,11 @@ export default function profileLayout({
     <div className="p-2 flex flex-col items-center gap-3 md:gap-10 dark:text-my-white-low">
       <h1 className="text-xl font-semibold">Your Profile</h1>
       <section className="grid items-start md:flex md:items-start gap-10 w-full">
-        <DesktopView role={userData.role} logOut={logOut} />
-        <MobileView role={userData.role} logOut={logOut} />
-        {children}
+        <div className="sticky top-24 z-50">
+          <DesktopView role={userData.role} logOut={logOut} />
+          <MobileView role={userData.role} logOut={logOut} />
+        </div>
+        <article className="w-full">{children}</article>
       </section>
     </div>
   );

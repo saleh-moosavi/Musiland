@@ -41,7 +41,7 @@ export default function SameSongs() {
 
   return (
     <div
-      className={`fixed inset-0 my-20 z-30 p-5 ${
+      className={`fixed inset-0 my-20 z-[60] p-5 ${
         isPanelVisible ? "" : "hidden"
       }`}
     >

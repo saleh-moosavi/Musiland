@@ -25,9 +25,11 @@ export default function MobileView({
       <ProfileBtn title="Comments" isMobile>
         <MessageSquareMore />
       </ProfileBtn>
-      <ProfileBtn title="Likes" isMobile>
-        <Heart />
-      </ProfileBtn>
+      <Link href="/profile/like">
+        <ProfileBtn title="Likes" isMobile>
+          <Heart />
+        </ProfileBtn>
+      </Link>
       <ProfileBtn title="log out" clickHandler={logOut} type="logout" isMobile>
         <LogOut />
       </ProfileBtn>
