@@ -11,15 +11,14 @@ import { generalItems } from "@/types/generalItems";
 import { LogIn, Menu, Moon, Sun, User } from "lucide-react";
 
 export default function Navbar() {
-  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
   const { isLoggedIn } = useAuthCheck();
   const { theme, handleTheme } = useTheme();
   const { genres, playlists } = useNavbarData();
+  const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
   const {
     navbarData,
     showSubNav,
     navbarType,
-    showMobileMenuPanel,
     setNavbarData,
     setShowSubNav,
     setShowMobileMenuPanel,
@@ -108,12 +107,7 @@ export default function Navbar() {
         )}
       </section>
 
-      <NavListMobile
-        genres={genres}
-        playlists={playlists}
-        showMobileMenuPanel={showMobileMenuPanel}
-        setShowMobileMenuPanel={setShowMobileMenuPanel}
-      />
+      <NavListMobile genres={genres} playlists={playlists} />
     </header>
   );
 }

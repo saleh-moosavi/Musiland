@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import Toast from "@/components/shared/Toast";
 import SideBar from "@/components/admin/SideBar";
 import DeleteConfirm from "@/components/shared/PopUp";
+import SideBarMobile from "@/components/admin/SideBarMobile";
 
 export const metadata: Metadata = {
   title: "Administrator",
@@ -18,8 +19,11 @@ export default function RootLayout({
     <html>
       <body className="bg-my-white-med dark:bg-my-black-high">
         <div className="flex gap-5 h-screen relative">
-          <section className="h-full p-2">
+          <section className="hidden md:block h-full p-2">
             <SideBar />
+          </section>
+          <section className="md:hidden h-full p-2">
+            <SideBarMobile />
           </section>
           <section className="p-10 w-full h-full flex justify-center items-center">
             {children}
