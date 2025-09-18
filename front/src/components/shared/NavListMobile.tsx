@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import useUserStore from "@/store/userStore";
 import useWindowStore from "@/store/windowStore";
 import { menuItems } from "@/constants/menuItems";
 import MobileMenuWrapper from "./MobileMenuWrapper";
@@ -13,6 +14,7 @@ export default function NavListMobile({
   genres: generalItems[];
   playlists: generalItems[];
 }) {
+  const { isLoggedIn } = useUserStore();
   const [subNavType, setSubNavType] = useState("");
   const [showSubNav, setShowSubNav] = useState(false);
   const { setShowMobileMenuPanel } = useWindowStore();
@@ -64,6 +66,15 @@ export default function NavListMobile({
             )}
           </li>
         ))}
+        <li className="cursor-pointer">
+          <Link
+            href={isLoggedIn ? "/profile" : "/register"}
+            onClick={() => setShowMobileMenuPanel(false)}
+            className="font-semibold block p-2 w-full shadow-sm space-y-2 rounded-xl hover:shadow-md dark:shadow-my-white-high transition-all duration-300"
+          >
+            {isLoggedIn ? "Profile" : "Register"}
+          </Link>
+        </li>
       </ul>
     </MobileMenuWrapper>
   );

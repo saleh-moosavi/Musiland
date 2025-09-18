@@ -19,6 +19,5 @@ export const menuItems = (
     },
     { title: "About Us", content: null, show: true, link: "/about" },
     { title: "Contact US", content: null, show: true, link: "/contact" },
-    { title: "Register", content: null, show: true, link: "/register" },
   ];
 };
