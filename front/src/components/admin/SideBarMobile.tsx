@@ -14,7 +14,7 @@ export default function SideBar() {
   return (
     <>
       <button
-        className="fixed top-5 left-5 dark:text-my-white-low text-my-black-max hover:scale-110 transition-all duration-200 cursor-pointer"
+        className="fixed top-5 left-5 md:hidden p-2 dark:text-my-white-low text-my-black-max hover:scale-110 transition-all duration-200 cursor-pointer"
         onClick={() => setShowMobileMenuPanel(true)}
       >
         <Menu />

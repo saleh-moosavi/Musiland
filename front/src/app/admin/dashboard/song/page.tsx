@@ -15,7 +15,7 @@ export default async function SongList() {
         <Button text="Song" type="button" />
       </Link>
       {songs.length > 0 ? (
-        <ul className="grid grid-cols-2 gap-5 w-full">
+        <ul className="grid lg:grid-cols-2 gap-5 w-full">
           {songs.map((song: any) => (
             <li
               className="w-full flex justify-between items-center gap-5 bg-my-white-low dark:bg-my-black-max p-2 rounded-3xl shadow-md shadow-my-black-low/20"
@@ -25,7 +25,7 @@ export default async function SongList() {
                 <img
                   src={song.coverUrl || "/placeholder.jpg"} // Fallback image
                   alt="Song Image Cover"
-                  className="object-cover max-w-40 rounded-2xl hover:grayscale-75 transition-all duration-500"
+                  className="object-cover max-w-18 sm:max-w-40 rounded-2xl hover:grayscale-75 transition-all duration-500"
                 />
                 <div className="flex flex-col justify-between h-full text-my-black-high dark:text-my-white-high text-sm">
                   <p className="font-bold text-xl text-my-black-max dark:text-my-white-low">

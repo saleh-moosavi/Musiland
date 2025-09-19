@@ -12,7 +12,7 @@ export default async function AlbumList() {
         <Button text="Album" type="button" />
       </Link>
       {albums.length > 0 ? (
-        <ul className="grid grid-cols-3 *:col-span-1 gap-5 w-full">
+        <ul className="grid sm:grid-cols-2 lg:grid-cols-3 *:col-span-1 gap-5 w-full">
           {albums.map((album: any) => {
             return (
               <li

@@ -12,7 +12,7 @@ export default async function SingerList() {
         <Button text="Singer" type="button" />
       </Link>
       {singers.length > 0 ? (
-        <ul className="grid grid-cols-3 *:col-span-1 gap-5 w-full">
+        <ul className="grid sm:grid-cols-2 lg:grid-cols-3 *:col-span-1 gap-5 w-full">
           {singers.map((singer: any) => {
             return (
               <li

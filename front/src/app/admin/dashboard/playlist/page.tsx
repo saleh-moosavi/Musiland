@@ -12,7 +12,7 @@ export default async function PlaylistList() {
         <Button text="Playlist" type="button" />
       </Link>
       {playlists.length > 0 ? (
-        <ul className="grid grid-cols-3 *:col-span-1 gap-5 w-full">
+        <ul className="grid sm:grid-cols-2 lg:grid-cols-3 *:col-span-1 gap-5 w-full">
           {playlists.map((playlist: any) => {
             return (
               <li

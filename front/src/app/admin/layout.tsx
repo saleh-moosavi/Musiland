@@ -22,10 +22,8 @@ export default function RootLayout({
           <section className="hidden md:block h-full p-2">
             <SideBar />
           </section>
-          <section className="md:hidden h-full p-2">
-            <SideBarMobile />
-          </section>
-          <section className="p-10 w-full h-full flex justify-center items-center">
+          <SideBarMobile />
+          <section className="p-5 md:p-10 w-full h-full flex justify-center items-center">
             {children}
           </section>
           <DeleteConfirm />
