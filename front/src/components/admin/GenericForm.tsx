@@ -85,7 +85,7 @@ export default function GenericForm({
   };
 
   return (
-    <article className="max-w-md min-w-md mx-auto overflow-hidden p-5 rounded-3xl bg-my-white-low dark:bg-my-black-max mt-10 shadow dark:shadow-my-black-low/30 text-my-black-max dark:text-my-white-low">
+    <article className="max-w-md w-full mx-auto overflow-hidden p-5 rounded-3xl bg-my-white-low dark:bg-my-black-max mt-10 shadow dark:shadow-my-black-low/30 text-my-black-max dark:text-my-white-low">
       <form onSubmit={handleSubmit(onSubmit)} className="grid gap-y-10">
         <h3 className="text-center">
           {mode === "add" ? "Add" : "Edit"} {itemName}

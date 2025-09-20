@@ -56,12 +56,12 @@ export default function SideBar() {
               onClick={handleTheme}
               className="flex justify-start hover:bg-my-black-low/30 transition-all duration-300 rounded-xl p-2 items-center shadow-md shadow-my-black-low/50 my-2"
             >
-              <p className="p-2 rounded flex justify-center items-center gap-5">
+              <div className="p-2 rounded flex justify-center items-center gap-5">
                 <p className="*:size-5">
                   {theme == "light" ? <Sun /> : <Moon />}
                 </p>
                 <p>{theme == "light" ? "Light" : "Dark"}</p>
-              </p>
+              </div>
             </li>
           </ul>
         </menu>

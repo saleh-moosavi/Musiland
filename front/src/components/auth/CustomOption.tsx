@@ -19,7 +19,7 @@ export default function CustomOption<TFieldValues extends FieldValues>({
   return (
     <section className="w-full">
       <div
-        className={`relative bg-my-white-med h-fit rounded-full ${
+        className={`relative bg-my-white-med h-fit rounded-lg ${
           classes && classes
         }`}
       >
@@ -38,7 +38,7 @@ export default function CustomOption<TFieldValues extends FieldValues>({
           )}
         </label>
         {isVisible && data && (
-          <div className="grid gap-2 p-3 mt-3 absolute bg-my-white-med dark:bg-my-black-high w-full rounded-2xl border z-50 overflow-y-scroll max-h-52">
+          <div className="grid gap-2 p-3 mt-3 absolute bg-my-white-med dark:bg-my-black-high w-full rounded-lg border z-50 overflow-y-scroll max-h-52">
             {data.map((item: GenericFormData) => (
               <label key={item._id} className="flex items-center gap-2">
                 <input

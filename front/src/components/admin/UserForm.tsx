@@ -52,7 +52,7 @@ export default function UserForm({ mode }: { mode: Mode }) {
       </h3>
 
       <form onSubmit={handleSubmit(submit)} className="space-y-5">
-        <article className="grid grid-cols-2 *:col-span-1 justify-items-center gap-5">
+        <article className="grid md:grid-cols-2 *:col-span-1 justify-items-center gap-5">
           <CustomInput
             register={register("name")}
             icon={<User />}

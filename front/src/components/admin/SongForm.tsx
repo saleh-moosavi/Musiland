@@ -57,9 +57,9 @@ export default function SongForm({ mode }: { mode: Mode }) {
       <h3 className="text-center">{mode === "add" ? "Add" : "Edit"} Song</h3>
       <form
         onSubmit={handleSubmit(submit)}
-        className="w-full space-y-5 flex flex-col"
+        className="w-full space-y-5 flex flex-col max-h-96 overflow-auto"
       >
-        <article className="grid grid-cols-4 *:col-span-1 gap-5">
+        <article className="grid md:grid-cols-4 *:col-span-1 gap-5">
           <CustomInput
             register={register("name")}
             icon={<Music />}
@@ -116,7 +116,7 @@ export default function SongForm({ mode }: { mode: Mode }) {
           />
         </article>
 
-        <div className="w-1/2 mx-auto space-y-2">
+        <div className="w-full md:w-1/2 mx-auto space-y-2 sticky bottom-0 inset-x-0">
           <Button
             isSubmitting={isSubmitting}
             text="Song"

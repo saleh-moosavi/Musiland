@@ -16,7 +16,7 @@ export default function ProfileBtn({
   if (isMobile) {
     return (
       <button
-        className={`p-3 rounded-xl shadow-md shadow-my-black-low/50 text-center cursor-pointer relative group ${
+        className={`p-3 rounded-lg shadow-md shadow-my-black-low/50 text-center cursor-pointer relative group ${
           type === "normal"
             ? "bg-my-white-med dark:bg-my-black-med"
             : "bg-my-red-med"
@@ -32,7 +32,7 @@ export default function ProfileBtn({
   } else {
     return (
       <button
-        className={`px-4 py-2 min-w-52 rounded-xl shadow-md shadow-my-black-low/50 text-center w-full cursor-pointer ${
+        className={`px-4 py-2 min-w-52 rounded-lg shadow-md shadow-my-black-low/50 text-center w-full cursor-pointer ${
           type === "normal"
             ? "bg-my-white-med dark:bg-my-black-med"
             : "bg-my-red-med"
