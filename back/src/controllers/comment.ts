@@ -25,7 +25,25 @@ export const getCommentsBySongId = async (req: Request, res: Response) => {
       data: comments,
     });
   } catch (err: any) {
-    console.error("Error fetching comments by song ID:", err);
+    res.status(500).json({ error: "Internal server error", ok: false });
+  }
+};
+
+export const getCommentsByUserId = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    if (!id)
+      return res.status(400).json({ error: "User ID is required", ok: false });
+
+    const comments = await Comment.find({ user: id })
+      .populate("song", "name")
+      .sort({ createdAt: -1 });
+    res.json({
+      ok: true,
+      count: comments.length,
+      data: comments,
+    });
+  } catch (err: any) {
     res.status(500).json({ error: "Internal server error", ok: false });
   }
 };
@@ -48,29 +66,15 @@ export const createComment = async (req: Request, res: Response) => {
   }
 };
 
-export const updateComment = async (req: Request, res: Response) => {
-  try {
-    const { id } = req.params;
-    if (!id) return res.status(400).json({ error: "ID required" });
-    const updates = req.body;
-    const comment = await Comment.findByIdAndUpdate(id, updates, { new: true })
-      .populate("user")
-      .populate("song");
-    if (!comment) return res.status(404).json({ error: "Comment not found" });
-    res.json(comment);
-  } catch (err: any) {
-    res.status(400).json({ error: err.message });
-  }
-};
-
 export const deleteComment = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
     if (!id) return res.status(400).json({ error: "ID required" });
     const comment = await Comment.findByIdAndDelete(id);
-    if (!comment) return res.status(404).json({ error: "Comment not found" });
-    res.json({ message: "Comment deleted" });
+    if (!comment)
+      return res.status(404).json({ error: "Comment not found", ok: false });
+    res.json({ message: "Comment deleted", ok: true });
   } catch (err: any) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: err.message, ok: false });
   }
 };

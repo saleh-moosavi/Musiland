@@ -19,7 +19,9 @@ export default function DesktopView({
         </Link>
       )}
 
-      <ProfileBtn title="Comments" />
+      <Link href="/profile/comment">
+        <ProfileBtn title="Comments" />
+      </Link>
       <Link href="/profile/like">
         <ProfileBtn title="Likes" />
       </Link>

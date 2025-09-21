@@ -54,7 +54,6 @@ export default function AddComment({ id: songId }: { id: string }) {
       credentials: "include",
     });
     const resData = await res.json();
-    console.log(resData);
     setValue("comment", "");
     if (resData.ok) {
       setComments([...comments, resData.comment]);

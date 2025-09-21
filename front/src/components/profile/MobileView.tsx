@@ -22,9 +22,11 @@ export default function MobileView({
         </Link>
       )}
 
-      <ProfileBtn title="Comments" isMobile>
-        <MessageSquareMore />
-      </ProfileBtn>
+      <Link href="/profile/comment">
+        <ProfileBtn title="Comments" isMobile>
+          <MessageSquareMore />
+        </ProfileBtn>
+      </Link>
       <Link href="/profile/like">
         <ProfileBtn title="Likes" isMobile>
           <Heart />
