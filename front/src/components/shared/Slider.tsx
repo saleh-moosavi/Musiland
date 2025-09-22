@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import PlayButton from "./PlayButton";
-import { GetSong } from "@/types/song";
 import SliderWrapper from "./SliderWrapper";
+import { getAllSongs } from "@/services/song";
 
 export default async function Slider({
   title,
@@ -11,13 +11,11 @@ export default async function Slider({
   title: string;
   query: string;
 }) {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/songs?${query}&page=1,10`
-  );
-  if (!response.ok) {
+  const songs = await getAllSongs(`${query}&page=1,10`);
+
+  if (songs === null) {
     throw new Error("Failed to fetch Slider Songs");
   }
-  const songs: GetSong[] = await response.json();
 
   return (
     <>

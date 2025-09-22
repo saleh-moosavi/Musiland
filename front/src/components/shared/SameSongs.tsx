@@ -5,6 +5,7 @@ import PlayButton from "./PlayButton";
 import { GetSong } from "@/types/song";
 import { Heart, X } from "lucide-react";
 import useUserStore from "@/store/userStore";
+import { getAllSongs } from "@/services/song";
 import useMusicStore from "@/store/musicStore";
 import useToggleLike from "@/hooks/useToggleLike";
 import { generalItems } from "@/types/generalItems";
@@ -25,11 +26,12 @@ export default function SameSongs() {
 
   useEffect(() => {
     const fetchSongs = async () => {
-      const url = new URL(`${process.env.NEXT_PUBLIC_API_URL}/songs?${query}`);
-      const response = await fetch(url);
-      const data: GetSong[] = await response.json();
-
-      setSameSongsList(data);
+      const songs = await getAllSongs(query);
+      if (songs === null) {
+        setSameSongsList([]);
+      } else {
+        setSameSongsList(songs);
+      }
     };
     if (
       sameSongsList?.length < 1 ||

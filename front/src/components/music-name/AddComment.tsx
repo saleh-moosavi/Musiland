@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { useEffect, useRef } from "react";
 import useSongStore from "@/store/songStore";
 import useToastStore from "@/store/toastStore";
+import { addComment } from "@/services/comment";
 import useAuthCheck from "@/hooks/useAuthCheck";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -43,20 +44,14 @@ export default function AddComment({ id: songId }: { id: string }) {
 
   //handle Send Comment
   const submitComment = async (data: { comment: string }) => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comments`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        description: data.comment,
-        user: userIdRef.current,
-        song: songId,
-      }),
-      credentials: "include",
-    });
-    const resData = await res.json();
     setValue("comment", "");
-    if (resData.ok) {
-      setComments([...comments, resData.comment]);
+    const addedComment = await addComment(data, userIdRef.current, songId);
+    if (addedComment.ok) {
+      setComments([addedComment.comment, ...comments]);
+    } else {
+      setIsToastOpen(true);
+      setToastColor("red");
+      setToastTitle("Error Adding Comment");
     }
   };
 

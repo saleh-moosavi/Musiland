@@ -1,19 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
-import { GetSong } from "@/types/song";
+import { getAllSongs } from "@/services/song";
 import HeroCarouselWrapper from "./HeroCarouselWrapper";
 
 export default async function HeroCarousel() {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/songs?page=1,10&sort=date`,
-    { next: { revalidate: 60 } }
-  );
-
-  if (!res.ok) {
-    throw new Error("Failed to fetch songs");
-  }
-
-  const songs: GetSong[] = await res.json();
+  const songs = await getAllSongs("page=1,10&sort=date");
 
   return (
     <HeroCarouselWrapper>

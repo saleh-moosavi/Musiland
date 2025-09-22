@@ -35,7 +35,7 @@ export const getAllSong = async (req: Request, res: Response) => {
       });
 
       if (foundGenres.length === 0) {
-        return res.status(404).json({ message: "No genres found" });
+        return res.status(404).json({ message: "No genres found", ok: false });
       }
 
       const genreIds = foundGenres.map((g) => g._id);
@@ -55,7 +55,9 @@ export const getAllSong = async (req: Request, res: Response) => {
       });
 
       if (foundPlaylists.length === 0) {
-        return res.status(404).json({ message: "No playlist found" });
+        return res
+          .status(404)
+          .json({ message: "No playlist found", ok: false });
       }
 
       const playlistIds = foundPlaylists.map((p) => p._id);
@@ -88,25 +90,26 @@ export const getAllSong = async (req: Request, res: Response) => {
       .skip(skip)
       .limit(limit);
 
-    res.json(songs);
+    res.status(200).json({ songs: songs, ok: true });
   } catch (err: any) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: err.message, ok: false });
   }
 };
 
 export const getByIdSong = async (req: Request, res: Response) => {
   try {
     const { id } = req.params;
-    if (!id) return res.status(400).json({ error: "ID required" });
+    if (!id) return res.status(400).json({ error: "ID required", ok: false });
     const song = await Song.findById(id)
       .populate("singer")
       .populate("album")
       .populate("genres")
       .populate("playlists");
-    if (!song) return res.status(404).json({ error: "Song not found" });
-    res.json(song);
+    if (!song)
+      return res.status(404).json({ error: "Song not found", ok: false });
+    res.json({ song: song, ok: true });
   } catch (err: any) {
-    res.status(500).json({ error: err.message });
+    res.status(500).json({ error: err.message, ok: false });
   }
 };
 

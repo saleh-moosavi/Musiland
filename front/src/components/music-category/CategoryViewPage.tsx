@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { GetSong } from "@/types/song";
 import PlayButton from "../shared/PlayButton";
+import { getAllSongs } from "@/services/song";
 
 export default async function CategoryViewPage({
   query,
@@ -11,18 +12,9 @@ export default async function CategoryViewPage({
   query: string;
   title: string;
 }) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/songs?${query}`);
-  const songs = await res.json();
+  const songs = await getAllSongs(query);
 
-  if (!Array.isArray(songs)) {
-    return (
-      <div className="text-my-red-med font-bold text-center mt-5">
-        {songs.message || "Unexpected error"}
-      </div>
-    );
-  }
-
-  if (songs.length < 1) {
+  if (songs?.length < 1 || !Array.isArray(songs)) {
     return (
       <div className="text-my-red-med font-bold text-center mt-5">
         Song not found
