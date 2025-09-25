@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import useUserStore from "@/store/userStore";
+import { registerUser } from "@/services/auth";
 import Loading from "@/components/shared/Loading";
 import { signUpSchema } from "@/constants/zodSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -42,16 +43,9 @@ export default function RegisterView() {
     password: string;
   }) => {
     try {
-      const res = await fetch("/api/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, email, password }),
-        credentials: "include",
-      });
+      const result = await registerUser(username, email, password);
 
-      const result = await res.json();
-
-      if (res.ok) {
+      if (result.ok) {
         router.push("/profile");
       } else {
         setError(result.error || "Register failed");

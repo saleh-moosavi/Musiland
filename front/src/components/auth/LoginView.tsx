@@ -4,6 +4,7 @@ import CustomInput from "./CustomInput";
 import Loading from "../shared/Loading";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { loginUser } from "@/services/auth";
 import { useEffect, useState } from "react";
 import useUserStore from "@/store/userStore";
 import { LockIcon, MailIcon } from "lucide-react";
@@ -40,17 +41,7 @@ export default function LoginView() {
     password: string;
   }) => {
     try {
-      const res = await fetch("/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-        credentials: "include",
-      });
-
-      const result = await res.json();
+      const result = await loginUser(email, password);
 
       if (result.ok) {
         setIsLoggedIn(true);
