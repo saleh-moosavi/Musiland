@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { addEditUser } from "@/services/user";
 import useToastStore from "@/store/toastStore";
 
 export function useUserFormSubmit({
   mode,
   userId,
 }: {
-  mode: string;
+  mode: "add" | "edit";
   userId: string | null;
 }) {
   const router = useRouter();
@@ -24,19 +25,8 @@ export function useUserFormSubmit({
     setError(null);
 
     try {
-      const url =
-        mode === "add"
-          ? `${process.env.NEXT_PUBLIC_API_URL}/users`
-          : `${process.env.NEXT_PUBLIC_API_URL}/users/${userId}`;
-      const method = mode === "add" ? "POST" : "PUT";
-      const res = await fetch(url, {
-        method: method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-
-      const result = await res.json();
-      if (!res.ok) throw new Error(result.error || "Something went wrong");
+      const result: any = await addEditUser(mode, userId, data);
+      if (!result.ok) throw new Error(result.error || "Something went wrong");
       setIsToastOpen(true);
       setToastColor("green");
       setToastTitle(

@@ -1,5 +1,6 @@
 import useUserStore from "@/store/userStore";
 import useSongStore from "@/store/songStore";
+import { likeToggler } from "@/services/like";
 import useToastStore from "@/store/toastStore";
 
 export default function useToggleLike() {
@@ -14,32 +15,25 @@ export default function useToggleLike() {
       setToastTitle("Please Login First");
       return;
     }
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/likes`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        userId,
-        songId,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.ok === true) {
-          setLikesCount(data.newLikes);
-          likedSongs.includes(songId)
-            ? setLikedSongs(likedSongs.filter((item) => item !== songId))
-            : setLikedSongs([...likedSongs, songId]);
-        } else {
-          setIsToastOpen(true);
-          setToastColor("orange");
-          setToastTitle(data.error || "Error");
-        }
-      })
-      .catch((err) => {
+    try {
+      const data: any = await likeToggler(userId, songId);
+      if (data.ok === true) {
+        setLikesCount(data.newLikes);
+        likedSongs.includes(songId)
+          ? setLikedSongs(likedSongs.filter((item) => item !== songId))
+          : setLikedSongs([...likedSongs, songId]);
+      } else {
+        setIsToastOpen(true);
+        setToastColor("orange");
+        setToastTitle(data.error || "Error");
+      }
+    } catch {
+      (err: any) => {
         setIsToastOpen(true);
         setToastColor("orange");
         setToastTitle(err || "Error");
-      });
+      };
+    }
   };
 
   return {

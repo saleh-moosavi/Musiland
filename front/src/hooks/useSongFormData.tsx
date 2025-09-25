@@ -51,7 +51,7 @@ export function useSongFormData({
         setPlaylists(await playlistRes.json());
 
         if (mode === "edit" && songRes) {
-          const songData = await songRes.json();
+          const songData = (await songRes.json()).song;
           setSong({
             name: songData.name || "",
             lyric: songData.lyric || "",

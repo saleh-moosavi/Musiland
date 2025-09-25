@@ -2,6 +2,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import useUserStore from "@/store/userStore";
+import { logoutUser } from "@/services/auth";
 
 export default function useAuthCheck(likes?: boolean) {
   const router = useRouter();
@@ -12,12 +13,7 @@ export default function useAuthCheck(likes?: boolean) {
   const { userData, setUserData } = useUserStore();
 
   const logOut = async () => {
-    const res = await fetch("/api/logout", {
-      method: "POST",
-      credentials: "include",
-    });
-
-    const data = await res.json();
+    const data = await logoutUser();
 
     if (data.ok) {
       setIsLoggedIn(false);

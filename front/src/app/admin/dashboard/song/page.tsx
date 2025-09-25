@@ -1,13 +1,11 @@
 import Link from "next/link";
+import { getAllSongs } from "@/services/song";
 import Button from "@/components/shared/Button";
 import EditBtn from "@/components/admin/EditBtn";
 import DeleteBtn from "@/components/admin/DeleteBtn";
 
 export default async function SongList() {
-  const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/songs`, {
-    cache: "no-store", // Ensure fresh data
-  });
-  const songs = await data.json();
+  const songs = await getAllSongs("");
 
   return (
     <section className="h-full w-full flex flex-col justify-start gap-10 dark:text-my-white-low">

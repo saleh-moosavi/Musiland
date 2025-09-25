@@ -172,22 +172,27 @@ export const updateSong = async (req: Request, res: Response) => {
       genreIds,
       playlistIds,
     } = req.body;
-    if (!id) return res.status(400).json({ error: "ID required" });
-    if (!name) return res.status(400).json({ error: "Name required" });
+    if (!id) return res.status(400).json({ ok: false, error: "ID required" });
+    if (!name)
+      return res.status(400).json({ ok: false, error: "Name required" });
     if (singerId && !(await Singer.findById(singerId)))
-      return res.status(400).json({ error: "Invalid singer ID" });
+      return res.status(400).json({ ok: false, error: "Invalid singer ID" });
     if (albumId && !(await Album.findById(albumId)))
-      return res.status(400).json({ error: "Invalid album ID" });
+      return res.status(400).json({ ok: false, error: "Invalid album ID" });
     if (genreIds) {
       for (const id of genreIds) {
         if (!(await Genre.findById(id)))
-          return res.status(400).json({ error: `Invalid genre ID: ${id}` });
+          return res
+            .status(400)
+            .json({ ok: false, error: `Invalid genre ID: ${id}` });
       }
     }
     if (playlistIds) {
       for (const id of playlistIds) {
         if (!(await Playlist.findById(id)))
-          return res.status(400).json({ error: `Invalid playlist ID: ${id}` });
+          return res
+            .status(400)
+            .json({ ok: false, error: `Invalid playlist ID: ${id}` });
       }
     }
 
@@ -209,10 +214,11 @@ export const updateSong = async (req: Request, res: Response) => {
       .populate("album")
       .populate("genres")
       .populate("playlists");
-    if (!song) return res.status(404).json({ error: "Song not found" });
-    res.json(song);
+    if (!song)
+      return res.status(404).json({ ok: false, error: "Song not found" });
+    res.json({ song: song, ok: true });
   } catch (err: any) {
-    res.status(400).json({ error: err.message });
+    res.status(400).json({ error: err.message, ok: false });
   }
 };
 

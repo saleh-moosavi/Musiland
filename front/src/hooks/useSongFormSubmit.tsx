@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { SongFormData } from "@/types/song";
+import { addEditSong } from "@/services/song";
 import useToastStore from "@/store/toastStore";
 
 interface UseSongFormSubmitProps {
@@ -26,23 +27,10 @@ export function useSongFormSubmit({
   const submit = async (data: SongFormData) => {
     setError(null);
     setIsSubmitting(true);
-
-    const url =
-      mode === "add"
-        ? `${process.env.NEXT_PUBLIC_API_URL}/songs`
-        : `${process.env.NEXT_PUBLIC_API_URL}/songs/${songId}`;
-    const method = mode === "add" ? "POST" : "PUT";
-
     try {
-      const res = await fetch(url, {
-        method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-        credentials: "include",
-      });
+      const result: any = await addEditSong(mode, songId, data);
 
-      const result = await res.json();
-      if (res.ok) {
+      if (result.ok) {
         setIsToastOpen(true);
         setToastTitle(
           `Song ${mode === "add" ? "added" : "updated"} successfully!`

@@ -30,3 +30,14 @@ export const loginUser = async (email: string, password: string) => {
 
   return result;
 };
+
+export const logoutUser = async () => {
+  const res = await fetch("/api/logout", {
+    method: "POST",
+    credentials: "include",
+  });
+
+  const data = await res.json();
+
+  return data;
+};
