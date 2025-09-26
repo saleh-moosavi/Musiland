@@ -1,22 +1,28 @@
 import { useEffect, useState } from "react";
+import { getAllGenres } from "@/services/genre";
 import { generalItems } from "@/types/generalItems";
+import { getAllPlaylists } from "@/services/playlist";
 
 export default function useNavbarData() {
   const [genres, setGenres] = useState<generalItems[]>([]);
   const [playlists, setPlaylists] = useState<generalItems[]>([]);
 
   useEffect(() => {
-    const fetchData = async (
-      url: string,
-      setter: React.Dispatch<React.SetStateAction<generalItems[]>>
-    ) => {
-      const response = await fetch(url);
-      const data = await response.json();
-      setter(data);
+    const fetchData = async () => {
+      try {
+        const [genresRes, playlistsRes] = await Promise.all([
+          getAllGenres(),
+          getAllPlaylists(),
+        ]);
+
+        setGenres(genresRes?.genres ?? []);
+        setPlaylists(playlistsRes?.playlists ?? []);
+      } catch (err) {
+        console.error("Navbar data fetch error:", err);
+      }
     };
 
-    fetchData(`${process.env.NEXT_PUBLIC_API_URL}/genres`, setGenres);
-    fetchData(`${process.env.NEXT_PUBLIC_API_URL}/playlists`, setPlaylists);
+    fetchData();
   }, []);
 
   return { genres, playlists };

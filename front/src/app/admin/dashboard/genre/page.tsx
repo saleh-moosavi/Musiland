@@ -1,11 +1,19 @@
 import Link from "next/link";
+import { getAllGenres } from "@/services/genre";
 import Button from "@/components/shared/Button";
 import EditBtn from "@/components/admin/EditBtn";
 import DeleteBtn from "@/components/admin/DeleteBtn";
 
 export default async function GenreList() {
-  const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/genres`);
-  const genres = await data.json();
+  const data = await getAllGenres();
+  if (data.ok === false) {
+    return (
+      <p className="dark:text-my-red-med font-semibold">
+        {data.error || "Something Went Wrong!!!"}
+      </p>
+    );
+  }
+  const { genres } = data;
   return (
     <section className="h-full w-full flex flex-col justify-start gap-10 dark:text-my-white-low">
       <Link href="/admin/dashboard/genre/add" className="w-fit self-end">

@@ -2,10 +2,18 @@ import Link from "next/link";
 import Button from "@/components/shared/Button";
 import EditBtn from "@/components/admin/EditBtn";
 import DeleteBtn from "@/components/admin/DeleteBtn";
+import { getAllPlaylists } from "@/services/playlist";
 
 export default async function PlaylistList() {
-  const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/playlists`);
-  const playlists = await data?.json();
+  const data = await getAllPlaylists();
+  if (data.ok === false) {
+    return (
+      <p className="dark:text-my-red-med font-semibold">
+        {data.error || "Something Went Wrong!!!"}
+      </p>
+    );
+  }
+  const { playlists } = data;
   return (
     <section className="h-full w-full flex flex-col justify-start gap-10 dark:text-my-white-low">
       <Link href="/admin/dashboard/playlist/add" className="w-fit self-end">

@@ -9,7 +9,6 @@ export const getSong = async (id: string): Promise<GetSong> => {
 export const getAllSongs = async (query: string): Promise<GetSong[]> => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/songs?${query}`);
   const data = await res.json();
-  console.log(data);
   return data.songs;
 };
 
