@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ProfileBtnType } from "@/types/shared";
 
 export default function ProfileBtn({
   title,
@@ -6,13 +6,7 @@ export default function ProfileBtn({
   clickHandler,
   type = "normal",
   isMobile = false,
-}: {
-  title: string;
-  isMobile?: boolean;
-  children?: ReactNode;
-  type?: "normal" | "logout";
-  clickHandler?: () => Promise<void>;
-}) {
+}: ProfileBtnType) {
   if (isMobile) {
     return (
       <button

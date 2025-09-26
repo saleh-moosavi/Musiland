@@ -1,9 +1,5 @@
-interface ButtonPropTypes {
-  isSubmitting?: boolean;
-  text: string;
-  mode?: "add" | "edit";
-  type: "submit" | "reset" | "button" | undefined;
-}
+import { ButtonPropTypes } from "@/types/shared";
+
 export default function Button({
   isSubmitting,
   text,

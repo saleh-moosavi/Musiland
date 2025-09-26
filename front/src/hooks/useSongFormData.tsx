@@ -1,25 +1,15 @@
 import { useState, useEffect } from "react";
-import { SongFormData } from "@/types/song";
 import { GenericFormData } from "@/types/inputTypes";
-
-interface UseSongFormDataProps {
-  mode: "add" | "edit";
-  songId: string | null;
-}
-
-interface UseSongFormDataResult {
-  singers: GenericFormData[];
-  albums: GenericFormData[];
-  genres: GenericFormData[];
-  playlists: GenericFormData[];
-  song: SongFormData | null;
-  error: string | null;
-}
+import {
+  SongFormData,
+  UseSongFormDataResult,
+  UseSongFormProps,
+} from "@/types/song";
 
 export function useSongFormData({
   mode,
   songId,
-}: UseSongFormDataProps): UseSongFormDataResult {
+}: UseSongFormProps): UseSongFormDataResult {
   const [singers, setSingers] = useState<GenericFormData[]>([]);
   const [albums, setAlbums] = useState<GenericFormData[]>([]);
   const [genres, setGenres] = useState<GenericFormData[]>([]);

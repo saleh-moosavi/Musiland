@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { generalItems } from "./generalItems";
+import { GenericFormData } from "./inputTypes";
 
 export const addSongSchema = z.object({
   name: z.string().min(1, "Song name is required"),
@@ -32,3 +33,23 @@ export interface GetSong {
 }
 
 export type Mode = "add" | "edit";
+
+export interface UseSongFormProps {
+  mode: Mode;
+  songId: string | null;
+}
+
+export interface UseSongFormSubmitResult {
+  submit: (data: SongFormData) => Promise<void>;
+  error: string | null;
+  isSubmitting: boolean;
+}
+
+export interface UseSongFormDataResult {
+  singers: GenericFormData[];
+  albums: GenericFormData[];
+  genres: GenericFormData[];
+  playlists: GenericFormData[];
+  song: SongFormData | null;
+  error: string | null;
+}

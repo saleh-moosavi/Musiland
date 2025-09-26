@@ -1,24 +1,17 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { SongFormData } from "@/types/song";
 import { addEditSong } from "@/services/song";
 import useToastStore from "@/store/toastStore";
-
-interface UseSongFormSubmitProps {
-  mode: "add" | "edit";
-  songId: string | null;
-}
-
-interface UseSongFormSubmitResult {
-  submit: (data: SongFormData) => Promise<void>;
-  error: string | null;
-  isSubmitting: boolean;
-}
+import {
+  SongFormData,
+  UseSongFormProps,
+  UseSongFormSubmitResult,
+} from "@/types/song";
 
 export function useSongFormSubmit({
   mode,
   songId,
-}: UseSongFormSubmitProps): UseSongFormSubmitResult {
+}: UseSongFormProps): UseSongFormSubmitResult {
   const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);

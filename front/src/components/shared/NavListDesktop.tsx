@@ -1,12 +1,5 @@
 import Link from "next/link";
-import { generalItems } from "@/types/generalItems";
-
-interface NavListDesktopProps {
-  navbarData: generalItems[];
-  onMouseEnter: () => void;
-  onMouseLeave: () => void;
-  type: "genre" | "playlist";
-}
+import { NavListDesktopProps } from "@/types/shared";
 
 const NavListDesktop: React.FC<NavListDesktopProps> = ({
   navbarData,
