@@ -2,6 +2,7 @@
 import { X } from "lucide-react";
 import { useEffect, useState } from "react";
 import useUserStore from "@/store/userStore";
+import { getUserLikes } from "@/services/like";
 import useToggleLike from "@/hooks/useToggleLike";
 import PlayButton from "@/components/shared/PlayButton";
 
@@ -12,15 +13,9 @@ export default function page() {
 
   useEffect(() => {
     if (!userId) return;
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/likes`, {
-      method: "POST",
-      body: JSON.stringify({ userId }),
-      headers: { "Content-Type": "application/json" },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setLikedSongs(data);
-      });
+    getUserLikes(userId).then((data) => {
+      setLikedSongs(data);
+    });
   }, [userId]);
 
   {

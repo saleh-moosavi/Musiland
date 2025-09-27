@@ -1,11 +1,11 @@
 import Link from "next/link";
+import { getSingers } from "@/services/singer";
 import Button from "@/components/shared/Button";
 import EditBtn from "@/components/admin/EditBtn";
 import DeleteBtn from "@/components/admin/DeleteBtn";
 
 export default async function SingerList() {
-  const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/singers`);
-  const singers = await data.json();
+  const singers = await getSingers();
   return (
     <section className="h-full w-full flex flex-col justify-start gap-10 dark:text-my-white-low">
       <Link href="/admin/dashboard/singer/add" className="w-fit self-end">

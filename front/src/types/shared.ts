@@ -22,3 +22,8 @@ export interface ProfileBtnType {
   type?: "normal" | "logout";
   clickHandler?: () => Promise<void>;
 }
+
+export interface usicCategoryPropsTypeM {
+  params: { music_category: string };
+  searchParams: { [key: string]: string | string[] };
+}

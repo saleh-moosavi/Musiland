@@ -1,12 +1,12 @@
 import Link from "next/link";
+import { getAlbums } from "@/services/album";
 import Button from "@/components/shared/Button";
 import EditBtn from "@/components/admin/EditBtn";
 import { generalItems } from "@/types/generalItems";
 import DeleteBtn from "@/components/admin/DeleteBtn";
 
 export default async function AlbumList() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/albums`);
-  const data = await res.json();
+  const data = await getAlbums();
 
   if (data.ok === false) {
     return (

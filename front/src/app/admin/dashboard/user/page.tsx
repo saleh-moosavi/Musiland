@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { GetUser } from "@/types/user";
+import { getUsers } from "@/services/user";
 import Button from "@/components/shared/Button";
 import EditBtn from "@/components/admin/EditBtn";
 import DeleteBtn from "@/components/admin/DeleteBtn";
 
 export default async function page() {
-  const data = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users`);
-  const users = await data.json();
+  const users = await getUsers();
 
   return (
     <section className="h-full w-full flex flex-col justify-start gap-10 dark:text-my-white-low">

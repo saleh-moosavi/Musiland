@@ -3,6 +3,7 @@ import { Trash } from "lucide-react";
 import { useEffect, useState } from "react";
 import useUserStore from "@/store/userStore";
 import useToastStore from "@/store/toastStore";
+import { getUserComments } from "@/services/comment";
 import TimeAgo from "@/components/music-name/TimeAgo";
 import { CommentByUserId, getCommentByUserId } from "@/types/comment";
 
@@ -11,19 +12,12 @@ export default function page() {
   const [comments, setComments] = useState<CommentByUserId[] | null>(null);
   const { setIsToastOpen, setToastColor, setToastTitle } = useToastStore();
 
-  const getComments = async (): Promise<CommentByUserId[]> => {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/comments/user/${userId}`
-    );
-    if (!res.ok) throw new Error("Failed to fetch comments");
-    const data: getCommentByUserId = await res.json();
-    return data.data;
-  };
-
   useEffect(() => {
-    getComments().then((data) => {
-      setComments(data);
-    });
+    getUserComments(userId)
+      .then((data) => {
+        setComments(data);
+      })
+      .catch((err) => console.log(err));
   }, [userId]);
 
   const handleDelete = async (id: string) => {
