@@ -28,3 +28,9 @@ export const getUsers = async () => {
   const data = await res.json();
   return data;
 };
+
+export const getUser = async (userId: string) => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${userId}`);
+  const data = await res.json();
+  return data;
+};

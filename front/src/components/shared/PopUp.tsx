@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import PopUpStore from "@/store/popUpStore";
 import useToastStore from "@/store/toastStore";
+import { popUpDelete } from "@/services/shared";
 
 export default function DeleteConfirm() {
   const { id, name, type, isOpen, setIsOpen } = PopUpStore();
@@ -11,12 +12,12 @@ export default function DeleteConfirm() {
 
   const handleDelete = async () => {
     try {
-      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${type}s/${id}`, {
-        method: "DELETE",
-      });
-      setIsToastOpen(true);
-      setToastTitle(`${name} Deleted Successfully`);
-      setToastColor("green");
+      const data = await popUpDelete(type, id);
+      if (data.ok) {
+        setIsToastOpen(true);
+        setToastTitle(`${name} Deleted Successfully`);
+        setToastColor("green");
+      }
     } catch (err) {
       alert("Failed to delete.");
       setIsToastOpen(true);

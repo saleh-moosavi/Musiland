@@ -1,3 +1,4 @@
+import { getUser } from "@/services/user";
 import { useEffect, useState } from "react";
 import { UserFormData } from "@/types/user";
 
@@ -13,8 +14,7 @@ export function useUserFormData({
 
   useEffect(() => {
     if (mode === "edit" && userId) {
-      fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/${userId}`)
-        .then((res) => res.json())
+      getUser(userId)
         .then((data) => {
           if (data.error) setError(data.error);
           else setUser(data);

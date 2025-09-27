@@ -39,3 +39,13 @@ export const getUserComments = async (
   const data: getCommentByUserId = await res.json();
   return data.data;
 };
+
+export const deleteComment = async (id: string) => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comments/${id}`, {
+    method: "DELETE",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+  });
+  const data = await res.json();
+  return data;
+};

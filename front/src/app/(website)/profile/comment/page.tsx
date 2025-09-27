@@ -3,9 +3,9 @@ import { Trash } from "lucide-react";
 import { useEffect, useState } from "react";
 import useUserStore from "@/store/userStore";
 import useToastStore from "@/store/toastStore";
-import { getUserComments } from "@/services/comment";
+import { CommentByUserId } from "@/types/comment";
 import TimeAgo from "@/components/music-name/TimeAgo";
-import { CommentByUserId, getCommentByUserId } from "@/types/comment";
+import { deleteComment, getUserComments } from "@/services/comment";
 
 export default function page() {
   const { userId } = useUserStore();
@@ -21,15 +21,7 @@ export default function page() {
   }, [userId]);
 
   const handleDelete = async (id: string) => {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/comments/${id}`,
-      {
-        method: "DELETE",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-      }
-    );
-    const data = await res.json();
+    const data = await deleteComment(id);
     if (data.ok === true) {
       setIsToastOpen(true);
       setToastColor("green");

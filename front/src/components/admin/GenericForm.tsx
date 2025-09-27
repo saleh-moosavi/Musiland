@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import useToastStore from "@/store/toastStore";
 import { formSchemas } from "@/constants/zodSchema";
+import { addEditGenerics } from "@/services/shared";
 import { GenericFormProps } from "@/types/inputTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { iconClasses } from "@/constants/styleClasses";
@@ -50,24 +51,10 @@ export default function GenericForm({
   const onSubmit = async (data: { name: string }) => {
     setError(null);
 
-    const url =
-      mode === "add"
-        ? `${process.env.NEXT_PUBLIC_API_URL}${baseUrl}`
-        : `${process.env.NEXT_PUBLIC_API_URL}${baseUrl}/${itemId}`;
-
-    const method = mode === "add" ? "POST" : "PUT";
-
     try {
-      const res = await fetch(url, {
-        method,
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-        credentials: "include",
-      });
+      const result = await addEditGenerics(mode, baseUrl, itemId, data);
 
-      const result = await res.json();
-
-      if (res.ok) {
+      if (result.ok) {
         reset();
         setIsToastOpen(true);
         setToastTitle(

@@ -1,5 +1,10 @@
+import { getSong } from "@/services/song";
 import { useState, useEffect } from "react";
+import { getAlbums } from "@/services/album";
+import { getSingers } from "@/services/singer";
+import { getAllGenres } from "@/services/genre";
 import { GenericFormData } from "@/types/inputTypes";
+import { getAllPlaylists } from "@/services/playlist";
 import {
   SongFormData,
   UseSongFormDataResult,
@@ -20,28 +25,26 @@ export function useSongFormData({
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const fetches = [
-          fetch(`${process.env.NEXT_PUBLIC_API_URL}/singers`),
-          fetch(`${process.env.NEXT_PUBLIC_API_URL}/albums`),
-          fetch(`${process.env.NEXT_PUBLIC_API_URL}/genres`),
-          fetch(`${process.env.NEXT_PUBLIC_API_URL}/playlists`),
+        const fetchesList = [
+          getSingers(),
+          getAlbums(),
+          getAllGenres(),
+          getAllPlaylists(),
         ];
         if (mode === "edit" && songId) {
-          fetches.push(
-            fetch(`${process.env.NEXT_PUBLIC_API_URL}/songs/${songId}`)
-          );
+          fetchesList.push(getSong(songId));
         }
 
         const [singerRes, albumRes, genreRes, playlistRes, songRes] =
-          await Promise.all(fetches);
+          await Promise.all(fetchesList);
 
-        setSingers(await singerRes.json());
-        setAlbums(await albumRes.json());
-        setGenres(await genreRes.json());
-        setPlaylists(await playlistRes.json());
+        setSingers(singerRes);
+        setAlbums(albumRes.albums);
+        setGenres(genreRes.genres);
+        setPlaylists(playlistRes.playlists);
 
         if (mode === "edit" && songRes) {
-          const songData = (await songRes.json()).song;
+          const songData = songRes;
           setSong({
             name: songData.name || "",
             lyric: songData.lyric || "",
