@@ -1,5 +1,6 @@
 import Likes from "./Likes";
 import Link from "next/link";
+import Image from "next/image";
 import { GetSong } from "@/types/song";
 import PlayButton from "../shared/PlayButton";
 import { MessageSquareMore } from "lucide-react";
@@ -22,10 +23,13 @@ export default function SingleMusicView({
 
   return (
     <div className="grid lg:grid-cols-3 items-start gap-10 w-full dark:text-my-white-low">
-      <img
-        className="col-span-1 lg:w-96 object-cover rounded-3xl h-full w-full"
+      <Image
         src={song.coverUrl}
         alt={song.name}
+        width={500}
+        height={500}
+        priority
+        className="col-span-1 lg:w-96 object-cover rounded-3xl h-full w-full"
       />
       <section className="col-span-1 flex flex-col *:w-full h-full justify-between items-start">
         <div className="space-y-2">

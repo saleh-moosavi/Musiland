@@ -1,9 +1,10 @@
 import "../globals.css";
+import { lazy } from "react";
 import type { Metadata } from "next";
-import Toast from "@/components/shared/Toast";
 import SideBar from "@/components/admin/SideBar";
 import DeleteConfirm from "@/components/shared/PopUp";
 import SideBarMobile from "@/components/admin/SideBarMobile";
+const Toast = lazy(() => import("@/components/shared/Toast"));
 
 export const metadata: Metadata = {
   title: "Administrator",

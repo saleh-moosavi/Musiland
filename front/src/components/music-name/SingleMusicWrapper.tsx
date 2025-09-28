@@ -1,10 +1,11 @@
-import Comments from "./Comments";
-import Slider from "../shared/Slider";
-import AddComment from "./AddComment";
+import { lazy } from "react";
 import { getSong } from "@/services/song";
 import SingleMusicView from "./SingleMusicView";
 import { getComments } from "@/services/comment";
 import { generalItems } from "@/types/generalItems";
+const Comments = lazy(() => import("./Comments"));
+const AddComment = lazy(() => import("./AddComment"));
+const Slider = lazy(() => import("../shared/Slider"));
 
 export default async function SingleMusicWrapper({ id }: { id: string }) {
   const [song, comments] = await Promise.all([getSong(id), getComments(id)]);

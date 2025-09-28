@@ -3,6 +3,7 @@ import { getAllSongs } from "@/services/song";
 import Button from "@/components/shared/Button";
 import EditBtn from "@/components/admin/EditBtn";
 import DeleteBtn from "@/components/admin/DeleteBtn";
+import Image from "next/image";
 
 export default async function SongList() {
   const songs = await getAllSongs("");
@@ -20,8 +21,10 @@ export default async function SongList() {
               key={song._id}
             >
               <article className="flex gap-5 h-full">
-                <img
-                  src={song.coverUrl || "/placeholder.jpg"} // Fallback image
+                <Image
+                  width={500}
+                  height={500}
+                  src={song.coverUrl || "/placeholder.jpg"}
                   alt="Song Image Cover"
                   className="object-cover max-w-18 sm:max-w-40 rounded-2xl hover:grayscale-75 transition-all duration-500"
                 />
