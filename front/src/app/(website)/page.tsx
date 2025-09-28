@@ -1,9 +1,10 @@
+import { lazy } from "react";
 import { Metadata } from "next";
-import Slider from "@/components/shared/Slider";
 import HeroCarousel from "@/components/home/HeroCarousel";
+const Slider = lazy(() => import("@/components/shared/Slider"));
 
 export const metadata: Metadata = {
-  title: "Musiland | Home",
+  title: "Home",
   description: "Newest Song and Musics",
 };
 

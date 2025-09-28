@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect } from "react";
 import PlayButton from "./PlayButton";
 import { GetSong } from "@/types/song";
@@ -66,10 +67,12 @@ export default function SameSongs() {
               key={song._id}
             >
               <div className="relative group rounded-xl overflow-hidden">
-                <img
+                <Image
                   src={song.coverUrl}
                   alt={song.name}
                   sizes="(max-width: 768px) 100vw, 50vw"
+                  width={80}
+                  height={80}
                   className="w-20 object-cover aspect-square"
                   loading="lazy"
                 />

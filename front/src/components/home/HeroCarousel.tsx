@@ -8,7 +8,7 @@ export default async function HeroCarousel() {
 
   return (
     <HeroCarouselWrapper>
-      {songs.map((song) => (
+      {songs.map((song, index) => (
         <Link
           href={`/music/${song.singer?.name || "Unknown"}-${song._id}`}
           key={song._id}
@@ -21,10 +21,10 @@ export default async function HeroCarousel() {
             src={song.coverUrl}
             alt={song.name}
             sizes="(max-width: 768px) 100vw, 50vw"
-            width={100}
-            height={100}
+            priority={index < 3}
+            width={800}
+            height={344}
             className="object-cover rounded-3xl w-full h-86"
-            loading="lazy"
           />
         </Link>
       ))}

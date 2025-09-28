@@ -1,14 +1,15 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import Image from "next/image";
+import { lazy, useState } from "react";
 import useTheme from "@/hooks/useTheme";
-import NavListMobile from "./NavListMobile";
-import NavListDesktop from "./NavListDesktop";
 import useAuthCheck from "@/hooks/useAuthCheck";
 import useWindowStore from "@/store/windowStore";
 import useNavbarData from "@/hooks/useNavbarData";
 import { generalItems } from "@/types/generalItems";
 import { LogIn, Menu, Moon, Sun, User } from "lucide-react";
+const NavListMobile = lazy(() => import("./NavListMobile"));
+const NavListDesktop = lazy(() => import("./NavListDesktop"));
 
 export default function Navbar() {
   const { isLoggedIn } = useAuthCheck();
@@ -60,8 +61,10 @@ export default function Navbar() {
           <Link href="/">
             <div className="relative lg:mx-20">
               <div className="w-18 lg:w-20 h-18 lg:h-20 flex place-content-center p-2 absolute inset-0 -top-5 -translate-x-1/2 bg-my-white-low dark:bg-my-black-max rounded-full shadow-md shadow-my-black-max/30 dark:shadow-my-white-high/30">
-                <img
+                <Image
                   src={theme == "light" ? "/Logo-light.png" : "/Logo-dark.png"}
+                  width={500}
+                  height={500}
                   className="scale-50"
                   alt="Logo"
                 />

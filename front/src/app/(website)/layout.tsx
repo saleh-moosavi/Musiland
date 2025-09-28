@@ -1,9 +1,10 @@
 import "../globals.css";
+import { lazy } from "react";
 import type { Metadata } from "next";
 import Navbar from "@/components/shared/Navbar";
 import Player from "@/components/shared/Player";
-import SameSongs from "@/components/shared/SameSongs";
-import Toast from "@/components/shared/Toast";
+const Toast = lazy(() => import("@/components/shared/Toast"));
+const SameSongs = lazy(() => import("@/components/shared/SameSongs"));
 
 export const metadata: Metadata = {
   title: {
@@ -11,6 +12,21 @@ export const metadata: Metadata = {
     template: "Musiland | %s",
   },
   description: "Listen to songs and music on Musiland",
+  openGraph: {
+    title: "Musiland - Listen to Newest Songs",
+    description: "Listen to songs and music on Musiland",
+    url: "https://musiland.com",
+    siteName: "Musiland",
+    images: [
+      {
+        url: "http://localhost:3000/_next/image?url=%2FLogo-dark.png",
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
