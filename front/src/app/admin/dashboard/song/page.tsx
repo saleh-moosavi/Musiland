@@ -1,9 +1,9 @@
 import Link from "next/link";
+import Image from "next/image";
 import { getAllSongs } from "@/services/song";
 import Button from "@/components/shared/Button";
 import EditBtn from "@/components/admin/EditBtn";
 import DeleteBtn from "@/components/admin/DeleteBtn";
-import Image from "next/image";
 
 export default async function SongList() {
   const songs = await getAllSongs("");
@@ -15,7 +15,7 @@ export default async function SongList() {
       </Link>
       {songs.length > 0 ? (
         <ul className="grid lg:grid-cols-2 gap-5 w-full">
-          {songs.map((song: any) => (
+          {songs.map((song) => (
             <li
               className="w-full flex justify-between items-center gap-5 bg-my-white-low dark:bg-my-black-max p-2 rounded-3xl shadow-md shadow-my-black-low/20"
               key={song._id}
@@ -36,12 +36,11 @@ export default async function SongList() {
                   <p>Album : {song.album?.name || "None"}</p>
                   <p>
                     Genre :{" "}
-                    {song.genres?.map((g: any) => g.name).join(", ") || "None"}
+                    {song.genres?.map((g) => g.name).join(", ") || "None"}
                   </p>
                   <p>
                     Playlist :{" "}
-                    {song.playlists?.map((p: any) => p.name).join(", ") ||
-                      "None"}
+                    {song.playlists?.map((p) => p.name).join(", ") || "None"}
                   </p>
                 </div>
               </article>

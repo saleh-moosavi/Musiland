@@ -21,7 +21,7 @@ export function useSongFormSubmit({
     setError(null);
     setIsSubmitting(true);
     try {
-      const result: any = await addEditSong(mode, songId, data);
+      const result = await addEditSong(mode, songId, data);
 
       if (result.ok) {
         setIsToastOpen(true);

@@ -1,6 +1,7 @@
 "use client";
 import { Trash } from "lucide-react";
 import PopUpStore from "@/store/popUpStore";
+import { deleteTypes } from "@/types/shared";
 
 export default function DeleteBtn({
   id,
@@ -9,7 +10,7 @@ export default function DeleteBtn({
 }: {
   id: string;
   name: string;
-  type: string;
+  type: deleteTypes;
 }) {
   const { setType, setName, setIsOpen, setId } = PopUpStore();
   const handleDelete = () => {

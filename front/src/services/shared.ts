@@ -1,3 +1,5 @@
+import { deleteTypes } from "@/types/shared";
+
 export const addEditGenerics = async (
   mode: "add" | "edit",
   baseUrl: string,
@@ -24,7 +26,7 @@ export const addEditGenerics = async (
   return result;
 };
 
-export const popUpDelete = async (type: string, id: string) => {
+export const popUpDelete = async (type: deleteTypes, id: string) => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${type}s/${id}`, {
     method: "DELETE",
   });

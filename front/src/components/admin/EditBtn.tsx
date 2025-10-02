@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Edit } from "lucide-react";
+import { deleteTypes } from "@/types/shared";
 
 export default function EditBtn({
   id,
@@ -7,7 +8,7 @@ export default function EditBtn({
   name,
 }: {
   id: string;
-  type: string;
+  type: deleteTypes;
   name: string;
 }) {
   return (

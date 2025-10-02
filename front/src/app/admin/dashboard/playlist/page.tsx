@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Button from "@/components/shared/Button";
 import EditBtn from "@/components/admin/EditBtn";
+import { generalItems } from "@/types/generalItems";
 import DeleteBtn from "@/components/admin/DeleteBtn";
 import { getAllPlaylists } from "@/services/playlist";
 
@@ -13,7 +14,7 @@ export default async function PlaylistList() {
       </p>
     );
   }
-  const { playlists } = data;
+  const playlists: generalItems[] = data.playlists;
   return (
     <section className="h-full w-full flex flex-col justify-start gap-10 dark:text-my-white-low">
       <Link href="/admin/dashboard/playlist/add" className="w-fit self-end">
@@ -21,7 +22,7 @@ export default async function PlaylistList() {
       </Link>
       {playlists.length > 0 ? (
         <ul className="grid sm:grid-cols-2 lg:grid-cols-3 *:col-span-1 gap-5 w-full">
-          {playlists.map((playlist: any) => {
+          {playlists.map((playlist) => {
             return (
               <li
                 className="w-full flex justify-between items-center gap-5 bg-my-white-low dark:bg-my-black-max shadow-md shadow-my-black-low/30 p-5 rounded-xl"

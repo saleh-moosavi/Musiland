@@ -27,3 +27,12 @@ export interface usicCategoryPropsTypeM {
   params: { music_category: string };
   searchParams: { [key: string]: string | string[] };
 }
+
+export type deleteTypes =
+  | "song"
+  | "genre"
+  | "playlist"
+  | "user"
+  | "album"
+  | "singer"
+  | null;

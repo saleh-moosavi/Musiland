@@ -5,11 +5,12 @@ import useUserStore from "@/store/userStore";
 import { getUserLikes } from "@/services/like";
 import useToggleLike from "@/hooks/useToggleLike";
 import PlayButton from "@/components/shared/PlayButton";
+import { GetSong } from "@/types/song";
 
 export default function page() {
   const { userId } = useUserStore();
   const { toggleLike } = useToggleLike();
-  const [likedSongs, setLikedSongs] = useState([]);
+  const [likedSongs, setLikedSongs] = useState<GetSong[]>([]);
 
   useEffect(() => {
     if (!userId) return;
@@ -21,7 +22,7 @@ export default function page() {
   {
     return likedSongs.length > 0 ? (
       <ul className="grid lg:grid-cols-2 gap-5 w-full">
-        {likedSongs.map((song: any) => {
+        {likedSongs.map((song) => {
           return (
             <li
               className="w-full flex justify-between items-center gap-5 bg-my-white-low dark:bg-my-black-max p-2 rounded-3xl shadow-md shadow-my-black-low/20"

@@ -13,7 +13,7 @@ export default async function SingerList() {
       </Link>
       {singers.length > 0 ? (
         <ul className="grid sm:grid-cols-2 lg:grid-cols-3 *:col-span-1 gap-5 w-full">
-          {singers.map((singer: any) => {
+          {singers.map((singer) => {
             return (
               <li
                 className="w-full flex justify-between items-center gap-5 bg-my-white-low dark:bg-my-black-max shadow-md shadow-my-black-low/30 p-5 rounded-xl"

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getAllGenres } from "@/services/genre";
 import Button from "@/components/shared/Button";
 import EditBtn from "@/components/admin/EditBtn";
+import { generalItems } from "@/types/generalItems";
 import DeleteBtn from "@/components/admin/DeleteBtn";
 
 export default async function GenreList() {
@@ -13,7 +14,7 @@ export default async function GenreList() {
       </p>
     );
   }
-  const { genres } = data;
+  const genres: generalItems[] = data.genres;
   return (
     <section className="h-full w-full flex flex-col justify-start gap-10 dark:text-my-white-low">
       <Link href="/admin/dashboard/genre/add" className="w-fit self-end">
@@ -21,7 +22,7 @@ export default async function GenreList() {
       </Link>
       {genres.length > 0 ? (
         <ul className="grid sm:grid-cols-2 lg:grid-cols-3 *:col-span-1 gap-5 w-full">
-          {genres.map((genre: any) => {
+          {genres.map((genre) => {
             return (
               <li
                 className="w-full flex justify-between items-center gap-5 bg-my-white-low dark:bg-my-black-max shadow-md shadow-my-black-low/30 p-5 rounded-xl"

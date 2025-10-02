@@ -15,7 +15,7 @@ export default async function AlbumList() {
       </p>
     );
   }
-  const { albums } = data;
+  const albums: generalItems[] = data.albums;
   return (
     <section className="h-full w-full flex flex-col justify-start gap-10 dark:text-my-white-low">
       <Link href="/admin/dashboard/album/add" className="w-fit self-end">
@@ -23,7 +23,7 @@ export default async function AlbumList() {
       </Link>
       {albums.length > 0 ? (
         <ul className="grid sm:grid-cols-2 lg:grid-cols-3 *:col-span-1 gap-5 w-full">
-          {albums.map((album: generalItems) => {
+          {albums.map((album) => {
             return (
               <li
                 className="w-full flex justify-between items-center gap-5 bg-my-white-low dark:bg-my-black-max shadow-md shadow-my-black-low/30 p-5 rounded-xl"

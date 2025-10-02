@@ -16,7 +16,7 @@ export default function useToggleLike() {
       return;
     }
     try {
-      const data: any = await likeToggler(userId, songId);
+      const data = await likeToggler(userId, songId);
       if (data.ok === true) {
         setLikesCount(data.newLikes);
         likedSongs.includes(songId)
@@ -28,7 +28,7 @@ export default function useToggleLike() {
         setToastTitle(data.error || "Error");
       }
     } catch {
-      (err: any) => {
+      (err: string) => {
         setIsToastOpen(true);
         setToastColor("orange");
         setToastTitle(err || "Error");
