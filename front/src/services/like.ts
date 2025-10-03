@@ -1,22 +1,7 @@
-export const likeToggler = async (userId: string, songId: string) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/likes`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      userId,
-      songId,
-    }),
-  });
-  const data = res.json();
-  return data;
-};
+import apiClient from "@/configs/axios";
 
-export const getUserLikes = async (userId: string) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/likes`, {
-    method: "POST",
-    body: JSON.stringify({ userId }),
-    headers: { "Content-Type": "application/json" },
-  });
-  const data = await res.json();
-  return data;
-};
+export const likeToggler = (userId: string, songId: string) =>
+  apiClient.put("/likes", { userId, songId }).then((res) => res.data);
+
+export const getUserLikes = (userId: string) =>
+  apiClient.post("/likes", { userId }).then((res) => res.data);

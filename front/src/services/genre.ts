@@ -1,5 +1,4 @@
-export const getAllGenres = async () => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/genres`);
-  const data = await res.json();
-  return data;
-};
+import apiClient from "@/configs/axios";
+
+export const getAllGenres = () =>
+  apiClient.get("/genres").then((res) => res.data);

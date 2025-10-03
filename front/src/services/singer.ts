@@ -1,7 +1,5 @@
-import { generalItems } from "@/types/generalItems";
+import apiClient from '@/configs/axios';
+import { generalItems } from '@/types/generalItems';
 
-export const getSingers = async (): Promise<generalItems[]> => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/singers`);
-  const data = await res.json();
-  return data;
-};
+export const getSingers = (): Promise<generalItems[]> =>
+  apiClient.get('/singers').then(res => res.data);

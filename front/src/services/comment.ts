@@ -1,51 +1,24 @@
-import {
-  getComment,
-  CommentByUserId,
-  getCommentByUserId,
-} from "@/types/comment";
+import apiClient from "@/configs/axios";
+import { getComment, CommentByUserId } from "@/types/comment";
 
-export const getComments = async (id: string): Promise<getComment> => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comments/${id}`);
-  if (!res.ok) throw new Error("Failed to fetch comments");
-  return res.json();
-};
+export const getComments = (id: string): Promise<getComment> =>
+  apiClient.get(`/comments/${id}`).then((res) => res.data);
 
-export const addComment = async (
+export const addComment = (
   data: { comment: string },
   userId: string | null,
   songId: string
-) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comments`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
+) =>
+  apiClient
+    .post("/comments", {
       description: data.comment,
       user: userId,
       song: songId,
-    }),
-    credentials: "include",
-  });
-  const resData = await res.json();
-  return resData;
-};
+    })
+    .then((res) => res.data);
 
-export const getUserComments = async (
-  userId: string
-): Promise<CommentByUserId[]> => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/comments/user/${userId}`
-  );
-  if (!res.ok) throw new Error("Failed to fetch comments");
-  const data: getCommentByUserId = await res.json();
-  return data.data;
-};
+export const getUserComments = (userId: string): Promise<CommentByUserId[]> =>
+  apiClient.get(`/comments/user/${userId}`).then((res) => res.data.data);
 
-export const deleteComment = async (id: string) => {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/comments/${id}`, {
-    method: "DELETE",
-    credentials: "include",
-    headers: { "Content-Type": "application/json" },
-  });
-  const data = await res.json();
-  return data;
-};
+export const deleteComment = (id: string) =>
+  apiClient.delete(`/comments/${id}`).then((res) => res.data);
