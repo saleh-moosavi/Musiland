@@ -7,14 +7,15 @@ import { getAllPlaylists } from "@/services/playlist";
 
 export default async function PlaylistList() {
   const data = await getAllPlaylists();
-  if (data.ok === false) {
+  const playlists: generalItems[] = data.data;
+
+  if (playlists.length < 1) {
     return (
       <p className="dark:text-my-red-med font-semibold">
         {data.error || "Something Went Wrong!!!"}
       </p>
     );
   }
-  const playlists: generalItems[] = data.playlists;
   return (
     <section className="h-full w-full flex flex-col justify-start gap-10 dark:text-my-white-low">
       <Link href="/admin/dashboard/playlist/add" className="w-fit self-end">

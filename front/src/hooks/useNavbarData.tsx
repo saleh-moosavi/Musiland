@@ -15,8 +15,8 @@ export default function useNavbarData() {
           getAllPlaylists(),
         ]);
 
-        setGenres(genresRes?.genres ?? []);
-        setPlaylists(playlistsRes?.playlists ?? []);
+        setGenres(genresRes?.data ?? []);
+        setPlaylists(playlistsRes?.data ?? []);
       } catch (err) {
         console.error("Navbar data fetch error:", err);
       }

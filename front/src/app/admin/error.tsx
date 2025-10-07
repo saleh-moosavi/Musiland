@@ -1,7 +1,14 @@
 "use client";
 import Link from "next/link";
 
-export default function error({ reset }: { reset: () => void }) {
+export default function error({
+  reset,
+  error,
+}: {
+  reset: () => void;
+  error: Error;
+}) {
+  console.log(error);
   return (
     <div className="flex flex-col items-center justify-center h-[65vh] gap-10 text-center dark:text-white">
       <h2 className="text-2xl font-bold">Oops! Something went wrong.</h2>

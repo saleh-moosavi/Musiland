@@ -7,14 +7,15 @@ import DeleteBtn from "@/components/admin/DeleteBtn";
 
 export default async function GenreList() {
   const data = await getAllGenres();
-  if (data.ok === false) {
+  const genres: generalItems[] = data.data;
+
+  if (genres.length < 1) {
     return (
       <p className="dark:text-my-red-med font-semibold">
         {data.error || "Something Went Wrong!!!"}
       </p>
     );
   }
-  const genres: generalItems[] = data.genres;
   return (
     <section className="h-full w-full flex flex-col justify-start gap-10 dark:text-my-white-low">
       <Link href="/admin/dashboard/genre/add" className="w-fit self-end">

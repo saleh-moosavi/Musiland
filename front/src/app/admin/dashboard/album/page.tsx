@@ -7,15 +7,16 @@ import DeleteBtn from "@/components/admin/DeleteBtn";
 
 export default async function AlbumList() {
   const data = await getAlbums();
+  const albums: generalItems[] = data.data;
 
-  if (data.ok === false) {
+  if (albums.length < 1) {
     return (
       <p className="dark:text-my-red-med font-semibold">
-        {data.error || "Something Went Wrong!!!"}
+        {"There Is No Album Here!!!"}
       </p>
     );
   }
-  const albums: generalItems[] = data.albums;
+
   return (
     <section className="h-full w-full flex flex-col justify-start gap-10 dark:text-my-white-low">
       <Link href="/admin/dashboard/album/add" className="w-fit self-end">
