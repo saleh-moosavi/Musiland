@@ -11,24 +11,36 @@ const apiClient = axios.create({
 
 // ✅ Request Interceptor
 apiClient.interceptors.request.use(
-  (config) => {
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
+  (config) => config,
+  (error) => Promise.reject(error)
 );
 
-// ✅ Response Interceptor
+// ✅ Response Interceptor (Global Error Handler)
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
-      if (typeof window !== "undefined") {
-        console.warn("Unauthorized access. Redirecting...");
-      }
+    const status = error.response?.status;
+    const message =
+      error.response?.data?.message || error.message || "Request failed";
+
+    switch (status) {
+      case 400:
+        console.warn("Bad request:", message);
+        break;
+      case 401:
+        console.warn("Unauthorized:", message);
+        break;
+      case 404:
+        console.warn("Not found:", message);
+        break;
+      case 500:
+        console.error("Server error:", message);
+        break;
+      default:
+        console.error("Unexpected error:", message);
     }
-    return Promise.reject(error);
+
+    return Promise.reject(new Error(message));
   }
 );
 

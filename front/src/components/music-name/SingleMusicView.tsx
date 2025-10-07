@@ -41,10 +41,10 @@ export default function SingleMusicView({
           {/* genres section */}
           <ul className="font-semibold my-10 flex items-center gap-3">
             Genre:{" "}
-            {song.genres && song.genres.length > 0
+            {song.genres?.length
               ? song.genres.map((g: generalItems) => (
                   <li key={g._id}>
-                    <Link href={`/category/${g.name}?${`genre=${g.name}`}`}>
+                    <Link href={`/category/${g.name}?genre=${g.name}`}>
                       {g.name}
                     </Link>
                   </li>
@@ -53,11 +53,11 @@ export default function SingleMusicView({
           </ul>
           {/* playlist section */}
           <ul className="font-semibold my-10 flex items-center gap-3">
-            playlist:{" "}
-            {song.playlists && song.playlists.length > 0
-              ? song.playlists?.map((p: generalItems) => (
+            Playlist:{" "}
+            {song.playlists?.length
+              ? song.playlists.map((p: generalItems) => (
                   <li key={p._id}>
-                    <Link href={`/category/${p.name}?${`playlist=${p.name}`}`}>
+                    <Link href={`/category/${p.name}?playlist=${p.name}`}>
                       {p.name}
                     </Link>
                   </li>
@@ -65,9 +65,10 @@ export default function SingleMusicView({
               : "Unknown"}
           </ul>
         </div>
+
         <div className="space-y-5">
           <a
-            download={true}
+            download
             href={song.audioUrl}
             target="_blank"
             className="playdownloadbtn"
@@ -85,6 +86,7 @@ export default function SingleMusicView({
           </div>
         </div>
       </section>
+
       <div className="col-span-1">
         <h3 className="font-semibold text-lg">Song Lyrics : </h3>
         {song.lyric ? (
