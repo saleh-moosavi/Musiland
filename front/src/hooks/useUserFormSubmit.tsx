@@ -26,7 +26,7 @@ export function useUserFormSubmit({
 
     try {
       const result = await addEditUser(mode, userId, data);
-      if (!result.ok) throw new Error(result.error || "Something went wrong");
+      if (!result.data) throw new Error(result.error || "Something went wrong");
       setIsToastOpen(true);
       setToastColor("green");
       setToastTitle(

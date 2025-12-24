@@ -54,7 +54,7 @@ export default function GenericForm({
     try {
       const result = await addEditGenerics(mode, baseUrl, itemId, data);
 
-      if (result.ok) {
+      if (result.data) {
         reset();
         setIsToastOpen(true);
         setToastTitle(

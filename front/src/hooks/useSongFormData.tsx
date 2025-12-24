@@ -39,9 +39,9 @@ export function useSongFormData({
           await Promise.all(fetchesList);
 
         setSingers(singerRes);
-        setAlbums(albumRes.albums);
-        setGenres(genreRes.genres);
-        setPlaylists(playlistRes.playlists);
+        setAlbums(albumRes.data);
+        setGenres(genreRes.data);
+        setPlaylists(playlistRes.data);
 
         if (mode === "edit" && songRes) {
           const songData = songRes;

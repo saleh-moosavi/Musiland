@@ -23,7 +23,7 @@ export function useSongFormSubmit({
     try {
       const result = await addEditSong(mode, songId, data);
 
-      if (result.ok) {
+      if (result.data) {
         setIsToastOpen(true);
         setToastTitle(
           `Song ${mode === "add" ? "added" : "updated"} successfully!`
