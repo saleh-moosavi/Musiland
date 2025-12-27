@@ -1,12 +1,10 @@
-import { UserModel } from "@/models/user";
 import { NextResponse } from "next/server";
+import { AlbumModel } from "@/models/album";
 
 export async function GET() {
   try {
-    const users = await UserModel.find()
-      .populate("likedSongs")
-      .populate("comments");
-    return NextResponse.json(users);
+    const data = await AlbumModel.find({});
+    return NextResponse.json(data);
   } catch (error) {
     console.error("Error fetching data:", error);
     return NextResponse.json(

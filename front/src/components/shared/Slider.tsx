@@ -13,8 +13,8 @@ export default async function Slider({
 }) {
   const songs = await getAllSongs(`${query}&page=1,10`);
 
-  if (songs === null) {
-    throw new Error("Failed to fetch Slider Songs");
+  if (!songs || songs?.length < 1) {
+    return null;
   }
 
   return (
@@ -31,7 +31,7 @@ export default async function Slider({
         </Link>
       </section>
       <SliderWrapper>
-        {songs.map((song) => (
+        {songs?.map((song) => (
           <article key={song._id}>
             <div className="relative group rounded-xl overflow-hidden">
               <Image

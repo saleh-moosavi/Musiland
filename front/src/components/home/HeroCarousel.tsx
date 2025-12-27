@@ -6,6 +6,8 @@ import HeroCarouselWrapper from "./HeroCarouselWrapper";
 export default async function HeroCarousel() {
   const songs = await getAllSongs("page=1,10&sort=date");
 
+  if (songs?.length < 1 || !songs) return null;
+
   return (
     <HeroCarouselWrapper>
       {songs.map((song, index) => (

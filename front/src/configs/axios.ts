@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiClient = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL: "http://localhost:3000/api",
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",
@@ -16,32 +16,6 @@ apiClient.interceptors.request.use(
 );
 
 // ✅ Response Interceptor (Global Error Handler)
-apiClient.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    const status = error.response?.status;
-    const message =
-      error.response?.data?.message || error.message || "Request failed";
-
-    switch (status) {
-      case 400:
-        console.warn("Bad request:", message);
-        break;
-      case 401:
-        console.warn("Unauthorized:", message);
-        break;
-      case 404:
-        console.warn("Not found:", message);
-        break;
-      case 500:
-        console.error("Server error:", message);
-        break;
-      default:
-        console.error("Unexpected error:", message);
-    }
-
-    return Promise.reject(new Error(message));
-  }
-);
+apiClient.interceptors.response.use((response) => response.data);
 
 export default apiClient;
