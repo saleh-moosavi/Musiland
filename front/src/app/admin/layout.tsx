@@ -1,6 +1,7 @@
 import "../globals.css";
 import { lazy } from "react";
 import type { Metadata } from "next";
+import { connectDB } from "@/libs/mongodb";
 import SideBar from "@/components/admin/SideBar";
 import DeleteConfirm from "@/components/shared/PopUp";
 import SideBarMobile from "@/components/admin/SideBarMobile";
@@ -11,11 +12,12 @@ export const metadata: Metadata = {
   description: "Made By Saleh",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  await connectDB();
   return (
     <html>
       <body className="bg-my-white-med dark:bg-my-black-high">

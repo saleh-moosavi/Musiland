@@ -1,6 +1,7 @@
 import "../globals.css";
 import { lazy } from "react";
 import type { Metadata } from "next";
+import { connectDB } from "@/libs/mongodb";
 import Navbar from "@/components/shared/Navbar";
 import Player from "@/components/shared/Player";
 const Toast = lazy(() => import("@/components/shared/Toast"));
@@ -29,11 +30,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  await connectDB();
   return (
     <html lang="en">
       <body className="bg-my-white-med dark:bg-my-black-high">
