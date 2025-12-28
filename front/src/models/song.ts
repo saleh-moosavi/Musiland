@@ -1,4 +1,4 @@
-import { model, Schema } from "mongoose";
+import { model, models, Schema } from "mongoose";
 
 const SongSchema = new Schema(
   {
@@ -15,4 +15,4 @@ const SongSchema = new Schema(
   { timestamps: true }
 );
 
-export const SongModel = model("Song", SongSchema);
+export const SongModel = models.Song || model("Song", SongSchema);
