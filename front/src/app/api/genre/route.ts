@@ -51,7 +51,6 @@ export async function POST(req: NextRequest) {
       {
         success: true,
         data: genre,
-        message: "Genre created successfully",
       },
       { status: 201 }
     );
@@ -110,7 +109,6 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json({
       success: true,
       data: genre,
-      message: "Genre updated successfully",
     });
   } catch (error: any) {
     console.error("Error updating genre:", error);
@@ -152,7 +150,7 @@ export async function DELETE({ params }: { params: { id: string } }) {
 
     return NextResponse.json({
       success: true,
-      message: "Genre deleted successfully",
+      data: genre,
     });
   } catch (error: any) {
     return NextResponse.json(
