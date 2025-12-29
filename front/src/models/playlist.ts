@@ -1,10 +1,11 @@
-import mongoose from "mongoose";
+import { model, models, Schema } from "mongoose";
 
-const PlaylistSchema = new mongoose.Schema(
+const PlaylistSchema = new Schema(
   {
     name: { type: String },
   },
   { timestamps: true }
 );
 
-export const PlaylistModel = mongoose.model("Playlist", PlaylistSchema);
+export const PlaylistModel =
+  models.Playlist || model("Playlist", PlaylistSchema);

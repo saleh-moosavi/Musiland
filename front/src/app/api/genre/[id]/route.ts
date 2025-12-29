@@ -1,7 +1,10 @@
-import { NextResponse } from "next/server";
 import { GenreModel } from "@/models/genre";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET({ params }: { params: { id: string } }) {
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
   try {
     const { id } = params;
 

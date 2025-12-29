@@ -1,4 +1,4 @@
-import { PlaylistModel } from "@/models/playlist";
+import { AlbumModel } from "@/models/album";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
@@ -8,12 +8,12 @@ export async function GET(
   try {
     const { id } = params;
 
-    const playlist = await PlaylistModel.findById(id);
-    if (!playlist)
+    const album = await AlbumModel.findById(id);
+    if (!album)
       return NextResponse.json(
         {
           success: false,
-          message: "Playlist not found",
+          message: "Album not found",
         },
         { status: 404 }
       );
@@ -21,7 +21,7 @@ export async function GET(
     return NextResponse.json(
       {
         success: true,
-        data: playlist,
+        data: album,
       },
       { status: 200 }
     );

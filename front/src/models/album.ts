@@ -1,10 +1,10 @@
-import mongoose from "mongoose";
+import { model, models, Schema } from "mongoose";
 
-const AlbumSchema = new mongoose.Schema(
+const AlbumSchema = new Schema(
   {
     name: { type: String },
   },
   { timestamps: true }
 );
 
-export const AlbumModel = mongoose.model("Album", AlbumSchema);
+export const AlbumModel = models.Album || model("Album", AlbumSchema);
