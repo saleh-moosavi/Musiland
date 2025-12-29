@@ -1,16 +1,153 @@
-import { NextResponse } from "next/server";
 import { CommentModel } from "@/models/comment";
+import { NextRequest, NextResponse } from "next/server";
 
+// ✅ Get all Comments
 export async function GET() {
   try {
-    const data = await CommentModel.find({});
-    return NextResponse.json(data);
-  } catch (error) {
-    console.error("Error fetching data:", error);
+    const comments = await CommentModel.find().sort({ createdAt: -1 });
     return NextResponse.json(
       {
-        error: "Internal Server Error",
-        details: error instanceof Error ? error.message : "Unknown error",
+        success: true,
+        data: comments,
+      },
+      { status: 200 }
+    );
+  } catch (error: any) {
+    return NextResponse.json(
+      {
+        success: false,
+        message: error.message || "Internal server error",
+      },
+      { status: 500 }
+    );
+  }
+}
+
+// ✅ Create new Comment
+export async function POST(req: NextRequest) {
+  try {
+    const { description, user, song } = await req.json();
+    if (!description || !user || !song) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Description, user, song are required",
+        },
+        { status: 400 }
+      );
+    }
+
+    const comment = await CommentModel.create({ description, user, song });
+    return NextResponse.json(
+      {
+        success: true,
+        data: comment,
+      },
+      { status: 201 }
+    );
+  } catch (error: any) {
+    return NextResponse.json(
+      {
+        success: false,
+        message: error.message || "Internal server error",
+      },
+      { status: 500 }
+    );
+  }
+}
+
+// ✅ Update Comment
+export async function PUT(req: NextRequest) {
+  try {
+    const { description, user, song, id } = await req.json();
+
+    if (!id) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "ID is required",
+        },
+        { status: 400 }
+      );
+    }
+
+    if (!description || !user || !song) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "description , user , song are required",
+        },
+        { status: 400 }
+      );
+    }
+
+    const comment = await CommentModel.findByIdAndUpdate(
+      id,
+      { description, user, song },
+      { new: true }
+    );
+
+    if (!comment) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "comment not found",
+        },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json({
+      success: true,
+      data: comment,
+    });
+  } catch (error: any) {
+    return NextResponse.json(
+      {
+        success: false,
+        message: error.message || "Internal server error",
+      },
+      { status: 500 }
+    );
+  }
+}
+
+// ✅ Delete Comment
+export async function DELETE({ params }: { params: { id: string } }) {
+  try {
+    const { id } = params;
+
+    if (!id) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "ID is required",
+        },
+        { status: 400 }
+      );
+    }
+
+    const comment = await CommentModel.findByIdAndDelete(id);
+
+    if (!comment) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "comment not found",
+        },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json({
+      success: true,
+      data: comment,
+    });
+  } catch (error: any) {
+    return NextResponse.json(
+      {
+        success: false,
+        message: error.message || "Internal server error",
       },
       { status: 500 }
     );

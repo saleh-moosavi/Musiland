@@ -1,24 +1,49 @@
 import apiClient from "@/configs/axios";
-import { getComment, CommentByUserId } from "@/types/comment";
 
-export const getComments = (id: string): Promise<getComment> =>
-  apiClient.get(`/comment/${id}`).then((res) => res.data);
+export const getAllComments = async () => {
+  const res = await apiClient.get(`/comment`);
+  return res;
+};
 
-export const addComment = (
-  data: { comment: string },
-  userId: string | null,
+export const getSongComments = async (id: string) => {
+  const res = await apiClient.get(`/comment/song/${id}`);
+  return res;
+};
+
+export const getUserComments = async (id: string) => {
+  const res = await apiClient.get(`/comment/user/${id}`);
+  return res;
+};
+
+export const addComment = async (
+  comment: string,
+  userId: string,
   songId: string
-) =>
-  apiClient
-    .post("/comment", {
-      description: data.comment,
-      user: userId,
-      song: songId,
-    })
-    .then((res) => res.data);
+) => {
+  const res = await apiClient.post("/comment", {
+    description: comment,
+    user: userId,
+    song: songId,
+  });
+  return res;
+};
 
-export const getUserComments = (userId: string): Promise<CommentByUserId[]> =>
-  apiClient.get(`/comment/user/${userId}`).then((res) => res.data.data);
+export const editComment = async (
+  commentId: string,
+  comment: string,
+  userId: string,
+  songId: string
+) => {
+  const res = await apiClient.put("/comment", {
+    id: commentId,
+    description: comment,
+    user: userId,
+    song: songId,
+  });
+  return res;
+};
 
-export const deleteComment = (id: string) =>
-  apiClient.delete(`/comment/${id}`).then((res) => res.data);
+export const deleteComment = async (id: string) => {
+  const res = await apiClient.delete(`/comment/${id}`);
+  return res;
+};
