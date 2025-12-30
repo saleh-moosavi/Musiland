@@ -1,10 +1,10 @@
-import mongoose from "mongoose";
+import { model, models, Schema } from "mongoose";
 
-const SingerSchema = new mongoose.Schema(
+const SingerSchema = new Schema(
   {
     name: { type: String },
   },
   { timestamps: true }
 );
 
-export const SingerModel = mongoose.model("Singer", SingerSchema);
+export const SingerModel = models.singer || model("Singer", SingerSchema);
