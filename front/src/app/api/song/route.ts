@@ -32,6 +32,7 @@ export async function POST(req: NextRequest) {
       data.coverUrl.trim() === "" ||
       data.audioUrl.trim() === "" ||
       data.albumId === "" ||
+      data.singerId === "" ||
       data.genreIds.length < 1 ||
       data.playlistIds.length < 1
     ) {
