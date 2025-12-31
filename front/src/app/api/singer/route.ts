@@ -1,7 +1,7 @@
 import { SingerModel } from "@/models/singer";
 import { NextRequest, NextResponse } from "next/server";
 
-// ✅ Get all singers
+/*---------------- API ----------------*/
 export async function GET() {
   try {
     const singers = await SingerModel.find().sort({ createdAt: -1 });
@@ -23,7 +23,7 @@ export async function GET() {
   }
 }
 
-// ✅ Create new Singer
+/*---------------- API ----------------*/
 export async function POST(req: NextRequest) {
   try {
     const { name } = await req.json();
@@ -66,7 +66,7 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// ✅ Update Singer
+/*---------------- API ----------------*/
 export async function PUT(req: NextRequest) {
   try {
     const { name, id } = await req.json();
@@ -121,4 +121,3 @@ export async function PUT(req: NextRequest) {
     );
   }
 }
-

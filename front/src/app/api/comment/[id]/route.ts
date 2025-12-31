@@ -1,31 +1,5 @@
-import { SongModel } from "@/models/song";
+import { CommentModel } from "@/models/comment";
 import { NextRequest, NextResponse } from "next/server";
-
-/*---------------- API ----------------*/
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
-  try {
-    const { id } = params;
-    const song = await SongModel.findById(id);
-    return NextResponse.json(
-      {
-        success: true,
-        data: song,
-      },
-      { status: 200 }
-    );
-  } catch (error: any) {
-    return NextResponse.json(
-      {
-        success: false,
-        message: error.message || "Unknown error",
-      },
-      { status: 500 }
-    );
-  }
-}
 
 /*---------------- API ----------------*/
 export async function DELETE(
@@ -39,19 +13,19 @@ export async function DELETE(
       return NextResponse.json(
         {
           success: false,
-          message: "Genre ID is required",
+          message: "ID is required",
         },
         { status: 400 }
       );
     }
 
-    const song = await SongModel.findByIdAndDelete(id);
+    const comment = await CommentModel.findByIdAndDelete(id);
 
-    if (!song) {
+    if (!comment) {
       return NextResponse.json(
         {
           success: false,
-          message: "Song not found",
+          message: "comment not found",
         },
         { status: 404 }
       );
@@ -59,7 +33,7 @@ export async function DELETE(
 
     return NextResponse.json({
       success: true,
-      data: song,
+      data: comment,
     });
   } catch (error: any) {
     return NextResponse.json(

@@ -1,7 +1,7 @@
 import { UserModel } from "@/models/user";
 import { NextRequest, NextResponse } from "next/server";
 
-// ✅ GET
+/*---------------- API ----------------*/
 export async function GET() {
   try {
     const users = await UserModel.find()
@@ -25,7 +25,7 @@ export async function GET() {
   }
 }
 
-// ✅ Create
+/*---------------- API ----------------*/
 export async function POST(req: NextRequest) {
   try {
     const { name, password, email } = await req.json();
@@ -78,8 +78,8 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// ✅ Update
-export async function PUT(req: NextRequest) {
+/*---------------- API ----------------*/
+async function PUT(req: NextRequest) {
   try {
     const { name, password, email, id } = await req.json();
 
@@ -114,48 +114,6 @@ export async function PUT(req: NextRequest) {
         {
           success: false,
           message: "User Not Found",
-        },
-        { status: 404 }
-      );
-    }
-
-    return NextResponse.json({
-      success: true,
-      data: user,
-    });
-  } catch (error: any) {
-    return NextResponse.json(
-      {
-        success: false,
-        message: error.message || "Internal server error",
-      },
-      { status: 500 }
-    );
-  }
-}
-
-// ✅ Delete
-export async function DELETE({ params }: { params: { id: string } }) {
-  try {
-    const { id } = params;
-
-    if (!id) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "ID is required",
-        },
-        { status: 400 }
-      );
-    }
-
-    const user = await UserModel.findByIdAndDelete(id);
-
-    if (!user) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Not Found",
         },
         { status: 404 }
       );

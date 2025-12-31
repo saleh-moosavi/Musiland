@@ -1,7 +1,7 @@
 import { CommentModel } from "@/models/comment";
 import { NextRequest, NextResponse } from "next/server";
 
-// ✅ Get all Comments
+/*---------------- API ----------------*/
 export async function GET() {
   try {
     const comments = await CommentModel.find().sort({ createdAt: -1 });
@@ -23,7 +23,7 @@ export async function GET() {
   }
 }
 
-// ✅ Create new Comment
+/*---------------- API ----------------*/
 export async function POST(req: NextRequest) {
   try {
     const { description, user, song } = await req.json();
@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// ✅ Update Comment
+/*---------------- API ----------------*/
 export async function PUT(req: NextRequest) {
   try {
     const { description, user, song, id } = await req.json();
@@ -86,48 +86,6 @@ export async function PUT(req: NextRequest) {
       { description, user, song },
       { new: true }
     );
-
-    if (!comment) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "comment not found",
-        },
-        { status: 404 }
-      );
-    }
-
-    return NextResponse.json({
-      success: true,
-      data: comment,
-    });
-  } catch (error: any) {
-    return NextResponse.json(
-      {
-        success: false,
-        message: error.message || "Internal server error",
-      },
-      { status: 500 }
-    );
-  }
-}
-
-// ✅ Delete Comment
-export async function DELETE({ params }: { params: { id: string } }) {
-  try {
-    const { id } = params;
-
-    if (!id) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "ID is required",
-        },
-        { status: 400 }
-      );
-    }
-
-    const comment = await CommentModel.findByIdAndDelete(id);
 
     if (!comment) {
       return NextResponse.json(

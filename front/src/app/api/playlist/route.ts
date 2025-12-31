@@ -1,6 +1,7 @@
 import { PlaylistModel } from "@/models/playlist";
 import { NextRequest, NextResponse } from "next/server";
 
+/*---------------- API ----------------*/
 export async function GET() {
   try {
     const playlists = await PlaylistModel.find();
@@ -22,6 +23,7 @@ export async function GET() {
   }
 }
 
+/*---------------- API ----------------*/
 export async function POST(req: NextRequest) {
   try {
     const { name } = await req.json();
@@ -66,6 +68,7 @@ export async function POST(req: NextRequest) {
   }
 }
 
+/*---------------- API ----------------*/
 export async function PUT(req: NextRequest) {
   try {
     const { name, id } = await req.json();
@@ -122,43 +125,3 @@ export async function PUT(req: NextRequest) {
   }
 }
 
-export async function DELETE({ params }: { params: { id: string } }) {
-  try {
-    const { id } = params;
-
-    if (!id) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Playlist ID is required",
-        },
-        { status: 400 }
-      );
-    }
-
-    const playlist = await PlaylistModel.findByIdAndDelete(id);
-
-    if (!playlist) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Playlist not found",
-        },
-        { status: 404 }
-      );
-    }
-
-    return NextResponse.json({
-      success: true,
-      data: playlist,
-    });
-  } catch (error: any) {
-    return NextResponse.json(
-      {
-        success: false,
-        message: error.message || "Internal server error",
-      },
-      { status: 500 }
-    );
-  }
-}

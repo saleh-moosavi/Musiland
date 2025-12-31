@@ -1,6 +1,7 @@
 import { CommentModel } from "@/models/comment";
 import { NextRequest, NextResponse } from "next/server";
 
+/*---------------- API ----------------*/
 export async function GET(
   req: NextRequest,
   { params }: { params: { id: string } }

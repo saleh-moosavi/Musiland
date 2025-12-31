@@ -1,6 +1,7 @@
 import { SingerModel } from "@/models/singer";
 import { NextRequest, NextResponse } from "next/server";
 
+/*---------------- API ----------------*/
 export async function GET(
   req: NextRequest,
   { params }: { params: { id: string } }
@@ -36,7 +37,7 @@ export async function GET(
   }
 }
 
-// ✅ Delete Singer
+/*---------------- API ----------------*/
 export async function DELETE(
   req: NextRequest,
   { params }: { params: { id: string } }

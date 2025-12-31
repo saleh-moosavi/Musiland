@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
+/*---------------- API ----------------*/
 export async function POST(req: NextRequest) {
   const { username, email, password } = await req.json();
 

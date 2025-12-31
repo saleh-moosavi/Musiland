@@ -2,6 +2,7 @@ import { SongModel } from "@/models/song";
 import { SongFormData } from "@/types/song";
 import { NextRequest, NextResponse } from "next/server";
 
+/*---------------- API ----------------*/
 export async function GET() {
   try {
     const songs = await SongModel.find();
@@ -23,6 +24,7 @@ export async function GET() {
   }
 }
 
+/*---------------- API ----------------*/
 export async function POST(req: NextRequest) {
   try {
     const data: SongFormData = await req.json();
@@ -75,6 +77,7 @@ export async function POST(req: NextRequest) {
   }
 }
 
+/*---------------- API ----------------*/
 export async function PUT(req: NextRequest) {
   try {
     const { data, id }: { data: SongFormData; id: string } = await req.json();
@@ -128,47 +131,6 @@ export async function PUT(req: NextRequest) {
     });
   } catch (error: any) {
     console.error("Error updating Song:", error);
-    return NextResponse.json(
-      {
-        success: false,
-        message: error.message || "Internal server error",
-      },
-      { status: 500 }
-    );
-  }
-}
-
-export async function DELETE({ params }: { params: { id: string } }) {
-  try {
-    const { id } = params;
-
-    if (!id) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Genre ID is required",
-        },
-        { status: 400 }
-      );
-    }
-
-    const song = await SongModel.findByIdAndDelete(id);
-
-    if (!song) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Song not found",
-        },
-        { status: 404 }
-      );
-    }
-
-    return NextResponse.json({
-      success: true,
-      data: song,
-    });
-  } catch (error: any) {
     return NextResponse.json(
       {
         success: false,

@@ -1,7 +1,7 @@
 import { AlbumModel } from "@/models/album";
 import { NextRequest, NextResponse } from "next/server";
 
-// ✅ Get all albums
+/*---------------- API ----------------*/
 export async function GET() {
   try {
     const albums = await AlbumModel.find().sort({ createdAt: -1 });
@@ -23,7 +23,7 @@ export async function GET() {
   }
 }
 
-// ✅ Create new album
+/*---------------- API ----------------*/
 export async function POST(req: NextRequest) {
   try {
     const { name } = await req.json();
@@ -66,7 +66,7 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// ✅ Update album
+/*---------------- API ----------------*/
 export async function PUT(req: NextRequest) {
   try {
     const { name, id } = await req.json();
@@ -122,44 +122,3 @@ export async function PUT(req: NextRequest) {
   }
 }
 
-// ✅ Delete album
-export async function DELETE({ params }: { params: { id: string } }) {
-  try {
-    const { id } = params;
-
-    if (!id) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Album ID is required",
-        },
-        { status: 400 }
-      );
-    }
-
-    const album = await AlbumModel.findByIdAndDelete(id);
-
-    if (!album) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Album not found",
-        },
-        { status: 404 }
-      );
-    }
-
-    return NextResponse.json({
-      success: true,
-      data: album,
-    });
-  } catch (error: any) {
-    return NextResponse.json(
-      {
-        success: false,
-        message: error.message || "Internal server error",
-      },
-      { status: 500 }
-    );
-  }
-}
