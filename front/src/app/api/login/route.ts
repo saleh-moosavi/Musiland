@@ -1,41 +1,71 @@
-import { cookies } from "next/headers";
+import { UserModel } from "@/models/user";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
   const { email, password } = await req.json();
-
-  try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/auth/login`,
+  if (!email || !password) {
+    return NextResponse.json(
       {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      }
+        success: false,
+        message: "Email and Password are required",
+      },
+      { status: 400 }
     );
-
-    const result = await response.json();
-
-    if (!result.ok) {
-      return NextResponse.json({
-        ok: false,
-        error: result?.error || "Login Failed",
-      });
+  }
+  // Is Super Admin
+  if (
+    email === process.env.ADMIN_EMAIL &&
+    password === process.env.ADMIN_PASSWORD
+  ) {
+    return NextResponse.json(
+      {
+        success: true,
+        user: {
+          name: "Admin Name",
+          email: "Admin Email",
+          role: "admin",
+        },
+      },
+      { status: 202 }
+    );
+  }
+  // Find User
+  try {
+    const user = await UserModel.findOne({ email });
+    if (!user) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Invalid credentials",
+        },
+        { status: 401 }
+      );
     }
 
-    (await cookies()).set("user", JSON.stringify(result.user), {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      path: "/",
-      maxAge: 60 * 60 * 24 * 7,
-    });
+    if (password !== user.password) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Invalid Email or Password",
+        },
+        { status: 401 }
+      );
+    }
 
-    return NextResponse.json({ ok: true });
-  } catch (error) {
-    return NextResponse.json({ ok: false, error: "Server Error" });
+    return NextResponse.json(
+      {
+        success: true,
+        data: user,
+      },
+      { status: 201 }
+    );
+  } catch (error: any) {
+    return NextResponse.json(
+      {
+        success: false,
+        message: error.message || "Internal server error",
+      },
+      { status: 500 }
+    );
   }
 }

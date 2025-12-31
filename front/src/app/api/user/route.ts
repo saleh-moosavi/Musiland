@@ -79,9 +79,18 @@ export async function POST(req: NextRequest) {
 }
 
 /*---------------- API ----------------*/
-async function PUT(req: NextRequest) {
+export async function PUT(req: NextRequest) {
   try {
-    const { name, password, email, id } = await req.json();
+    const { name, password, email, id, role } = await req.json();
+
+    if (!role || !["admin", "user", "manager"].includes(role))
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Valid role required",
+        },
+        { status: 400 }
+      );
 
     if (!id) {
       return NextResponse.json(

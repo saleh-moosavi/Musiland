@@ -12,16 +12,12 @@ export const getSong = async (id: string): Promise<GetSong> => {
 };
 
 export const addSong = async (data: SongFormData) => {
-  const res = await apiClient.post(`/song`, {
-    body: JSON.stringify({ data }),
-  });
+  const res = await apiClient.post(`/song`, { data });
   return res.data;
 };
 
 export const editSong = async (id: string, data: SongFormData) => {
-  const res = await apiClient.put(`/song`, {
-    body: JSON.stringify({ data, id }),
-  });
+  const res = await apiClient.put(`/song`, { id, data });
   return res.data;
 };
 

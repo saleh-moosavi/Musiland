@@ -11,24 +11,16 @@ export const getGenre = async (id: string) => {
 };
 
 export const createGenre = async (name: string) => {
-  const data = await apiClient.post(`/genre`, {
-    body: JSON.stringify({ name }),
-  });
-
+  const data = await apiClient.post(`/genre`, { name });
   return data;
 };
 
 export const editGenre = async (name: string, id: string) => {
-  const data = await apiClient.put(`/genre/`, {
-    body: JSON.stringify({ name, id }),
-  });
-
+  const data = await apiClient.put(`/genre/`, { name, id });
   return data;
 };
 
 export const deleteGenre = async (id: string) => {
-  const data = await apiClient.delete(`/genre/${id}`, {
-    method: "DELETE",
-  });
+  const data = await apiClient.delete(`/genre/${id}`);
   return data;
 };

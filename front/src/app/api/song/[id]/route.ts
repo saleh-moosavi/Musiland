@@ -8,7 +8,11 @@ export async function GET(
 ) {
   try {
     const { id } = params;
-    const song = await SongModel.findById(id);
+    const song = await SongModel.findById(id)
+      .populate("singer")
+      .populate("album")
+      .populate("genres")
+      .populate("playlists");
     return NextResponse.json(
       {
         success: true,

@@ -1,44 +1,50 @@
-import { cookies } from "next/headers";
+import { UserModel } from "@/models/user";
 import { NextRequest, NextResponse } from "next/server";
 
-/*---------------- API ----------------*/
 export async function POST(req: NextRequest) {
   const { username, email, password } = await req.json();
+  if (!email || !password || !username) {
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Username , Email and Password are required",
+      },
+      { status: 400 }
+    );
+  }
+  // Is Existed
+  const existingUser = await UserModel.findOne({ email });
+  if (existingUser) {
+    return NextResponse.json(
+      {
+        success: false,
+        message: "Email already in use",
+      },
+      { status: 400 }
+    );
+  }
 
   try {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/auth/register`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, email, password }),
-      }
-    );
-
-    const result = await response.json();
-
-    if (!result.ok) {
-      return NextResponse.json(
-        {
-          ok: false,
-          error: result?.error || "Register Failed",
-        },
-        { status: result.status }
-      );
-    }
-
-    (await cookies()).set("user", JSON.stringify(result.user), {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
-      path: "/",
-      maxAge: 60 * 60 * 24 * 7,
+    // Create User
+    const user = await UserModel.create({
+      username,
+      email,
+      password,
     });
 
-    return NextResponse.json({ ok: true });
-  } catch (error) {
     return NextResponse.json(
-      { ok: false, error: "Server Error" },
+      {
+        success: true,
+        data: user,
+      },
+      { status: 201 }
+    );
+  } catch (error: any) {
+    return NextResponse.json(
+      {
+        success: false,
+        message: error.message || "Internal server error",
+      },
       { status: 500 }
     );
   }

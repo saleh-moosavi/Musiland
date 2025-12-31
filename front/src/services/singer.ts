@@ -11,24 +11,16 @@ export const getSinger = async (id: string) => {
 };
 
 export const createSinger = async (name: string) => {
-  const data = await apiClient.post(`/singer`, {
-    body: JSON.stringify({ name }),
-  });
-
+  const data = await apiClient.post(`/singer`, { name });
   return data;
 };
 
 export const editSinger = async (name: string, id: string) => {
-  const data = await apiClient.put(`/singer/`, {
-    body: JSON.stringify({ name, id }),
-  });
-
+  const data = await apiClient.put(`/singer/`, { name, id });
   return data;
 };
 
 export const deleteSinger = async (id: string) => {
-  const data = await apiClient.delete(`/singer/${id}`, {
-    method: "DELETE",
-  });
+  const data = await apiClient.delete(`/singer/${id}`);
   return data;
 };

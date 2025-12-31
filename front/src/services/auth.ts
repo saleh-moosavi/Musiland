@@ -1,43 +1,24 @@
+import apiClient from "@/configs/axios";
+
 export const registerUser = async (
   username: string,
   email: string,
   password: string
 ) => {
-  const res = await fetch("/api/register", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, email, password }),
-    credentials: "include",
+  const res = await apiClient.post("/register", {
+    username,
+    email,
+    password,
   });
-
-  const result = await res.json();
-
-  return result;
+  return res;
 };
 
 export const loginUser = async (email: string, password: string) => {
-  const res = await fetch("/api/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      email,
-      password,
-    }),
-    credentials: "include",
-  });
-
-  const result = await res.json();
-
-  return result;
+  const res = await apiClient.post("/login", { email, password });
+  return res;
 };
 
 export const logoutUser = async () => {
-  const res = await fetch("/api/logout", {
-    method: "POST",
-    credentials: "include",
-  });
-
-  const data = await res.json();
-
-  return data;
+  const res = await apiClient.get("/logout", {});
+  return res;
 };

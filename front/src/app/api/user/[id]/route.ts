@@ -9,7 +9,9 @@ export async function GET(
   try {
     const { id } = params;
 
-    const user = await UserModel.findById(id);
+    const user = await UserModel.findById(id)
+      .populate("likedSongs")
+      .populate("comments");
     if (!user)
       return NextResponse.json(
         {
