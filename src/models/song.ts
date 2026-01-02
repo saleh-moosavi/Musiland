@@ -15,4 +15,4 @@ const SongSchema = new Schema(
   { timestamps: true }
 );
 
-export const SongModel = models.Song || model("Song", SongSchema);
+export const SongModel = models.Song ?? model("Song", SongSchema);

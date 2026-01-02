@@ -9,4 +9,4 @@ const CommentSchema = new Schema(
   { timestamps: true }
 );
 
-export const CommentModel = models.comment || model("Comment", CommentSchema);
+export const CommentModel = models.Comment ?? model("Comment", CommentSchema);

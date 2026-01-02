@@ -8,4 +8,4 @@ const PlaylistSchema = new Schema(
 );
 
 export const PlaylistModel =
-  models.Playlist || model("Playlist", PlaylistSchema);
+  models.Playlist ?? model("Playlist", PlaylistSchema);

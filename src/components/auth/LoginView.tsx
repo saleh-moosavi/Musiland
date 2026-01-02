@@ -43,11 +43,11 @@ export default function LoginView() {
     try {
       const result = await loginUser(email, password);
 
-      if (result.ok) {
+      if (result.success) {
         setIsLoggedIn(true);
         router.push("/profile");
       } else {
-        setError(result.error || "Email Or Password Is Incorrect!");
+        setError(result.message || "Email Or Password Is Incorrect!");
       }
     } catch (err) {
       setIsLoggedIn(false);

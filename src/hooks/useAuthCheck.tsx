@@ -15,11 +15,11 @@ export default function useAuthCheck(likes?: boolean) {
   const logOut = async () => {
     const data = await logoutUser();
 
-    if (data.ok) {
+    if (data.success) {
       setIsLoggedIn(false);
       router.push("/login");
     } else {
-      setError(data.error || "Logout failed");
+      setError(data.message || "Logout failed");
     }
   };
 
@@ -34,8 +34,8 @@ export default function useAuthCheck(likes?: boolean) {
         });
 
         const data = await res.json();
-        if (data.ok) {
-          if (data?.user) {
+        if (data.success) {
+          if (data?.data) {
             setError(null);
             setIsLoggedIn(true);
             setUserData(data.user);

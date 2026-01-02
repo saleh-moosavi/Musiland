@@ -7,4 +7,4 @@ const SingerSchema = new Schema(
   { timestamps: true }
 );
 
-export const SingerModel = models.singer || model("Singer", SingerSchema);
+export const SingerModel = models.Singer ?? model("Singer", SingerSchema);

@@ -1,20 +1,22 @@
 import apiClient from "@/configs/axios";
 
 export const registerUser = async (
-  username: string,
+  name: string,
   email: string,
   password: string
 ) => {
   const res = await apiClient.post("/register", {
-    username,
+    name,
     email,
     password,
   });
+  console.log(res);
   return res;
 };
 
 export const loginUser = async (email: string, password: string) => {
   const res = await apiClient.post("/login", { email, password });
+  console.log(res);
   return res;
 };
 

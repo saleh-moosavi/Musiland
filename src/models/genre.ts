@@ -7,4 +7,4 @@ const GenreSchema = new Schema(
   { timestamps: true }
 );
 
-export const GenreModel = models.Genre || model("Genre", GenreSchema);
+export const GenreModel = models.Genre ?? model("Genre", GenreSchema);

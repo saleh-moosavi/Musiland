@@ -7,4 +7,4 @@ const AlbumSchema = new Schema(
   { timestamps: true }
 );
 
-export const AlbumModel = models.Album || model("Album", AlbumSchema);
+export const AlbumModel = models.Album ?? model("Album", AlbumSchema);
