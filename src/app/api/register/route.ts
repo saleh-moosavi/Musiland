@@ -1,7 +1,7 @@
 import { cookies } from "next/headers";
 import { UserModel } from "@/models/user";
 import { NextRequest, NextResponse } from "next/server";
-import { hashPassword, generateToken, cookieOptions } from "@/libs/authUtils";x
+import { hashPassword, generateToken, cookieOptions } from "@/libs/authUtils";
 
 export async function POST(req: NextRequest) {
   try {

@@ -1,15 +1,14 @@
 import GenericForm from "@/components/admin/GenericForm";
+import { createPlaylist } from "@/services/playlist";
 
 export default function addPlaylistPage() {
   return (
     <GenericForm
       mode="add"
+      title="Playlist"
       schemaKey="playlist"
-      baseUrl="/playlists"
-      redirectPath="/admin/dashboard/playlist"
-      itemName="Playlist"
-      idParamKey="playlistId"
-      nameParamKey="playlistName"
+      redirectPath="/playlist"
+      submitFn={createPlaylist}
     />
   );
 }

@@ -1,17 +1,19 @@
 import Link from "next/link";
-import { getSingers } from "@/services/singer";
 import Button from "@/components/shared/Button";
 import EditBtn from "@/components/admin/EditBtn";
+import { getAllSingers } from "@/services/singer";
 import DeleteBtn from "@/components/admin/DeleteBtn";
 
 export default async function SingerList() {
-  const singers = await getSingers();
+  const data = await getAllSingers();
+  const singers = data.data;
+
   return (
     <section className="h-full w-full flex flex-col justify-start gap-10 dark:text-my-white-low">
       <Link href="/admin/dashboard/singer/add" className="w-fit self-end">
         <Button text="Singer" type="button" />
       </Link>
-      {singers.length > 0 ? (
+      {data.success && singers.length > 0 ? (
         <ul className="grid sm:grid-cols-2 lg:grid-cols-3 *:col-span-1 gap-5 w-full">
           {singers.map((singer) => {
             return (

@@ -2,14 +2,13 @@ import Link from "next/link";
 import { getAllGenres } from "@/services/genre";
 import Button from "@/components/shared/Button";
 import EditBtn from "@/components/admin/EditBtn";
-import { generalItems } from "@/types/generalItems";
 import DeleteBtn from "@/components/admin/DeleteBtn";
 
 export default async function GenreList() {
   const data = await getAllGenres();
-  const genres: generalItems[] = data.data;
+  const genres = data.data;
 
-  if (genres.length < 1) {
+  if (!data.success) {
     return (
       <p className="dark:text-my-red-med font-semibold">
         {data.error || "Something Went Wrong!!!"}

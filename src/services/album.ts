@@ -1,13 +1,16 @@
 import apiClient from "@/configs/axios";
+import { ApiResponse, IGeneralRes } from "@/types/generalItems";
 
-export const getAllAlbums = async () => {
-  const data = await apiClient.get(`/album`);
-  return data;
+export const getAllAlbums = async (): Promise<ApiResponse<IGeneralRes[]>> => {
+  const data = await apiClient.get<ApiResponse<IGeneralRes[]>>(`/album`);
+  return data.data;
 };
 
-export const getAlbum = async (id: string) => {
-  const data = await apiClient.get(`/album/${id}`);
-  return data;
+export const getAlbum = async (
+  id: string
+): Promise<ApiResponse<IGeneralRes>> => {
+  const data = await apiClient.get<ApiResponse<IGeneralRes>>(`/album/${id}`);
+  return data.data;
 };
 
 export const createAlbum = async (name: string) => {

@@ -1,5 +1,6 @@
 import { FormSchemaKey } from "@/constants/zodSchema";
 import { UseFormRegisterReturn, FieldValues, FieldPath } from "react-hook-form";
+import { ApiResponse, IGeneralRes } from "./generalItems";
 
 export interface GenericFormData {
   _id: string;
@@ -24,13 +25,23 @@ export interface CustomOptionProps<TFieldValues extends FieldValues> {
   classes?: string;
 }
 
-export interface GenericFormProps {
-  mode: "add" | "edit";
+interface IAddFn {
+  mode: "add";
+  submitFn: (name: string) => Promise<ApiResponse<IGeneralRes>>;
+}
+interface IEditFn {
+  mode: "edit";
+  submitFn: (name: string, id: string) => Promise<ApiResponse<IGeneralRes>>;
+}
+
+export interface GenericAddFormProps extends IAddFn {
+  title: string;
   schemaKey: FormSchemaKey;
-  baseUrl: string;
   redirectPath: string;
-  itemName: string;
-  idParamKey: string;
-  nameParamKey: string;
-  onSuccess?: () => void;
+}
+
+export interface GenericEditFormProps extends IEditFn {
+  title: string;
+  schemaKey: FormSchemaKey;
+  redirectPath: string;
 }

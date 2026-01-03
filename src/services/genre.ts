@@ -1,13 +1,16 @@
 import apiClient from "@/configs/axios";
+import { ApiResponse, IGeneralRes } from "@/types/generalItems";
 
-export const getAllGenres = async () => {
-  const data = await apiClient.get(`/genre`);
-  return data;
+export const getAllGenres = async (): Promise<ApiResponse<IGeneralRes[]>> => {
+  const data = await apiClient.get<ApiResponse<IGeneralRes[]>>(`/genre`);
+  return data.data;
 };
 
-export const getGenre = async (id: string) => {
-  const data = await apiClient.get(`/genre/${id}`);
-  return data;
+export const getGenre = async (
+  id: string
+): Promise<ApiResponse<IGeneralRes>> => {
+  const data = await apiClient.get<ApiResponse<IGeneralRes>>(`/genre/${id}`);
+  return data.data;
 };
 
 export const createGenre = async (name: string) => {

@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosResponse } from "axios";
 
 const apiClient = axios.create({
   baseURL: "http://localhost:3000/api",
@@ -16,6 +16,6 @@ apiClient.interceptors.request.use(
 );
 
 // ✅ Response Interceptor (Global Error Handler)
-apiClient.interceptors.response.use((response) => response.data);
+apiClient.interceptors.response.use((response: AxiosResponse) => response);
 
 export default apiClient;

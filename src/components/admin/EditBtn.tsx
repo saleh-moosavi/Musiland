@@ -14,7 +14,7 @@ export default function EditBtn({
   return (
     <Link
       className="text-my-blue-med size-5"
-      href={`/admin/dashboard/${type}/edit?${type}Id=${id}&${type}Name=${name}`}
+      href={`/admin/dashboard/${type}/edit?itemId=${id}&itemName=${name}`}
     >
       <Edit />
     </Link>

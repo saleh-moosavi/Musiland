@@ -1,15 +1,14 @@
 import Link from "next/link";
-import { getAlbums } from "@/services/album";
+import { getAllAlbums } from "@/services/album";
 import Button from "@/components/shared/Button";
 import EditBtn from "@/components/admin/EditBtn";
-import { generalItems } from "@/types/generalItems";
 import DeleteBtn from "@/components/admin/DeleteBtn";
 
 export default async function AlbumList() {
-  const data = await getAlbums();
-  const albums: generalItems[] = data.data;
+  const data = await getAllAlbums();
+  const albums = data.data;
 
-  if (albums.length < 1) {
+  if (!data.success) {
     return (
       <p className="dark:text-my-red-med font-semibold">
         {"There Is No Album Here!!!"}
@@ -22,7 +21,7 @@ export default async function AlbumList() {
       <Link href="/admin/dashboard/album/add" className="w-fit self-end">
         <Button text="Album" type="button" />
       </Link>
-      {albums.length > 0 ? (
+      {data.success && albums.length > 0 ? (
         <ul className="grid sm:grid-cols-2 lg:grid-cols-3 *:col-span-1 gap-5 w-full">
           {albums.map((album) => {
             return (

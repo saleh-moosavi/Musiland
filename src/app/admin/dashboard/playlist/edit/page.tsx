@@ -1,15 +1,14 @@
+import { editPlaylist } from "@/services/playlist";
 import GenericForm from "@/components/admin/GenericForm";
 
 export default function editPlaylistPage() {
   return (
     <GenericForm
       mode="edit"
+      title="Playlist"
       schemaKey="playlist"
-      baseUrl="/playlists"
-      redirectPath="/admin/dashboard/playlist"
-      itemName="Playlist"
-      idParamKey="playlistId"
-      nameParamKey="playlistName"
+      redirectPath="/playlist"
+      submitFn={editPlaylist}
     />
   );
 }

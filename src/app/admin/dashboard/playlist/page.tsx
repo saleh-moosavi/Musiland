@@ -1,15 +1,14 @@
 import Link from "next/link";
 import Button from "@/components/shared/Button";
 import EditBtn from "@/components/admin/EditBtn";
-import { generalItems } from "@/types/generalItems";
 import DeleteBtn from "@/components/admin/DeleteBtn";
-import { getAllPlaylists } from "@/services/playlist";
+import { deletePlaylist, getAllPlaylists } from "@/services/playlist";
 
 export default async function PlaylistList() {
   const data = await getAllPlaylists();
-  const playlists: generalItems[] = data.data;
+  const playlists = data.data;
 
-  if (playlists.length < 1) {
+  if (!data.success) {
     return (
       <p className="dark:text-my-red-med font-semibold">
         {data.error || "Something Went Wrong!!!"}
@@ -21,7 +20,7 @@ export default async function PlaylistList() {
       <Link href="/admin/dashboard/playlist/add" className="w-fit self-end">
         <Button text="Playlist" type="button" />
       </Link>
-      {playlists.length > 0 ? (
+      {data.success && playlists.length > 0 ? (
         <ul className="grid sm:grid-cols-2 lg:grid-cols-3 *:col-span-1 gap-5 w-full">
           {playlists.map((playlist) => {
             return (
@@ -37,9 +36,10 @@ export default async function PlaylistList() {
                     type="playlist"
                   />
                   <DeleteBtn
+                    type="playlist"
                     id={playlist._id}
                     name={playlist.name}
-                    type="playlist"
+                    deleteFn={deletePlaylist}
                   />
                 </article>
               </li>
