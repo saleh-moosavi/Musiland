@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { getAllAlbums } from "@/services/album";
 import Button from "@/components/shared/Button";
 import EditBtn from "@/components/admin/EditBtn";
 import DeleteBtn from "@/components/admin/DeleteBtn";
+import { deleteAlbum, getAllAlbums } from "@/services/album";
 
 export default async function AlbumList() {
   const data = await getAllAlbums();
@@ -32,7 +32,12 @@ export default async function AlbumList() {
                 <p>{album.name}</p>
                 <article className="flex gap-5 items-center">
                   <EditBtn id={album._id} name={album.name} type="album" />
-                  <DeleteBtn id={album._id} name={album.name} type="album" />
+                  <DeleteBtn
+                    type="album"
+                    id={album._id}
+                    name={album.name}
+                    deleteFn={deleteAlbum}
+                  />
                 </article>
               </li>
             );

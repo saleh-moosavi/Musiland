@@ -1,3 +1,4 @@
+"use server";
 import apiClient from "@/configs/axios";
 import { ApiResponse, IGeneralRes } from "@/types/generalItems";
 
@@ -13,17 +14,29 @@ export const getGenre = async (
   return data.data;
 };
 
-export const createGenre = async (name: string) => {
-  const data = await apiClient.post(`/genre`, { name });
-  return data;
+export const createGenre = async (
+  name: string
+): Promise<ApiResponse<IGeneralRes>> => {
+  const data = await apiClient.post<ApiResponse<IGeneralRes>>(`/genre`, {
+    name,
+  });
+  return data.data;
 };
 
-export const editGenre = async (name: string, id: string) => {
-  const data = await apiClient.put(`/genre/`, { name, id });
-  return data;
+export const editGenre = async (
+  name: string,
+  id: string
+): Promise<ApiResponse<IGeneralRes>> => {
+  const data = await apiClient.put<ApiResponse<IGeneralRes>>(`/genre/`, {
+    name,
+    id,
+  });
+  return data.data;
 };
 
-export const deleteGenre = async (id: string) => {
-  const data = await apiClient.delete(`/genre/${id}`);
-  return data;
+export const deleteGenre = async (
+  id: string
+): Promise<ApiResponse<IGeneralRes>> => {
+  const data = await apiClient.delete<ApiResponse<IGeneralRes>>(`/genre/${id}`);
+  return data.data;
 };

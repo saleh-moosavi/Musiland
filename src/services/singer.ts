@@ -1,3 +1,4 @@
+"use server";
 import apiClient from "@/configs/axios";
 import { ApiResponse, IGeneralRes } from "@/types/generalItems";
 

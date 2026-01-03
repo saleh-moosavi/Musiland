@@ -1,15 +1,14 @@
+import { editGenre } from "@/services/genre";
 import GenericForm from "@/components/admin/GenericForm";
 
 export default function editGenrePage() {
   return (
     <GenericForm
       mode="edit"
+      title="Genre"
       schemaKey="genre"
-      baseUrl="/genres"
-      redirectPath="/admin/dashboard/genre"
-      itemName="Genre"
-      idParamKey="genreId"
-      nameParamKey="genreName"
+      redirectPath="/genre"
+      submitFn={editGenre}
     />
   );
 }

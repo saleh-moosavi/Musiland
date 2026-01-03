@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { getAllGenres } from "@/services/genre";
 import Button from "@/components/shared/Button";
 import EditBtn from "@/components/admin/EditBtn";
 import DeleteBtn from "@/components/admin/DeleteBtn";
+import { deleteGenre, getAllGenres } from "@/services/genre";
 
 export default async function GenreList() {
   const data = await getAllGenres();
@@ -31,7 +31,12 @@ export default async function GenreList() {
                 <p>{genre.name}</p>
                 <article className="flex gap-5 items-center">
                   <EditBtn id={genre._id} name={genre.name} type="genre" />
-                  <DeleteBtn id={genre._id} name={genre.name} type="genre" />
+                  <DeleteBtn
+                    type="genre"
+                    id={genre._id}
+                    name={genre.name}
+                    deleteFn={deleteGenre}
+                  />
                 </article>
               </li>
             );

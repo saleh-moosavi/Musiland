@@ -1,9 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
-import { getAllSongs } from "@/services/song";
 import Button from "@/components/shared/Button";
 import EditBtn from "@/components/admin/EditBtn";
 import DeleteBtn from "@/components/admin/DeleteBtn";
+import { deleteSong, getAllSongs } from "@/services/song";
 
 export default async function SongList() {
   const songs = await getAllSongs("");
@@ -46,7 +46,12 @@ export default async function SongList() {
               </article>
               <article className="h-full flex flex-col justify-between gap-2 p-2">
                 <EditBtn id={song._id} name={song.name} type="song" />
-                <DeleteBtn id={song._id} name={song.name} type="song" />
+                <DeleteBtn
+                  type="song"
+                  id={song._id}
+                  name={song.name}
+                  deleteFn={deleteSong}
+                />
               </article>
             </li>
           ))}

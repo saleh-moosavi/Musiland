@@ -1,15 +1,14 @@
+import { editAlbum } from "@/services/album";
 import GenericForm from "@/components/admin/GenericForm";
 
 export default function editAlbumPage() {
   return (
     <GenericForm
       mode="edit"
+      title="Album"
       schemaKey="album"
-      baseUrl="/albums"
-      redirectPath="/admin/dashboard/album"
-      itemName="Album"
-      idParamKey="albumId"
-      nameParamKey="albumName"
+      submitFn={editAlbum}
+      redirectPath="/album"
     />
   );
 }

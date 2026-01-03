@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Button from "@/components/shared/Button";
 import EditBtn from "@/components/admin/EditBtn";
-import { getAllSingers } from "@/services/singer";
 import DeleteBtn from "@/components/admin/DeleteBtn";
+import { deleteSinger, getAllSingers } from "@/services/singer";
 
 export default async function SingerList() {
   const data = await getAllSingers();
@@ -24,7 +24,12 @@ export default async function SingerList() {
                 <p>{singer.name}</p>
                 <article className="flex gap-5 items-center">
                   <EditBtn id={singer._id} name={singer.name} type="singer" />
-                  <DeleteBtn id={singer._id} name={singer.name} type="singer" />
+                  <DeleteBtn
+                    type="singer"
+                    id={singer._id}
+                    name={singer.name}
+                    deleteFn={deleteSinger}
+                  />
                 </article>
               </li>
             );
