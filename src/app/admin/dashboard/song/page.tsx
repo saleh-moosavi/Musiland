@@ -6,14 +6,15 @@ import DeleteBtn from "@/components/admin/DeleteBtn";
 import { deleteSong, getAllSongs } from "@/services/song";
 
 export default async function SongList() {
-  const songs = await getAllSongs("");
+  const data = await getAllSongs("");
+  const songs = data.data;
 
   return (
     <section className="h-full w-full flex flex-col justify-start gap-10 dark:text-my-white-low">
       <Link href="/admin/dashboard/song/add" className="w-fit self-end">
         <Button text="Song" type="button" />
       </Link>
-      {songs.length > 0 ? (
+      {data.success && songs.length > 0 ? (
         <ul className="grid lg:grid-cols-2 gap-5 w-full">
           {songs.map((song) => (
             <li
@@ -36,11 +37,11 @@ export default async function SongList() {
                   <p>Album : {song.album?.name || "None"}</p>
                   <p>
                     Genre :{" "}
-                    {song.genres?.map((g) => g.name).join(", ") || "None"}
+                    {song.genre?.map((g) => g.name).join(", ") || "None"}
                   </p>
                   <p>
                     Playlist :{" "}
-                    {song.playlists?.map((p) => p.name).join(", ") || "None"}
+                    {song.playlist?.map((p) => p.name).join(", ") || "None"}
                   </p>
                 </div>
               </article>

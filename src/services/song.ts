@@ -1,27 +1,36 @@
+"use server";
 import apiClient from "@/configs/axios";
-import { GetSong, SongFormData } from "@/types/song";
+import { ISongListResponse, ISongResponse, SongFormData } from "@/types/song";
 
-export const getAllSongs = async (query?: string): Promise<GetSong[]> => {
-  const data = await apiClient.get(`/song?${query}`);
-  return data.data.songs;
+export const getAllSongs = async (
+  query?: string
+): Promise<ISongListResponse> => {
+  const data = await apiClient.get<ISongListResponse>(`/song?${query}`);
+  return data.data;
 };
 
-export const getSong = async (id: string): Promise<GetSong> => {
-  const data = await apiClient.get(`/song/${id}`);
-  return data.data.song;
+export const getSong = async (id: string): Promise<ISongResponse> => {
+  const data = await apiClient.get<ISongResponse>(`/song/${id}`);
+  return data.data;
 };
 
-export const addSong = async (data: SongFormData) => {
-  const res = await apiClient.post(`/song`, { data });
+export const createSong = async (
+  data: SongFormData
+): Promise<ISongResponse> => {
+  const res = await apiClient.post<ISongResponse>(`/song`, data);
+  console.log(res);
   return res.data;
 };
 
-export const editSong = async (id: string, data: SongFormData) => {
-  const res = await apiClient.put(`/song`, { id, data });
+export const editSong = async (
+  id: string,
+  data: SongFormData
+): Promise<ISongResponse> => {
+  const res = await apiClient.put<ISongResponse>(`/song`, { id, data });
   return res.data;
 };
 
-export const deleteSong = async (id: string) => {
-  const res = await apiClient.delete(`/song/${id}`);
+export const deleteSong = async (id: string): Promise<ISongResponse> => {
+  const res = await apiClient.delete<ISongResponse>(`/song/${id}`);
   return res.data;
 };

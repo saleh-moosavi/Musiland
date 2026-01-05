@@ -1,132 +1,278 @@
 "use client";
 
-import { useEffect } from "react";
 import Button from "../shared/Button";
 import { useForm } from "react-hook-form";
-import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import useToastStore from "@/store/toastStore";
+import { getAllAlbums } from "@/services/album";
+import { getAllGenres } from "@/services/genre";
+import { getAllSingers } from "@/services/singer";
+import { getAllPlaylists } from "@/services/playlist";
 import { zodResolver } from "@hookform/resolvers/zod";
 import CustomInput from "@/components/auth/CustomInput";
+import type { ISong, ISongResponse } from "@/types/song";
 import CustomOption from "@/components/auth/CustomOption";
-import { useSongFormData } from "@/hooks/useSongFormData";
-import { useSongFormSubmit } from "@/hooks/useSongFormSubmit";
+import { useRouter, useSearchParams } from "next/navigation";
+import { createSong, editSong, getSong } from "@/services/song";
 import { addSongSchema, Mode, SongFormData } from "@/types/song";
-import { Music, FileText, Image, Mic, Disc, List } from "lucide-react";
+import type { ApiResponse, IGeneralRes } from "@/types/generalItems";
+import {
+  Music,
+  FileText,
+  Image as ImageIcon,
+  Mic,
+  Disc,
+  List,
+} from "lucide-react";
 
 export default function SongForm({ mode }: { mode: Mode }) {
+  const router = useRouter();
   const searchParams = useSearchParams();
-  const songId = searchParams.get("songId");
-  const {
-    singers,
-    albums,
-    genres,
-    playlists,
-    song,
-    error: fetchError,
-  } = useSongFormData({ mode, songId });
-  const {
-    submit,
-    error: submitError,
-    isSubmitting,
-  } = useSongFormSubmit({ mode, songId });
+  const songId = searchParams.get("itemId");
+  const { setIsToastOpen, setToastTitle, setToastColor } = useToastStore();
 
+  // State برای داده‌های فرم
+  const [singers, setSingers] = useState<IGeneralRes[]>([]);
+  const [albums, setAlbums] = useState<IGeneralRes[]>([]);
+  const [genres, setGenres] = useState<IGeneralRes[]>([]);
+  const [playlists, setPlaylists] = useState<IGeneralRes[]>([]);
+  const [songData, setSongData] = useState<ISong | null>(null);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+
+  // فرم
   const {
-    formState: { errors },
+    formState: { errors, isLoading },
     register,
     handleSubmit,
-    setValue,
+    reset,
   } = useForm<SongFormData>({
     resolver: zodResolver(addSongSchema),
+    defaultValues: {
+      name: "",
+      lyric: "",
+      audioUrl: "",
+      coverUrl: "",
+      singer: "",
+      album: "",
+      genre: [],
+      playlist: [],
+    },
   });
 
-  // Populate form for edit mode
+  // Fetch داده‌های مورد نیاز
   useEffect(() => {
-    if (mode === "edit" && song) {
-      setValue("name", song.name);
-      setValue("lyric", song.lyric);
-      setValue("audioUrl", song.audioUrl);
-      setValue("coverUrl", song.coverUrl);
-      setValue("singerId", song.singerId);
-      setValue("albumId", song.albumId);
-      setValue("genreIds", song.genreIds);
-      setValue("playlistIds", song.playlistIds);
+    const fetchData = async () => {
+      try {
+        setSubmitError(null);
+
+        // Array of promises برای parallel fetching
+        const fetchPromises: (
+          | Promise<ApiResponse<IGeneralRes[]>>
+          | Promise<ISongResponse>
+        )[] = [
+          getAllSingers(),
+          getAllAlbums(),
+          getAllGenres(),
+          getAllPlaylists(),
+        ];
+
+        // اگر در حالت edit هستیم، song data رو هم fetch کنیم
+        if (mode === "edit" && songId) {
+          fetchPromises.push(getSong(songId));
+        }
+
+        // اجرای همه promises به صورت موازی
+        const [singersRes, albumsRes, genresRes, playlistsRes, songRes] =
+          await Promise.all(fetchPromises);
+
+        // تنظیم state‌ها
+        setAlbums(albumsRes.data as IGeneralRes[]);
+        setSingers(singersRes?.data as IGeneralRes[]);
+        setGenres(genresRes.data as IGeneralRes[]);
+        setPlaylists(playlistsRes.data as IGeneralRes[]);
+
+        if (mode === "edit" && songRes && songRes.success) {
+          const sData = songRes.data as ISong;
+          setSongData(sData);
+
+          reset({
+            name: sData.name,
+            lyric: sData.lyric,
+            album: sData.album._id,
+            singer: sData.singer._id,
+            genre: sData.genre.map((g) => g._id),
+            audioUrl: sData.audioUrl,
+            coverUrl: sData.coverUrl,
+            playlist: sData.playlist.map((p) => p._id),
+          });
+        }
+      } catch (error: unknown) {
+        setSubmitError(
+          error instanceof Error
+            ? error?.message
+            : "Failed to fetch required data. Please try again."
+        );
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // Submit handler
+  const submitHandler = async (data: SongFormData) => {
+    setSubmitError(null);
+
+    try {
+      let result: ISongResponse;
+
+      if (mode === "add") {
+        // Create new song
+        result = await createSong(data);
+      } else {
+        // Edit existing song
+        if (!songId) {
+          setSubmitError("Song ID is required for editing");
+          return;
+        }
+        result = await editSong(songId, data);
+      }
+
+      // بررسی موفقیت‌آمیز بودن عملیات
+      if (result.success) {
+        setIsToastOpen(true);
+        setToastTitle(
+          `Song ${mode === "add" ? "added" : "updated"} successfully!`
+        );
+        setToastColor(mode === "add" ? "green" : "orange");
+
+        // Reset فرم
+        reset();
+
+        // Redirect به صفحه songs
+        router.push("/admin/dashboard/song");
+        router.refresh(); // برای update لیست songs
+      } else {
+        setSubmitError(result.message || "Operation failed.");
+      }
+    } catch (error: unknown) {
+      setSubmitError(
+        error instanceof Error
+          ? error?.message
+          : "Server connection error. Please try again."
+      );
     }
-  }, [song, mode, setValue]);
+  };
+
+  // Loading state
+  if (mode === "edit" && songData === null) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="text-gray-500">Loading song data...</div>
+      </div>
+    );
+  }
 
   return (
-    <article className="mx-auto p-5 rounded-3xl bg-my-white-low dark:bg-my-black-max mt-10 shadow-md dark:shadow-my-black-low/30 text-my-black-max dark:text-my-white-low space-y-5">
-      <h3 className="text-center">{mode === "add" ? "Add" : "Edit"} Song</h3>
-      <form
-        onSubmit={handleSubmit(submit)}
-        className="w-full space-y-5 flex flex-col max-h-96 overflow-auto"
-      >
-        <article className="grid md:grid-cols-4 *:col-span-1 gap-5">
+    <article className="mx-auto p-6 rounded-3xl bg-my-white-low dark:bg-my-black-max mt-8 shadow-md dark:shadow-my-black-low/30 text-my-black-max dark:text-my-white-low">
+      <h3 className="text-center text-xl font-bold mb-6">
+        {mode === "add" ? "Add New Song" : "Edit Song"}
+      </h3>
+
+      <form onSubmit={handleSubmit(submitHandler)} className="space-y-6">
+        {/* Basic Info Section */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <CustomInput
             register={register("name")}
-            icon={<Music />}
+            icon={<Music className="w-5 h-5" />}
             name="Song Name"
             error={errors.name?.message}
           />
+
           <CustomInput
             register={register("lyric")}
-            icon={<FileText />}
-            name="Lyric"
+            icon={<FileText className="w-5 h-5" />}
+            name="Lyrics"
             error={errors.lyric?.message}
           />
+
           <CustomInput
             register={register("audioUrl")}
-            icon={<Music />}
+            icon={<Music className="w-5 h-5" />}
             name="Audio URL"
             error={errors.audioUrl?.message}
           />
+
           <CustomInput
             register={register("coverUrl")}
-            icon={<Image />}
-            name="Cover URL"
+            icon={<ImageIcon className="w-5 h-5" />}
+            name="Cover Image URL"
             error={errors.coverUrl?.message}
           />
+        </div>
+
+        {/* Selection Section */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <CustomOption
             title="Singer"
-            icon={<Mic />}
-            register={register("singerId")}
+            icon={<Mic className="w-5 h-5" />}
+            register={register("singer")}
             data={singers}
-            error={errors.singerId?.message}
+            error={errors.singer?.message}
           />
+
           <CustomOption
             title="Album"
-            icon={<Disc />}
-            register={register("albumId")}
+            icon={<Disc className="w-5 h-5" />}
+            register={register("album")}
             data={albums}
-            error={errors.albumId?.message}
+            error={errors.album?.message}
           />
+
           <CustomOption
             multiple
             title="Genres"
-            icon={<List />}
-            register={register("genreIds")}
+            icon={<List className="w-5 h-5" />}
+            register={register("genre")}
             data={genres}
-            error={errors.genreIds?.message}
+            error={errors.genre?.message}
           />
+
           <CustomOption
             multiple
             title="Playlists"
-            icon={<List />}
-            register={register("playlistIds")}
+            icon={<List className="w-5 h-5" />}
+            register={register("playlist")}
             data={playlists}
-            error={errors.playlistIds?.message}
+            error={errors.playlist?.message}
           />
-        </article>
+        </div>
 
-        <div className="w-full md:w-1/2 mx-auto space-y-2 sticky bottom-0 inset-x-0">
-          <Button
-            isSubmitting={isSubmitting}
-            text="Song"
-            mode={mode}
-            type="submit"
-          />
-          {(fetchError || submitError) && (
-            <p className="text-my-red-med text-sm text-center">
-              {fetchError || submitError}
-            </p>
+        {/* Submit Section */}
+        <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
+          <div className="flex flex-row gap-3 justify-center items-center">
+            <Button
+              type="submit"
+              text="Song"
+              isSubmitting={isLoading}
+              mode={mode}
+            />
+
+            <button
+              type="button"
+              onClick={() => router.back()}
+              disabled={isLoading}
+              className="cursor-pointer px-4 py-2 text-gray-700 dark:text-gray-300 bg-gray-300 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 disabled:opacity-50 transition-colors w-full"
+            >
+              Cancel
+            </button>
+          </div>
+
+          {submitError && (
+            <div className="mt-3 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+              <p className="text-red-600 dark:text-red-400 text-sm text-center">
+                {submitError}
+              </p>
+            </div>
           )}
         </div>
       </form>

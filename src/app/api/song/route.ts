@@ -1,3 +1,4 @@
+import { SortOrder } from "mongoose";
 import { SongModel } from "@/models/song";
 import { SongFormData } from "@/types/song";
 import { AlbumModel } from "@/models/album";
@@ -17,7 +18,7 @@ export async function GET(req: NextRequest) {
   const genre = searchParams.get("genre");
   const singer = searchParams.get("singer");
   const playlist = searchParams.get("playlist");
-  const query: any = {};
+  const query: Record<string, Record<string, string | number | string[]>> = {};
   if (likes) query.likes = { $gt: Number(likes) };
   if (name) query.name = { $regex: name, $options: "i" };
 
@@ -68,7 +69,12 @@ export async function GET(req: NextRequest) {
   }
 
   // Sorting
-  let sortOption: any = {};
+  const sortOption:
+    | string
+    | Record<string, SortOrder | { $meta: string | number }>
+    | [string, SortOrder][]
+    | null
+    | undefined = {};
   if (sort) {
     const [field, order] = sort.split(",");
     const sortField = field === "date" ? "createdAt" : field;
@@ -89,11 +95,13 @@ export async function GET(req: NextRequest) {
     const songs = await SongModel.find(query)
       .populate("singer")
       .populate("album")
-      .populate("genres")
-      .populate("playlists")
+      .populate("genre")
+      .populate("playlist")
       .sort(sortOption)
       .skip(skip)
       .limit(limit);
+
+    console.log(songs);
     return NextResponse.json(
       {
         success: true,
@@ -101,11 +109,11 @@ export async function GET(req: NextRequest) {
       },
       { status: 200 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
       {
         success: false,
-        message: error.message || "Unknown error",
+        message: error instanceof Error ? error?.message : "Unknown error",
       },
       { status: 500 }
     );
@@ -121,10 +129,10 @@ export async function POST(req: NextRequest) {
       data.name.trim() === "" ||
       data.coverUrl.trim() === "" ||
       data.audioUrl.trim() === "" ||
-      data.albumId === "" ||
-      data.singerId === "" ||
-      data.genreIds.length < 1 ||
-      data.playlistIds.length < 1
+      data.album === "" ||
+      data.singer === "" ||
+      data.genre.length < 1 ||
+      data.playlist.length < 1
     ) {
       return NextResponse.json(
         {
@@ -144,7 +152,17 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
-    const song = await SongModel.create({ ...data });
+    const song = await SongModel.create({
+      name: data.name,
+      likes: 0,
+      lyric: data.lyric,
+      audioUrl: data.audioUrl,
+      coverUrl: data.coverUrl,
+      singer: data.singer,
+      album: data.album,
+      genre: data.genre,
+      playlist: data.playlist,
+    });
 
     return NextResponse.json(
       {
@@ -153,12 +171,12 @@ export async function POST(req: NextRequest) {
       },
       { status: 201 }
     );
-  } catch (error: any) {
-    console.error("Error creating song:", error);
+  } catch (error: unknown) {
     return NextResponse.json(
       {
         success: false,
-        message: error?.message || "Internal server error",
+        message:
+          error instanceof Error ? error?.message : "Internal server error",
       },
       { status: 500 }
     );
@@ -174,9 +192,9 @@ export async function PUT(req: NextRequest) {
       data.name.trim() === "" ||
       data.coverUrl.trim() === "" ||
       data.audioUrl.trim() === "" ||
-      data.albumId === "" ||
-      data.genreIds.length < 1 ||
-      data.playlistIds.length < 1
+      data.album === "" ||
+      data.genre.length < 1 ||
+      data.playlist.length < 1
     ) {
       return NextResponse.json(
         {
@@ -204,8 +222,8 @@ export async function PUT(req: NextRequest) {
     )
       .populate("singer")
       .populate("album")
-      .populate("genres")
-      .populate("playlists");
+      .populate("genre")
+      .populate("playlist");
 
     if (!song) {
       return NextResponse.json(
@@ -221,12 +239,12 @@ export async function PUT(req: NextRequest) {
       success: true,
       data: song,
     });
-  } catch (error: any) {
-    console.error("Error updating Song:", error);
+  } catch (error: unknown) {
     return NextResponse.json(
       {
         success: false,
-        message: error.message || "Internal server error",
+        message:
+          error instanceof Error ? error?.message : "Internal server error",
       },
       { status: 500 }
     );

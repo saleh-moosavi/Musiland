@@ -7,12 +7,35 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   try {
-    const { id } = params;
-    const song = await SongModel.findById(id)
-      .populate("singer")
-      .populate("album")
-      .populate("genres")
-      .populate("playlists");
+    const { id } = await params;
+
+    if (!id) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Song ID is required",
+        },
+        { status: 400 }
+      );
+    }
+
+    const song = await SongModel.findById(id).populate([
+      "singer",
+      "album",
+      "genre",
+      "playlist",
+    ]);
+
+    if (!song) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Song not found",
+        },
+        { status: 404 }
+      );
+    }
+
     return NextResponse.json(
       {
         success: true,
@@ -20,11 +43,12 @@ export async function GET(
       },
       { status: 200 }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
+    console.error("Error fetching song:", error);
     return NextResponse.json(
       {
         success: false,
-        message: error.message || "Unknown error",
+        message: error instanceof Error ? error?.message : "Unknown error",
       },
       { status: 500 }
     );
@@ -65,11 +89,12 @@ export async function DELETE(
       success: true,
       data: song,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
       {
         success: false,
-        message: error.message || "Internal server error",
+        message:
+          error instanceof Error ? error?.message : "Internal server error",
       },
       { status: 500 }
     );

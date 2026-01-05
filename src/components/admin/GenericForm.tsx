@@ -51,7 +51,6 @@ export default function GenericForm({
       const result = await (mode === "add"
         ? submitFn(data.name)
         : submitFn(data.name, itemId));
-      console.log(result);
 
       if (result.success) {
         reset();
@@ -64,8 +63,10 @@ export default function GenericForm({
       } else {
         setError(result.message || "Operation failed.");
       }
-    } catch (err) {
-      setError("Server connection error.");
+    } catch (error: unknown) {
+      setError(
+        error instanceof Error ? error.message : "Server connection error"
+      );
     }
   };
 
