@@ -1,7 +1,7 @@
 import Likes from "./Likes";
 import Link from "next/link";
 import Image from "next/image";
-import { GetSong } from "@/types/song";
+import { ISong } from "@/types/song";
 import PlayButton from "../shared/PlayButton";
 import { MessageSquareMore } from "lucide-react";
 import { generalItems } from "@/types/generalItems";
@@ -10,13 +10,13 @@ export default function SingleMusicView({
   song,
   commentCount,
 }: {
-  song: GetSong;
+  song: ISong;
   commentCount: number;
 }) {
   if (!song) {
     return (
       <div className="text-my-red-med font-bold text-center mt-5">
-        آهنگ پیدا نشد
+        Song Not Found!
       </div>
     );
   }
@@ -40,9 +40,9 @@ export default function SingleMusicView({
           </p>
           {/* genres section */}
           <ul className="font-semibold my-10 flex items-center gap-3">
-            Genre:{" "}
-            {song.genres?.length
-              ? song.genres.map((g: generalItems) => (
+            Genre :
+            {song.genre?.length
+              ? song.genre.map((g: generalItems) => (
                   <li key={g._id}>
                     <Link href={`/category/${g.name}?genre=${g.name}`}>
                       {g.name}
@@ -53,9 +53,9 @@ export default function SingleMusicView({
           </ul>
           {/* playlist section */}
           <ul className="font-semibold my-10 flex items-center gap-3">
-            Playlist:{" "}
-            {song.playlists?.length
-              ? song.playlists.map((p: generalItems) => (
+            Playlist :
+            {song.playlist?.length
+              ? song.playlist.map((p: generalItems) => (
                   <li key={p._id}>
                     <Link href={`/category/${p.name}?playlist=${p.name}`}>
                       {p.name}

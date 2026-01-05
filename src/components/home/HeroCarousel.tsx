@@ -4,7 +4,8 @@ import { getAllSongs } from "@/services/song";
 import HeroCarouselWrapper from "./HeroCarouselWrapper";
 
 export default async function HeroCarousel() {
-  const songs = await getAllSongs("page=1,10&sort=date");
+  const res = await getAllSongs("page=1,10&sort=date");
+  const songs = res.data;
 
   if (songs?.length < 1 || !songs) return null;
 

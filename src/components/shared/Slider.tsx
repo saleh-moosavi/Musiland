@@ -11,7 +11,8 @@ export default async function Slider({
   title: string;
   query: string;
 }) {
-  const songs = await getAllSongs(`${query}&page=1,10`);
+  const res = await getAllSongs(`${query}&page=1,10`);
+  const songs = res.data;
 
   if (!songs || songs?.length < 1) {
     return null;

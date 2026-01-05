@@ -1,10 +1,11 @@
+import { ISong } from "@/types/song";
 import { create } from "zustand";
 
 interface SameSongsStore {
   isPanelVisible: boolean;
-  sameSongsList: any[];
+  sameSongsList: ISong[];
   setIsPanelVisible: (isPanelVisible: boolean) => void;
-  setSameSongsList: (sameSongsList: any[]) => void;
+  setSameSongsList: (sameSongsList: ISong[]) => void;
 }
 
 const useSameSongsStore = create<SameSongsStore>((set) => ({

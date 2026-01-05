@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect } from "react";
 import PlayButton from "./PlayButton";
-import { GetSong } from "@/types/song";
+import { ISong } from "@/types/song";
 import { Heart, X } from "lucide-react";
 import useUserStore from "@/store/userStore";
 import { getAllSongs } from "@/services/song";
@@ -27,7 +27,8 @@ export default function SameSongs() {
 
   useEffect(() => {
     const fetchSongs = async () => {
-      const songs = await getAllSongs(query);
+      const res = await getAllSongs(query);
+      const songs = res.data;
       if (songs === null) {
         setSameSongsList([]);
       } else {
@@ -57,7 +58,7 @@ export default function SameSongs() {
           />
         </div>
         {sameSongsList ? (
-          sameSongsList.map((song: GetSong) => (
+          sameSongsList.map((song: ISong) => (
             <section
               className={`flex justify-start items-center gap-2 mb-5 md:gap-10 w-full p-2 rounded-2xl overflow-hidden dark:text-my-white-low select-none transition-all duration-200 ${
                 audioSrc == song.audioUrl

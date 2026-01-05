@@ -1,15 +1,19 @@
 import { lazy } from "react";
 import { getSong } from "@/services/song";
 import SingleMusicView from "./SingleMusicView";
-import { getComments } from "@/services/comment";
+import { getSongComments } from "@/services/comment";
 import { generalItems } from "@/types/generalItems";
 const Comments = lazy(() => import("./Comments"));
 const AddComment = lazy(() => import("./AddComment"));
 const Slider = lazy(() => import("../shared/Slider"));
 
 export default async function SingleMusicWrapper({ id }: { id: string }) {
-  const [song, comments] = await Promise.all([getSong(id), getComments(id)]);
+  const [songRes, commentRes] = await Promise.all([
+    getSong(id),
+    getSongComments(id),
+  ]);
 
+  const [song, comments] = [songRes.data, commentRes.data];
   if (!song || typeof song !== "object" || Array.isArray(song)) {
     return (
       <div className="text-my-red-med font-bold text-center mt-5">
@@ -26,9 +30,9 @@ export default async function SingleMusicWrapper({ id }: { id: string }) {
       <div className="space-y-10 mt-10">
         <Slider
           title="Related Songs"
-          query={`genre=${song.genres
+          query={`genre=${song.genre
             .map((g: generalItems) => g.name)
-            .join(",")}&playlist=${song.playlists
+            .join(",")}&playlist=${song.playlist
             .map((p: generalItems) => p.name)
             .join(",")}`}
         />
