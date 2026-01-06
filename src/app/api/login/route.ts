@@ -1,12 +1,16 @@
 import { cookies } from "next/headers";
 import { UserModel } from "@/models/user";
 import { NextRequest, NextResponse } from "next/server";
-import { comparePassword, generateToken, cookieOptions } from "@/libs/authUtils";
+import {
+  comparePassword,
+  generateToken,
+  cookieOptions,
+} from "@/libs/authUtils";
 
 export async function POST(req: NextRequest) {
   try {
     const { email, password } = await req.json();
-    
+
     if (!email || !password) {
       return NextResponse.json(
         {
@@ -24,20 +28,20 @@ export async function POST(req: NextRequest) {
     ) {
       // Create admin token
       const token = generateToken({
-        userId: 'admin',
+        userId: "admin",
         email: email,
-        role: 'admin'
+        role: "admin",
       });
 
       // Set cookie
       const cookieStore = await cookies();
-      cookieStore.set('user', token, cookieOptions);
+      cookieStore.set("user", token, cookieOptions);
 
       return NextResponse.json(
         {
           success: true,
           user: {
-            id: 'admin',
+            id: "admin",
             name: "Admin Name",
             email: email,
             role: "admin",
@@ -48,8 +52,8 @@ export async function POST(req: NextRequest) {
     }
 
     // Find User
-    const user = await UserModel.findOne({ email }).select('+password');
-    
+    const user = await UserModel.findOne({ email }).select("+password");
+
     if (!user) {
       return NextResponse.json(
         {
@@ -62,7 +66,7 @@ export async function POST(req: NextRequest) {
 
     // Check password
     const isPasswordValid = await comparePassword(password, user.password);
-    
+
     if (!isPasswordValid) {
       return NextResponse.json(
         {
@@ -77,12 +81,12 @@ export async function POST(req: NextRequest) {
     const token = generateToken({
       userId: user._id.toString(),
       email: user.email,
-      role: user.role || 'user'
+      role: user.role || "user",
     });
 
     // Set cookie
     const cookieStore = await cookies();
-    cookieStore.set('user', token, cookieOptions);
+    cookieStore.set("user", token, cookieOptions);
 
     // Remove password from response
     const userResponse = {
@@ -90,9 +94,9 @@ export async function POST(req: NextRequest) {
       username: user.username,
       email: user.email,
       name: user.name,
-      role: user.role || 'user',
+      role: user.role || "user",
       createdAt: user.createdAt,
-      updatedAt: user.updatedAt
+      updatedAt: user.updatedAt,
     };
 
     return NextResponse.json(
@@ -102,15 +106,14 @@ export async function POST(req: NextRequest) {
       },
       { status: 200 }
     );
-    
-  } catch (error: any) {
-    console.error('Login error:', error);
-    return NextResponse.json(
-      {
-        success: false,
-        message: error.message || "Internal server error",
-      },
-      { status: 500 }
-    );
+  } catch (error: unknown) {
+    if (error instanceof Error)
+      return NextResponse.json(
+        {
+          success: false,
+          message: error.message || "Internal server error",
+        },
+        { status: 500 }
+      );
   }
 }

@@ -6,6 +6,7 @@ import { Menu, Moon, Sun } from "lucide-react";
 import { links } from "@/constants/sidebarMenu";
 import useWindowStore from "@/store/windowStore";
 import MobileMenuWrapper from "../shared/MobileMenuWrapper";
+import Image from "next/image";
 
 export default function SideBar() {
   const { theme, handleTheme } = useTheme();
@@ -30,10 +31,12 @@ export default function SideBar() {
                 target="_blank"
                 className="p-2 rounded flex justify-center items-center gap-5"
               >
-                <img
+                <Image
                   src={theme == "dark" ? "/Logo-dark.png" : "/Logo-light.png"}
                   alt="Site Logo"
                   className="min-w-5 w-5"
+                  width={100}
+                  height={100}
                 />
                 <p>Musiland</p>
               </Link>

@@ -7,7 +7,7 @@ import useMusicStore from "@/store/musicStore";
 import MusicDetail from "./player/MusicDetail";
 import { SkipBack, SkipForward } from "lucide-react";
 import useSameSongsStore from "@/store/sameSongStore";
-import { GetSong } from "@/types/song";
+import { ISong } from "@/types/song";
 
 export default function Player() {
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -22,12 +22,12 @@ export default function Player() {
     setAudioPlaylists,
   } = useMusicStore();
 
-  const songSetter = (song: GetSong) => {
+  const songSetter = (song: ISong) => {
     setAudioSrc(song.audioUrl);
     setAudioCover(song.coverUrl);
     setAudioName(song.name);
-    setAudioGenres(song.genres);
-    setAudioPlaylists(song.playlists);
+    setAudioGenres(song.genre);
+    setAudioPlaylists(song.playlist);
   };
 
   useEffect(() => {

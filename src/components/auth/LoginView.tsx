@@ -49,9 +49,9 @@ export default function LoginView() {
       } else {
         setError(result.message || "Email Or Password Is Incorrect!");
       }
-    } catch (err) {
+    } catch (error: unknown) {
       setIsLoggedIn(false);
-      setError("Server Error!");
+      setError(error instanceof Error ? error.message : "Server Error!");
     }
   };
 

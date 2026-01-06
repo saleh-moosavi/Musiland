@@ -7,7 +7,7 @@ import { CommentByUserId } from "@/types/comment";
 import TimeAgo from "@/components/music-name/TimeAgo";
 import { deleteComment, getUserComments } from "@/services/comment";
 
-export default function page() {
+export default function Page() {
   const { userId } = useUserStore();
   const [comments, setComments] = useState<CommentByUserId[] | null>(null);
   const { setIsToastOpen, setToastColor, setToastTitle } = useToastStore();

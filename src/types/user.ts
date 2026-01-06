@@ -16,10 +16,17 @@ export interface GetUser extends UserFormData {
   _id: string;
 }
 
-export interface userProfileType {
-  id: string;
-  name: string;
-  email: string;
-  likedSongs?: string[];
-  role: "admin" | "user" | "manager";
+export interface IAuth {
+  success: boolean;
+  message?: string;
+  data?: {
+    id: string;
+    username: string;
+    email: string;
+    likedSongs?: string[];
+    name: string;
+    role: "user" | "admin" | "manager";
+    createdAt: string;
+    updatedAt: string;
+  };
 }

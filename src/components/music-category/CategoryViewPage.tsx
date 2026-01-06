@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { GetSong } from "@/types/song";
+import { ISong } from "@/types/song";
 import PlayButton from "../shared/PlayButton";
 import { getAllSongs } from "@/services/song";
 
@@ -12,7 +12,8 @@ export default async function CategoryViewPage({
   query: string;
   title: string;
 }) {
-  const songs = await getAllSongs(query);
+  const res = await getAllSongs(query);
+  const songs = res.data;
 
   if (songs?.length < 1 || !Array.isArray(songs)) {
     return (
@@ -28,7 +29,7 @@ export default async function CategoryViewPage({
         {title.toLocaleLowerCase().includes("song") ? title : title + " Songs"}
       </h2>
       <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-center justify-start gap-10">
-        {songs?.map((song: GetSong) => (
+        {songs?.map((song: ISong) => (
           <div className="self-start" key={song._id}>
             <div className="relative group rounded-xl overflow-hidden">
               <Image

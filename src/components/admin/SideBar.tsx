@@ -5,6 +5,7 @@ import { useState } from "react";
 import useTheme from "@/hooks/useTheme";
 import { links } from "@/constants/sidebarMenu";
 import { ChevronsLeft, ChevronsRight, Moon, Sun } from "lucide-react";
+import Image from "next/image";
 
 export default function SideBar() {
   const { theme, handleTheme } = useTheme();
@@ -27,10 +28,12 @@ export default function SideBar() {
             target="_blank"
             className="p-2 rounded flex justify-center items-center gap-5"
           >
-            <img
+            <Image
               src={theme == "dark" ? "/Logo-dark.png" : "/Logo-light.png"}
               alt="Site Logo"
               className="min-w-5 w-5"
+              width={100}
+              height={100}
             />
             <p className={isOpen ? "" : "hidden"}>Musiland</p>
           </Link>

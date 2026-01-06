@@ -69,14 +69,14 @@ export async function POST(req: NextRequest) {
       },
       { status: 201 }
     );
-  } catch (error: any) {
-    console.error("Register error:", error);
-    return NextResponse.json(
-      {
-        success: false,
-        message: error.message || "Internal server error",
-      },
-      { status: 500 }
-    );
+  } catch (error: unknown) {
+    if (error instanceof Error)
+      return NextResponse.json(
+        {
+          success: false,
+          message: error.message || "Internal server error",
+        },
+        { status: 500 }
+      );
   }
 }

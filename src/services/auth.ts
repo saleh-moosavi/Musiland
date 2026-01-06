@@ -1,4 +1,5 @@
 import apiClient from "@/configs/axios";
+import { IAuth } from "@/types/user";
 
 export const registerUser = async (
   name: string,
@@ -14,10 +15,12 @@ export const registerUser = async (
   return res;
 };
 
-export const loginUser = async (email: string, password: string) => {
+export const loginUser = async (
+  email: string,
+  password: string
+): Promise<IAuth> => {
   const res = await apiClient.post("/login", { email, password });
-  console.log(res);
-  return res;
+  return res as unknown as IAuth;
 };
 
 export const logoutUser = async () => {
