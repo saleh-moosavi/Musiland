@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useEffect } from "react";
 import PlayButton from "./PlayButton";
-import { ISong } from "@/types/song";
+import { ISong } from "@/models/song";
 import { Heart, X } from "lucide-react";
 import useUserStore from "@/store/userStore";
 import { getAllSongs } from "@/services/song";

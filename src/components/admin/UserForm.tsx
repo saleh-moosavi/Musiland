@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
-import { Mode } from "@/types/song";
 import Button from "../shared/Button";
+import { IMode } from "@/models/song";
 import { useSearchParams } from "next/navigation";
 import { Resolver, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -13,7 +13,7 @@ import { useUserFormData } from "@/hooks/useUserFormData";
 import { useUserFormSubmit } from "@/hooks/useUserFormSubmit";
 import { User, Shield, MailIcon, EyeClosed } from "lucide-react";
 
-export default function UserForm({ mode }: { mode: Mode }) {
+export default function UserForm({ mode }: { mode: IMode }) {
   const searchParams = useSearchParams();
   const userId = searchParams.get("userId");
 

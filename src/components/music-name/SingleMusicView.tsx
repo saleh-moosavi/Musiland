@@ -1,10 +1,10 @@
 import Likes from "./Likes";
 import Link from "next/link";
 import Image from "next/image";
-import { ISong } from "@/types/song";
 import PlayButton from "../shared/PlayButton";
 import { MessageSquareMore } from "lucide-react";
 import { generalItems } from "@/types/generalItems";
+import { ISong } from "@/models/song";
 
 export default function SingleMusicView({
   song,

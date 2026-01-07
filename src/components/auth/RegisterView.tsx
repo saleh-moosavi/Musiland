@@ -43,12 +43,12 @@ export default function RegisterView() {
     password: string;
   }) => {
     try {
-      const result = await registerUser(username, email, password);
+      const res = await registerUser(username, email, password);
 
-      if (result.ok) {
+      if (res.data) {
         router.push("/profile");
       } else {
-        setError(result.error || "Register failed");
+        setError(res.error || "Register failed");
       }
     } catch (err) {
       setError(`Server Error! : ${err}`);

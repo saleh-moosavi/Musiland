@@ -7,7 +7,7 @@ export default async function HeroCarousel() {
   const res = await getAllSongs("page=1,10&sort=date");
   const songs = res.data;
 
-  if (songs?.length < 1 || !songs) return null;
+  if ((songs?.length && songs.length < 1) || !songs) return null;
 
   return (
     <HeroCarouselWrapper>

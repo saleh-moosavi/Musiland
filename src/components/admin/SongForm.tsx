@@ -10,11 +10,9 @@ import { getAllSingers } from "@/services/singer";
 import { getAllPlaylists } from "@/services/playlist";
 import { zodResolver } from "@hookform/resolvers/zod";
 import CustomInput from "@/components/auth/CustomInput";
-import type { ISong, ISongResponse } from "@/types/song";
 import CustomOption from "@/components/auth/CustomOption";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createSong, editSong, getSong } from "@/services/song";
-import { addSongSchema, Mode, SongFormData } from "@/types/song";
 import type { ApiResponse, IGeneralRes } from "@/types/generalItems";
 import {
   Music,
@@ -24,8 +22,15 @@ import {
   Disc,
   List,
 } from "lucide-react";
+import {
+  addSongSchema,
+  IMode,
+  ISong,
+  ISongResponse,
+  SongFormData,
+} from "@/models/song";
 
-export default function SongForm({ mode }: { mode: Mode }) {
+export default function SongForm({ mode }: { mode: IMode }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const songId = searchParams.get("itemId");

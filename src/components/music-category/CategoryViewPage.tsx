@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ISong } from "@/types/song";
+import { ISong } from "@/models/song";
 import PlayButton from "../shared/PlayButton";
 import { getAllSongs } from "@/services/song";
 
@@ -15,7 +15,7 @@ export default async function CategoryViewPage({
   const res = await getAllSongs(query);
   const songs = res.data;
 
-  if (songs?.length < 1 || !Array.isArray(songs)) {
+  if ((songs?.length && songs.length < 1) || !Array.isArray(songs)) {
     return (
       <div className="text-my-red-med font-bold text-center mt-5">
         Song not found

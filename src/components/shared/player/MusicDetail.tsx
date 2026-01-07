@@ -2,6 +2,7 @@
 
 import useMusicStore from "@/store/musicStore";
 import useSameSongsStore from "@/store/sameSongStore";
+import Image from "next/image";
 
 export default function MusicDetail() {
   const { audioCover, audioName } = useMusicStore();
@@ -12,10 +13,12 @@ export default function MusicDetail() {
   return (
     <article className="flex items-center gap-x-3 min-w-fit group">
       {audioCover ? (
-        <img
+        <Image
           src={audioCover}
           alt={audioName || "Song"}
           onClick={togglePanel}
+          width={100}
+          height={100}
           className="w-10 aspect-square object-cover rounded-lg cursor-pointer"
         />
       ) : (

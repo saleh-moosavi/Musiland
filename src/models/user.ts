@@ -13,3 +13,17 @@ const UserSchema = new Schema(
 );
 
 export const UserModel = models.User ?? model("User", UserSchema);
+
+export interface IUser {
+  _id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+export interface IUserResponse {
+  success: boolean;
+  data?: IUser;
+  message?: string;
+}

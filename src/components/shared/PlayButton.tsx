@@ -1,7 +1,7 @@
 "use client";
+import { ISong } from "@/models/song";
 import { PlayCircleIcon } from "lucide-react";
 import useMusicStore from "@/store/musicStore";
-import { ISong } from "@/types/song";
 
 export default function PlayButton({
   song,

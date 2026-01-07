@@ -1,4 +1,4 @@
-import { ISong } from "@/types/song";
+import { ISong } from "@/models/song";
 import { create } from "zustand";
 
 interface SameSongsStore {

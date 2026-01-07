@@ -1,11 +1,9 @@
 "use server";
 import apiClient from "@/configs/axios";
-import { ISongListResponse, ISongResponse, SongFormData } from "@/types/song";
+import { ISongResponse, ISongsResponse, SongFormData } from "@/models/song";
 
-export const getAllSongs = async (
-  query?: string
-): Promise<ISongListResponse> => {
-  const data = await apiClient.get<ISongListResponse>(`/song?${query}`);
+export const getAllSongs = async (query?: string): Promise<ISongsResponse> => {
+  const data = await apiClient.get<ISongsResponse>(`/song?${query}`);
   return data.data;
 };
 

@@ -7,7 +7,7 @@ import useMusicStore from "@/store/musicStore";
 import MusicDetail from "./player/MusicDetail";
 import { SkipBack, SkipForward } from "lucide-react";
 import useSameSongsStore from "@/store/sameSongStore";
-import { ISong } from "@/types/song";
+import { ISong } from "@/models/song";
 
 export default function Player() {
   const audioRef = useRef<HTMLAudioElement>(null);
