@@ -2,7 +2,8 @@ import { lazy } from "react";
 import { getSong } from "@/services/song";
 import SingleMusicView from "./SingleMusicView";
 import { getSongComments } from "@/services/comment";
-import { generalItems } from "@/types/generalItems";
+import { IGenre } from "@/models/genre";
+import { IPlaylist } from "@/models/playlist";
 const Comments = lazy(() => import("./Comments"));
 const AddComment = lazy(() => import("./AddComment"));
 const Slider = lazy(() => import("../shared/Slider"));
@@ -31,9 +32,9 @@ export default async function SingleMusicWrapper({ id }: { id: string }) {
         <Slider
           title="Related Songs"
           query={`genre=${song.genre
-            .map((g: generalItems) => g.name)
+            .map((g: IGenre) => g.name)
             .join(",")}&playlist=${song.playlist
-            .map((p: generalItems) => p.name)
+            .map((p: IPlaylist) => p.name)
             .join(",")}`}
         />
       </div>

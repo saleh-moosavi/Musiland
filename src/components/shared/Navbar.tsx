@@ -6,8 +6,9 @@ import useTheme from "@/hooks/useTheme";
 import useAuthCheck from "@/hooks/useAuthCheck";
 import useWindowStore from "@/store/windowStore";
 import useNavbarData from "@/hooks/useNavbarData";
-import { generalItems } from "@/types/generalItems";
 import { LogIn, Menu, Moon, Sun, User } from "lucide-react";
+import { IGenre } from "@/models/genre";
+import { IPlaylist } from "@/models/playlist";
 const NavListMobile = lazy(() => import("./NavListMobile"));
 const NavListDesktop = lazy(() => import("./NavListDesktop"));
 
@@ -38,7 +39,7 @@ export default function Navbar() {
 
   const handleNavbarData = (
     type: "genre" | "playlist",
-    data: generalItems[]
+    data: IGenre[] | IPlaylist[]
   ) => {
     setNavbarData(data);
     setNavbarType(type);

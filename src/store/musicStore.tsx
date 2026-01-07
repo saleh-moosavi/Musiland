@@ -1,17 +1,18 @@
-import { generalItems } from "@/types/generalItems";
 import { create } from "zustand";
+import { IGenre } from "@/models/genre";
+import { IPlaylist } from "@/models/playlist";
 
 interface MusicStore {
   audioSrc: string;
   audioName: string;
   audioCover: string;
-  audioGenres: generalItems[];
-  audioPlaylists: generalItems[];
+  audioGenres: IGenre[];
+  audioPlaylists: IPlaylist[];
   setAudioSrc: (audioSrc: string) => void;
   setAudioName: (audioName: string) => void;
   setAudioCover: (setAudioSrc: string) => void;
-  setAudioGenres: (audioGenres: generalItems[]) => void;
-  setAudioPlaylists: (audioPlaylists: generalItems[]) => void;
+  setAudioGenres: (audioGenres: IGenre[]) => void;
+  setAudioPlaylists: (audioPlaylists: IPlaylist[]) => void;
 }
 
 const useMusicStore = create<MusicStore>((set) => ({

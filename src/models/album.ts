@@ -22,3 +22,9 @@ export interface IAlbumResponse {
   data?: IAlbum;
   message?: string;
 }
+
+export interface IGetAllAlbumResponse {
+  success: boolean;
+  data?: IAlbum[];
+  message?: string;
+}

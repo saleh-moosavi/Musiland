@@ -1,12 +1,13 @@
 import { create } from "zustand";
-import { generalItems } from "@/types/generalItems";
+import { IGenre } from "@/models/genre";
+import { IPlaylist } from "@/models/playlist";
 
 interface WindowStore {
-  navbarData: generalItems[];
+  navbarData: IGenre[] | IPlaylist[];
   showSubNav: boolean;
   showMobileMenuPanel: boolean;
   navbarType: "genre" | "playlist";
-  setNavbarData: (navbarData: generalItems[]) => void;
+  setNavbarData: (navbarData: IGenre[] | IPlaylist[]) => void;
   setShowSubNav: (showSubNav: boolean) => void;
   setShowMobileMenuPanel: (showSubNav: boolean) => void;
   setNavbarType: (navbarType: "genre" | "playlist") => void;

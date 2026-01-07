@@ -1,18 +1,19 @@
 import Link from "next/link";
 import { useState } from "react";
+import { IGenre } from "@/models/genre";
 import { ChevronDown } from "lucide-react";
 import useUserStore from "@/store/userStore";
+import { IPlaylist } from "@/models/playlist";
 import useWindowStore from "@/store/windowStore";
 import { menuItems } from "@/constants/menuItems";
 import MobileMenuWrapper from "./MobileMenuWrapper";
-import { generalItems } from "@/types/generalItems";
 
 export default function NavListMobile({
   genres,
   playlists,
 }: {
-  genres: generalItems[];
-  playlists: generalItems[];
+  genres: IGenre[];
+  playlists: IPlaylist[];
 }) {
   const { isLoggedIn } = useUserStore();
   const [subNavType, setSubNavType] = useState("");
@@ -53,7 +54,7 @@ export default function NavListMobile({
             )}
             {item.content && item.title === subNavType && showSubNav && (
               <div className="font-semibold p-2 bg-my-white-low dark:bg-my-black-high mt-2 w-full space-y-2 rounded-xl">
-                {item.content.map((data: generalItems) => (
+                {item.content.map((data: IGenre | IPlaylist) => (
                   <Link
                     key={data._id}
                     onClick={() => setShowMobileMenuPanel(false)}

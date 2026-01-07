@@ -23,3 +23,9 @@ export interface IPlaylistResponse {
   data?: IPlaylist;
   message?: string;
 }
+
+export interface IGetAllPlaylistResponse {
+  success: boolean;
+  data?: IPlaylist[];
+  message?: string;
+}

@@ -22,3 +22,9 @@ export interface IGenreResponse {
   data?: IGenre;
   message?: string;
 }
+
+export interface IGetAllGenreResponse {
+  success: boolean;
+  data?: IGenre[];
+  message?: string;
+}

@@ -22,3 +22,9 @@ export interface ISingerResponse {
   data?: ISinger;
   message?: string;
 }
+
+export interface IGetAllSingerResponse {
+  success: boolean;
+  data?: ISinger[];
+  message?: string;
+}

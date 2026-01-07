@@ -1,25 +1,21 @@
 "use server";
 import apiClient from "@/configs/axios";
-import { ApiResponse, IGeneralRes } from "@/types/generalItems";
+import { IGetAllPlaylistResponse, IPlaylistResponse } from "@/models/playlist";
 
-export const getAllPlaylists = async (): Promise<
-  ApiResponse<IGeneralRes[]>
-> => {
-  const data = await apiClient.get<ApiResponse<IGeneralRes[]>>(`/playlist`);
+export const getAllPlaylists = async (): Promise<IGetAllPlaylistResponse> => {
+  const data = await apiClient.get<IGetAllPlaylistResponse>(`/playlist`);
   return data.data;
 };
 
-export const getPlaylist = async (
-  id: string
-): Promise<ApiResponse<IGeneralRes>> => {
-  const data = await apiClient.get<ApiResponse<IGeneralRes>>(`/playlist/${id}`);
+export const getPlaylist = async (id: string): Promise<IPlaylistResponse> => {
+  const data = await apiClient.get<IPlaylistResponse>(`/playlist/${id}`);
   return data.data;
 };
 
 export const createPlaylist = async (
   name: string
-): Promise<ApiResponse<IGeneralRes>> => {
-  const data = await apiClient.post<ApiResponse<IGeneralRes>>(`/playlist`, {
+): Promise<IPlaylistResponse> => {
+  const data = await apiClient.post<IPlaylistResponse>(`/playlist`, {
     name,
   });
   return data.data;
@@ -28,8 +24,8 @@ export const createPlaylist = async (
 export const editPlaylist = async (
   name: string,
   id: string
-): Promise<ApiResponse<IGeneralRes>> => {
-  const data = await apiClient.put<ApiResponse<IGeneralRes>>(`/playlist/`, {
+): Promise<IPlaylistResponse> => {
+  const data = await apiClient.put<IPlaylistResponse>(`/playlist/`, {
     name,
     id,
   });
@@ -38,9 +34,7 @@ export const editPlaylist = async (
 
 export const deletePlaylist = async (
   id: string
-): Promise<ApiResponse<IGeneralRes>> => {
-  const data = await apiClient.delete<ApiResponse<IGeneralRes>>(
-    `/playlist/${id}`
-  );
+): Promise<IPlaylistResponse> => {
+  const data = await apiClient.delete<IPlaylistResponse>(`/playlist/${id}`);
   return data.data;
 };

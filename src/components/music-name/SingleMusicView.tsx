@@ -3,8 +3,9 @@ import Link from "next/link";
 import Image from "next/image";
 import PlayButton from "../shared/PlayButton";
 import { MessageSquareMore } from "lucide-react";
-import { generalItems } from "@/types/generalItems";
 import { ISong } from "@/models/song";
+import { IGenre } from "@/models/genre";
+import { IPlaylist } from "@/models/playlist";
 
 export default function SingleMusicView({
   song,
@@ -42,7 +43,7 @@ export default function SingleMusicView({
           <ul className="font-semibold my-10 flex items-center gap-3">
             Genre :
             {song.genre?.length
-              ? song.genre.map((g: generalItems) => (
+              ? song.genre.map((g: IGenre) => (
                   <li key={g._id}>
                     <Link href={`/category/${g.name}?genre=${g.name}`}>
                       {g.name}
@@ -55,7 +56,7 @@ export default function SingleMusicView({
           <ul className="font-semibold my-10 flex items-center gap-3">
             Playlist :
             {song.playlist?.length
-              ? song.playlist.map((p: generalItems) => (
+              ? song.playlist.map((p: IPlaylist) => (
                   <li key={p._id}>
                     <Link href={`/category/${p.name}?playlist=${p.name}`}>
                       {p.name}

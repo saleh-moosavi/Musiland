@@ -2,7 +2,10 @@
 import { Trash } from "lucide-react";
 import PopUpStore from "@/store/popUpStore";
 import { deleteTypes } from "@/types/shared";
-import { ApiResponse, IGeneralRes } from "@/types/generalItems";
+import { IGenreResponse } from "@/models/genre";
+import { IAlbumResponse } from "@/models/album";
+import { ISingerResponse } from "@/models/singer";
+import { IPlaylistResponse } from "@/models/playlist";
 
 export default function DeleteBtn({
   id,
@@ -13,7 +16,11 @@ export default function DeleteBtn({
   id: string;
   name: string;
   type: deleteTypes;
-  deleteFn: (id: string) => Promise<ApiResponse<IGeneralRes>>;
+  deleteFn: (
+    id: string
+  ) => Promise<
+    IGenreResponse | IPlaylistResponse | ISingerResponse | IAlbumResponse
+  >;
 }) {
   const { setType, setName, setIsOpen, setId, setPopUpFn } = PopUpStore();
   const handleDelete = () => {

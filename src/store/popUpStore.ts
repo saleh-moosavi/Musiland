@@ -1,19 +1,27 @@
 import { create } from "zustand";
 import { deleteTypes } from "@/types/shared";
-import { ApiResponse, IGeneralRes } from "@/types/generalItems";
+import { IPlaylistResponse } from "@/models/playlist";
+import { IGenreResponse } from "@/models/genre";
+import { ISingerResponse } from "@/models/singer";
 
 interface PopUpStoreType {
   id: string;
   name: string;
   isOpen: boolean;
   type: deleteTypes;
-  popUpFn?: ((id: string) => Promise<ApiResponse<IGeneralRes>>) | null;
+  popUpFn?:
+    | ((
+        id: string
+      ) => Promise<IPlaylistResponse | IGenreResponse | ISingerResponse>)
+    | null;
   setId: (id: string) => void;
   setName: (name: string) => void;
   setType: (type: deleteTypes) => void;
   setIsOpen: (isOpen: boolean) => void;
   setPopUpFn: (
-    popUpFn: (id: string) => Promise<ApiResponse<IGeneralRes>>
+    popUpFn: (
+      id: string
+    ) => Promise<IPlaylistResponse | IGenreResponse | ISingerResponse>
   ) => void;
 }
 

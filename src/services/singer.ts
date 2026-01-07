@@ -1,23 +1,19 @@
 "use server";
 import apiClient from "@/configs/axios";
-import { ApiResponse, IGeneralRes } from "@/types/generalItems";
+import { IGetAllSingerResponse, ISingerResponse } from "@/models/singer";
 
-export const getAllSingers = async (): Promise<ApiResponse<IGeneralRes[]>> => {
-  const data = await apiClient.get<ApiResponse<IGeneralRes[]>>(`/singer`);
+export const getAllSingers = async (): Promise<IGetAllSingerResponse> => {
+  const data = await apiClient.get<IGetAllSingerResponse>(`/singer`);
   return data.data;
 };
 
-export const getSinger = async (
-  id: string
-): Promise<ApiResponse<IGeneralRes>> => {
-  const data = await apiClient.get<ApiResponse<IGeneralRes>>(`/singer/${id}`);
+export const getSinger = async (id: string): Promise<ISingerResponse> => {
+  const data = await apiClient.get<ISingerResponse>(`/singer/${id}`);
   return data.data;
 };
 
-export const createSinger = async (
-  name: string
-): Promise<ApiResponse<IGeneralRes>> => {
-  const data = await apiClient.post<ApiResponse<IGeneralRes>>(`/singer`, {
+export const createSinger = async (name: string): Promise<ISingerResponse> => {
+  const data = await apiClient.post<ISingerResponse>(`/singer`, {
     name,
   });
   return data.data;
@@ -26,19 +22,15 @@ export const createSinger = async (
 export const editSinger = async (
   name: string,
   id: string
-): Promise<ApiResponse<IGeneralRes>> => {
-  const data = await apiClient.put<ApiResponse<IGeneralRes>>(`/singer/`, {
+): Promise<ISingerResponse> => {
+  const data = await apiClient.put<ISingerResponse>(`/singer/`, {
     name,
     id,
   });
   return data.data;
 };
 
-export const deleteSinger = async (
-  id: string
-): Promise<ApiResponse<IGeneralRes>> => {
-  const data = await apiClient.delete<ApiResponse<IGeneralRes>>(
-    `/singer/${id}`
-  );
+export const deleteSinger = async (id: string): Promise<ISingerResponse> => {
+  const data = await apiClient.delete<ISingerResponse>(`/singer/${id}`);
   return data.data;
 };

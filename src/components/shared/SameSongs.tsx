@@ -5,11 +5,12 @@ import { useEffect } from "react";
 import PlayButton from "./PlayButton";
 import { ISong } from "@/models/song";
 import { Heart, X } from "lucide-react";
+import { IGenre } from "@/models/genre";
 import useUserStore from "@/store/userStore";
+import { IPlaylist } from "@/models/playlist";
 import { getAllSongs } from "@/services/song";
 import useMusicStore from "@/store/musicStore";
 import useToggleLike from "@/hooks/useToggleLike";
-import { generalItems } from "@/types/generalItems";
 import useSameSongsStore from "@/store/sameSongStore";
 
 export default function SameSongs() {
@@ -20,19 +21,19 @@ export default function SameSongs() {
     useSameSongsStore();
 
   const query = `genre=${audioGenres
-    .map((g: generalItems) => g.name)
+    .map((g: IGenre) => g.name)
     .join(",")}&playlist=${audioPlaylists
-    .map((p: generalItems) => p.name)
+    .map((p: IPlaylist) => p.name)
     .join(",")}`;
 
   useEffect(() => {
     const fetchSongs = async () => {
       const res = await getAllSongs(query);
-      const songs = res.data;
+      const songs = res?.data;
       if (songs === null) {
         setSameSongsList([]);
       } else {
-        setSameSongsList(songs);
+        setSameSongsList(songs || []);
       }
     };
     if (

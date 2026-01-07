@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { getAllGenres } from "@/services/genre";
-import { generalItems } from "@/types/generalItems";
 import { getAllPlaylists } from "@/services/playlist";
+import { IGenre } from "@/models/genre";
+import { IPlaylist } from "@/models/playlist";
 
 export default function useNavbarData() {
-  const [genres, setGenres] = useState<generalItems[]>([]);
-  const [playlists, setPlaylists] = useState<generalItems[]>([]);
+  const [genres, setGenres] = useState<IGenre[]>([]);
+  const [playlists, setPlaylists] = useState<IPlaylist[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
