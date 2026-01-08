@@ -1,11 +1,10 @@
 import { SortOrder } from "mongoose";
-import { SongModel } from "@/models/song";
-import { SongFormData } from "@/types/song";
 import { AlbumModel } from "@/models/album";
 import { GenreModel } from "@/models/genre";
 import { SingerModel } from "@/models/singer";
 import { PlaylistModel } from "@/models/playlist";
 import { NextRequest, NextResponse } from "next/server";
+import { SongFormData, SongModel } from "@/models/song";
 
 /*---------------- API ----------------*/
 export async function GET(req: NextRequest) {
@@ -50,7 +49,7 @@ export async function GET(req: NextRequest) {
         { status: 404 }
       );
     }
-    query.genres = { $in: foundGenres.map((g) => g._id) };
+    query.genre = { $in: foundGenres.map((g) => g._id) };
   }
 
   // filter by Playlist
@@ -65,7 +64,7 @@ export async function GET(req: NextRequest) {
         { status: 404 }
       );
     }
-    query.playlists = { $in: foundPlaylists.map((p) => p._id) };
+    query.playlist = { $in: foundPlaylists.map((p) => p._id) };
   }
 
   // Sorting
@@ -101,7 +100,6 @@ export async function GET(req: NextRequest) {
       .skip(skip)
       .limit(limit);
 
-    console.log(songs);
     return NextResponse.json(
       {
         success: true,

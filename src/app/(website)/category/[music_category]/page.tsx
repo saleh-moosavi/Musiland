@@ -7,9 +7,7 @@ import CategoryViewPage from "@/components/music-category/CategoryViewPage";
 
 export async function generateMetadata({
   params,
-}: {
-  params: { music_category: string };
-}): Promise<Metadata> {
+}: usicCategoryPropsTypeM): Promise<Metadata> {
   const music_category = decodeURIComponent((await params).music_category);
   return {
     title: music_category,
