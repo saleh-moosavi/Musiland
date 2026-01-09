@@ -6,8 +6,8 @@ import { IMode } from "@/models/song";
 import { useSearchParams } from "next/navigation";
 import { Resolver, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { userSchema, UserFormData } from "@/types/user";
 import CustomInput from "@/components/auth/CustomInput";
+import { UserFormData, userSchema } from "@/models/user";
 import CustomOption from "@/components/auth/CustomOption";
 import { useUserFormData } from "@/hooks/useUserFormData";
 import { useUserFormSubmit } from "@/hooks/useUserFormSubmit";
@@ -40,7 +40,6 @@ export default function UserForm({ mode }: { mode: IMode }) {
     if (mode === "edit" && user) {
       setValue("name", user.name);
       setValue("role", user.role);
-      setValue("password", user.password);
       setValue("email", user.email);
     }
   }, [user, mode, setValue]);

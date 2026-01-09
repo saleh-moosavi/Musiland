@@ -1,5 +1,5 @@
-import { userProfileType } from "@/types/user";
 import { create } from "zustand";
+import { IUser } from "@/models/user";
 
 interface UserStore {
   userId: string;
@@ -8,8 +8,8 @@ interface UserStore {
   setIsLoggedIn: (isLoggedIn: boolean) => void;
   likedSongs: string[];
   setLikedSongs: (likedSong: string[]) => void;
-  userData: userProfileType | null;
-  setUserData: (userData: userProfileType | null) => void;
+  userData: IUser | null;
+  setUserData: (userData: IUser | null) => void;
 }
 
 const useUserStore = create<UserStore>((set) => ({

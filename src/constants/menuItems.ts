@@ -1,9 +1,7 @@
-import { generalItems } from "@/types/generalItems";
+import { IGenre } from "@/models/genre";
+import { IPlaylist } from "@/models/playlist";
 
-export const menuItems = (
-  playlists: generalItems[],
-  genres: generalItems[]
-) => {
+export const menuItems = (playlists: IPlaylist[], genres: IGenre[]) => {
   return [
     {
       title: "Playlists",

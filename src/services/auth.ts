@@ -1,5 +1,5 @@
+import { IAuth } from "@/models/user";
 import apiClient from "@/configs/axios";
-import { IAuth } from "@/types/user";
 
 export const registerUser = async (
   name: string,

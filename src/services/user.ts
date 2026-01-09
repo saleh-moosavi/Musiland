@@ -1,13 +1,14 @@
 import apiClient from "@/configs/axios";
+import { IAuth } from "@/models/user";
 
 export const getAllUsers = async () => {
   const res = await apiClient.get("/user");
   return res;
 };
 
-export const getUser = async (id: string) => {
-  const res = await apiClient.get(`/user/${id}`);
-  return res;
+export const getUser = async (id: string): Promise<IAuth> => {
+  const res = await apiClient.get<IAuth>(`/user/${id}`);
+  return res.data;
 };
 
 export const addUser = async (data: {

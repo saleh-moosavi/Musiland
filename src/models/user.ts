@@ -1,3 +1,4 @@
+import { z } from "zod";
 import { Schema, model, models } from "mongoose";
 
 const UserSchema = new Schema(
@@ -14,16 +15,32 @@ const UserSchema = new Schema(
 
 export const UserModel = models.User ?? model("User", UserSchema);
 
+// Form Schema
+export const userSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  email: z.string().email("Invalid email address"),
+  password: z.string().min(6, "More Than 6 Character"),
+  role: z.enum(["user", "admin", "manager"] as const).catch("user"),
+
+  likedSongs: z.array(z.string()).min(0).default([]),
+  comments: z.array(z.string()).min(0).default([]),
+});
+
+export type UserFormData = z.infer<typeof userSchema>;
+
 export interface IUser {
-  _id: string;
+  id: string;
+  username: string;
+  email: string;
+  likedSongs?: string[];
   name: string;
+  role: "user" | "admin" | "manager";
   createdAt: string;
   updatedAt: string;
-  __v: number;
 }
 
-export interface IUserResponse {
+export interface IAuth {
   success: boolean;
-  data?: IUser;
   message?: string;
+  data?: IUser;
 }

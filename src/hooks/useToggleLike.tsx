@@ -18,8 +18,10 @@ export default function useToggleLike() {
         ? likedSongs.filter((id) => id !== songId)
         : [...likedSongs, songId];
       setLikedSongs(updated);
-    } catch (err: any) {
-      showToast(err.message || "Something went wrong");
+    } catch (error: unknown) {
+      showToast(
+        error instanceof Error ? error.message : "Something went wrong"
+      );
     }
   };
 

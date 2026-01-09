@@ -13,7 +13,6 @@ import CustomInput from "@/components/auth/CustomInput";
 import CustomOption from "@/components/auth/CustomOption";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createSong, editSong, getSong } from "@/services/song";
-import type { ApiResponse, IGeneralRes } from "@/types/generalItems";
 import {
   Music,
   FileText,
@@ -29,6 +28,10 @@ import {
   ISongResponse,
   SongFormData,
 } from "@/models/song";
+import { IAlbum, IGetAllAlbumResponse } from "@/models/album";
+import { IGenre, IGetAllGenreResponse } from "@/models/genre";
+import { IGetAllSingerResponse, ISinger } from "@/models/singer";
+import { IGetAllPlaylistResponse, IPlaylist } from "@/models/playlist";
 
 export default function SongForm({ mode }: { mode: IMode }) {
   const router = useRouter();
@@ -37,10 +40,10 @@ export default function SongForm({ mode }: { mode: IMode }) {
   const { setIsToastOpen, setToastTitle, setToastColor } = useToastStore();
 
   // State برای داده‌های فرم
-  const [singers, setSingers] = useState<IGeneralRes[]>([]);
-  const [albums, setAlbums] = useState<IGeneralRes[]>([]);
-  const [genres, setGenres] = useState<IGeneralRes[]>([]);
-  const [playlists, setPlaylists] = useState<IGeneralRes[]>([]);
+  const [singers, setSingers] = useState<ISinger[]>([]);
+  const [albums, setAlbums] = useState<IAlbum[]>([]);
+  const [genres, setGenres] = useState<IGenre[]>([]);
+  const [playlists, setPlaylists] = useState<IPlaylist[]>([]);
   const [songData, setSongData] = useState<ISong | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
 
@@ -72,7 +75,10 @@ export default function SongForm({ mode }: { mode: IMode }) {
 
         // Array of promises برای parallel fetching
         const fetchPromises: (
-          | Promise<ApiResponse<IGeneralRes[]>>
+          | Promise<IGetAllSingerResponse>
+          | Promise<IGetAllAlbumResponse>
+          | Promise<IGetAllGenreResponse>
+          | Promise<IGetAllPlaylistResponse>
           | Promise<ISongResponse>
         )[] = [
           getAllSingers(),
@@ -91,10 +97,10 @@ export default function SongForm({ mode }: { mode: IMode }) {
           await Promise.all(fetchPromises);
 
         // تنظیم state‌ها
-        setAlbums(albumsRes.data as IGeneralRes[]);
-        setSingers(singersRes?.data as IGeneralRes[]);
-        setGenres(genresRes.data as IGeneralRes[]);
-        setPlaylists(playlistsRes.data as IGeneralRes[]);
+        setAlbums(albumsRes.data as IAlbum[]);
+        setSingers(singersRes?.data as ISinger[]);
+        setGenres(genresRes.data as IGenre[]);
+        setPlaylists(playlistsRes.data as IPlaylist[]);
 
         if (mode === "edit" && songRes && songRes.success) {
           const sData = songRes.data as ISong;

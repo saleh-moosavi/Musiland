@@ -28,11 +28,12 @@ export async function GET(
       },
       { status: 200 }
     );
-  } catch (err: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
       {
         success: false,
-        message: err.message || "Internal server error",
+        message:
+          error instanceof Error ? error.message : "Internal server error",
       },
       { status: 500 }
     );
@@ -73,11 +74,12 @@ export async function DELETE(
       success: true,
       data: user,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
       {
         success: false,
-        message: error.message || "Internal server error",
+        message:
+          error instanceof Error ? error.message : "Internal server error",
       },
       { status: 500 }
     );
