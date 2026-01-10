@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { IGenre } from "@/models/genre";
+import { IComment } from "@/models/comment";
 import { IPlaylist } from "@/models/playlist";
 
 interface MusicStore {
@@ -8,11 +9,15 @@ interface MusicStore {
   audioCover: string;
   audioGenres: IGenre[];
   audioPlaylists: IPlaylist[];
+  likesCount: number | null;
+  comments: IComment[];
   setAudioSrc: (audioSrc: string) => void;
   setAudioName: (audioName: string) => void;
   setAudioCover: (setAudioSrc: string) => void;
   setAudioGenres: (audioGenres: IGenre[]) => void;
   setAudioPlaylists: (audioPlaylists: IPlaylist[]) => void;
+  setLikesCount: (likesCount: number | null) => void;
+  setComments: (comments: IComment[]) => void;
 }
 
 const useMusicStore = create<MusicStore>((set) => ({
@@ -21,11 +26,15 @@ const useMusicStore = create<MusicStore>((set) => ({
   audioCover: "",
   audioGenres: [],
   audioPlaylists: [],
+  likesCount: null,
+  comments: [],
   setAudioSrc: (audioSrc) => set({ audioSrc }),
   setAudioName: (audioName) => set({ audioName }),
   setAudioCover: (audioCover) => set({ audioCover }),
   setAudioGenres: (audioGenres) => set({ audioGenres }),
   setAudioPlaylists: (audioPlaylists) => set({ audioPlaylists }),
+  setLikesCount: (likesCount) => set({ likesCount }),
+  setComments: (comments) => set({ comments }),
 }));
 
 export default useMusicStore;

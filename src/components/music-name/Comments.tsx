@@ -2,7 +2,7 @@
 
 import TimeAgo from "./TimeAgo";
 import { IComment } from "@/models/comment";
-import useSongStore from "@/store/songStore";
+import useMusicStore from "@/store/musicStore";
 import { useEffect, useRef, useState } from "react";
 
 export default function Comments({
@@ -14,7 +14,7 @@ export default function Comments({
 }) {
   const [showCount, setShowCount] = useState(5);
   const commentsLength = useRef(commentCount || 0);
-  const { comments: commentsState, setComments } = useSongStore();
+  const { comments: commentsState, setComments } = useMusicStore();
 
   useEffect(() => {
     setComments(comments);

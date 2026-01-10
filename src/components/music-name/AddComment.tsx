@@ -5,7 +5,7 @@ import Link from "next/link";
 import Button from "../shared/Button";
 import { useForm } from "react-hook-form";
 import { useEffect, useRef } from "react";
-import useSongStore from "@/store/songStore";
+import useMusicStore from "@/store/musicStore";
 import useToastStore from "@/store/toastStore";
 import { addComment } from "@/services/comment";
 import useAuthCheck from "@/hooks/useAuthCheck";
@@ -13,7 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function AddComment({ id: songId }: { id: string }) {
   const userIdRef = useRef<null | string>(null);
-  const { comments, setComments } = useSongStore();
+  const { comments, setComments } = useMusicStore();
   const { isLoggedIn, userData, error, isLoading } = useAuthCheck();
   const { setIsToastOpen, setToastColor, setToastTitle } = useToastStore();
   const {

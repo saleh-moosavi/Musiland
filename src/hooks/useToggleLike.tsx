@@ -1,11 +1,11 @@
 import useToast from "./useToast";
 import useUserStore from "@/store/userStore";
-import useSongStore from "@/store/songStore";
+import useMusicStore from "@/store/musicStore";
 import { likeToggler } from "@/services/like";
 
 export default function useToggleLike() {
   const { showToast } = useToast();
-  const { setLikesCount, likesCount } = useSongStore();
+  const { setLikesCount, likesCount } = useMusicStore();
   const { likedSongs, setLikedSongs, userId } = useUserStore();
 
   const toggleLike = async (songId: string) => {
