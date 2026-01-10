@@ -1,9 +1,22 @@
 import { useState } from "react";
-import { FieldValues } from "react-hook-form";
+import { IGenre } from "@/models/genre";
+import { IAlbum } from "@/models/album";
+import { ISinger } from "@/models/singer";
+import { IPlaylist } from "@/models/playlist";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { CustomOptionProps, GenericFormData } from "@/types/inputTypes";
+import { FieldPath, FieldValues, UseFormRegisterReturn } from "react-hook-form";
 
-export default function CustomOption<TFieldValues extends FieldValues>({
+interface CustomOptionProps {
+  title: string;
+  classes?: string;
+  multiple?: boolean;
+  icon?: React.ReactNode;
+  data: IPlaylist[] | IGenre[] | IAlbum[] | ISinger[];
+  error?: React.ReactNode | string;
+  register: UseFormRegisterReturn<FieldPath<FieldValues>>;
+}
+
+export default function CustomOption({
   title,
   icon,
   register,
@@ -11,7 +24,7 @@ export default function CustomOption<TFieldValues extends FieldValues>({
   error,
   multiple = false,
   classes,
-}: CustomOptionProps<TFieldValues>) {
+}: CustomOptionProps) {
   const [isVisible, setIsVisible] = useState(false);
   const showSubMenu = () => {
     setIsVisible((perv) => !perv);
@@ -39,7 +52,7 @@ export default function CustomOption<TFieldValues extends FieldValues>({
         </label>
         {isVisible && data && (
           <div className="grid gap-2 p-3 mt-3 absolute bg-my-white-med dark:bg-my-black-high w-full rounded-lg border z-50 overflow-y-scroll max-h-52">
-            {data.map((item: GenericFormData) => (
+            {data.map((item) => (
               <label key={item._id} className="flex items-center gap-2">
                 <input
                   type={multiple ? "checkbox" : "radio"}

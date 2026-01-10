@@ -3,19 +3,19 @@ import { Trash } from "lucide-react";
 import { useEffect, useState } from "react";
 import useUserStore from "@/store/userStore";
 import useToastStore from "@/store/toastStore";
-import { CommentByUserId } from "@/types/comment";
+import { IComment } from "@/models/comment";
 import TimeAgo from "@/components/music-name/TimeAgo";
 import { deleteComment, getUserComments } from "@/services/comment";
 
 export default function Page() {
   const { userId } = useUserStore();
-  const [comments, setComments] = useState<CommentByUserId[] | null>(null);
+  const [comments, setComments] = useState<IComment[] | null>(null);
   const { setIsToastOpen, setToastColor, setToastTitle } = useToastStore();
 
   useEffect(() => {
     getUserComments(userId)
       .then((data) => {
-        setComments(data);
+        setComments(data.data);
       })
       .catch((err) => console.log(err));
   }, [userId]);

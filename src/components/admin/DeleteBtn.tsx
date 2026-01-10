@@ -1,7 +1,7 @@
 "use client";
 import { Trash } from "lucide-react";
+import { deleteTypes } from "@/types";
 import PopUpStore from "@/store/popUpStore";
-import { deleteTypes } from "@/types/shared";
 import { IGenreResponse } from "@/models/genre";
 import { IAlbumResponse } from "@/models/album";
 import { ISingerResponse } from "@/models/singer";

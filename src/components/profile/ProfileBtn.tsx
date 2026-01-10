@@ -1,4 +1,12 @@
-import { ProfileBtnType } from "@/types/shared";
+import { ReactNode } from "react";
+
+interface IProps {
+  title: string;
+  isMobile?: boolean;
+  children?: ReactNode;
+  type?: "normal" | "logout";
+  clickHandler?: () => Promise<void>;
+}
 
 export default function ProfileBtn({
   title,
@@ -6,7 +14,7 @@ export default function ProfileBtn({
   clickHandler,
   type = "normal",
   isMobile = false,
-}: ProfileBtnType) {
+}: IProps) {
   if (isMobile) {
     return (
       <button

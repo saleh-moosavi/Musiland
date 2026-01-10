@@ -13,14 +13,27 @@ export const CommentModel = models.Comment ?? model("Comment", CommentSchema);
 
 export interface IComment {
   _id: string;
-  name: string;
+  description: string;
+  user: {
+    _id: string;
+    name: string;
+  };
+  song: {
+    _id: string;
+    name: string;
+  };
   createdAt: string;
   updatedAt: string;
-  __v: number;
 }
 
 export interface ICommentResponse {
   success: boolean;
   data?: IComment;
+  message?: string;
+}
+
+export interface IGetAllCommentsResponse {
+  success: boolean;
+  data?: IComment[];
   message?: string;
 }

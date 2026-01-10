@@ -1,13 +1,14 @@
-import { FieldValues } from "react-hook-form";
-import { CustomInputProps } from "@/types/inputTypes";
+import { FieldPath, FieldValues, UseFormRegisterReturn } from "react-hook-form";
 
-const CustomInput = <TFieldValues extends FieldValues>({
-  register,
-  icon,
-  name,
-  error,
-  classes,
-}: CustomInputProps<TFieldValues>) => {
+interface IProps {
+  name: string;
+  classes?: string;
+  icon: React.ReactNode;
+  error?: React.ReactNode | string;
+  register: UseFormRegisterReturn<FieldPath<FieldValues>>;
+}
+
+const CustomInput = ({ register, icon, name, error, classes }: IProps) => {
   return (
     <section className={classes || ""}>
       <div className="relative w-full">

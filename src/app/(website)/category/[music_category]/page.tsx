@@ -1,13 +1,15 @@
 import { Metadata } from "next";
 import { Suspense } from "react";
 import Loading from "@/components/shared/Loading";
-import { usicCategoryPropsTypeM } from "@/types/shared";
 import { objectToQueryString } from "@/libs/objectToQueryString";
 import CategoryViewPage from "@/components/music-category/CategoryViewPage";
 
-export async function generateMetadata({
-  params,
-}: usicCategoryPropsTypeM): Promise<Metadata> {
+interface IProps {
+  params: { music_category: string };
+  searchParams: { [key: string]: string | string[] };
+}
+
+export async function generateMetadata({ params }: IProps): Promise<Metadata> {
   const music_category = decodeURIComponent((await params).music_category);
   return {
     title: music_category,
@@ -18,7 +20,7 @@ export async function generateMetadata({
 export default async function MusicCategoryPage({
   params,
   searchParams,
-}: usicCategoryPropsTypeM) {
+}: IProps) {
   const music_category = (await params).music_category;
   const decoded_music_category = decodeURIComponent(music_category);
   const stringQuery = await objectToQueryString(await searchParams);

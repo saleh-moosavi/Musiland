@@ -1,11 +1,11 @@
 import { create } from "zustand";
-import { Comment } from "@/types/comment";
+import { IComment } from "@/models/comment";
 
 interface SongStore {
   likesCount: number | null;
   setLikesCount: (likesCount: number | null) => void;
-  comments: Comment[];
-  setComments: (comments: Comment[]) => void;
+  comments: IComment[];
+  setComments: (comments: IComment[]) => void;
 }
 
 const useSongStore = create<SongStore>((set) => ({

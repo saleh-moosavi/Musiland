@@ -1,12 +1,20 @@
 import Link from "next/link";
-import { NavListDesktopProps } from "@/types/shared";
+import { IGenre } from "@/models/genre";
+import { IPlaylist } from "@/models/playlist";
 
-const NavListDesktop: React.FC<NavListDesktopProps> = ({
+interface IProps {
+  navbarData: IGenre[] | IPlaylist[];
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
+  type: "genre" | "playlist";
+}
+
+const NavListDesktop = ({
   navbarData,
   onMouseEnter,
   onMouseLeave,
   type,
-}) => {
+}: IProps) => {
   return (
     <article
       className="hidden lg:flex absolute top-24 -z-10 inset-x-0"

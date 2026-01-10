@@ -1,7 +1,7 @@
 "use client";
 
 import TimeAgo from "./TimeAgo";
-import { Comment } from "@/types/comment";
+import { IComment } from "@/models/comment";
 import useSongStore from "@/store/songStore";
 import { useEffect, useRef, useState } from "react";
 
@@ -9,7 +9,7 @@ export default function Comments({
   comments,
   commentCount,
 }: {
-  comments: Comment[];
+  comments: IComment[];
   commentCount: number;
 }) {
   const [showCount, setShowCount] = useState(5);

@@ -1,8 +1,9 @@
 import { create } from "zustand";
-import { deleteTypes } from "@/types/shared";
-import { IPlaylistResponse } from "@/models/playlist";
+import { deleteTypes } from "@/types";
 import { IGenreResponse } from "@/models/genre";
+import { IAlbumResponse } from "@/models/album";
 import { ISingerResponse } from "@/models/singer";
+import { IPlaylistResponse } from "@/models/playlist";
 
 interface PopUpStoreType {
   id: string;
@@ -12,8 +13,11 @@ interface PopUpStoreType {
   popUpFn?:
     | ((
         id: string
-      ) => Promise<IPlaylistResponse | IGenreResponse | ISingerResponse>)
+      ) => Promise<
+        IPlaylistResponse | IGenreResponse | ISingerResponse | IAlbumResponse
+      >)
     | null;
+  // Setters
   setId: (id: string) => void;
   setName: (name: string) => void;
   setType: (type: deleteTypes) => void;
@@ -21,7 +25,9 @@ interface PopUpStoreType {
   setPopUpFn: (
     popUpFn: (
       id: string
-    ) => Promise<IPlaylistResponse | IGenreResponse | ISingerResponse>
+    ) => Promise<
+      IPlaylistResponse | IGenreResponse | ISingerResponse | IAlbumResponse
+    >
   ) => void;
 }
 

@@ -1,11 +1,11 @@
-import { ButtonPropTypes } from "@/types/shared";
+interface IProps {
+  isSubmitting?: boolean;
+  text: string;
+  mode?: "add" | "edit";
+  type: "submit" | "reset" | "button" | undefined;
+}
 
-export default function Button({
-  isSubmitting,
-  text,
-  mode,
-  type,
-}: ButtonPropTypes) {
+export default function Button({ isSubmitting, text, mode, type }: IProps) {
   return (
     <button
       disabled={isSubmitting || false}
