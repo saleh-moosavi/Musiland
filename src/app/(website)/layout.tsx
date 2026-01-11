@@ -1,7 +1,7 @@
 import "../globals.css";
 import { lazy } from "react";
 import type { Metadata } from "next";
-import { connectDB } from "@/libs/mongodb";
+import { connectDB } from "@/configs/mongodb";
 import Navbar from "@/components/shared/Navbar";
 import Player from "@/components/shared/Player";
 const Toast = lazy(() => import("@/components/shared/Toast"));

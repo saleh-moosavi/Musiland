@@ -1,8 +1,4 @@
 import { useState } from "react";
-import { IGenre } from "@/models/genre";
-import { IAlbum } from "@/models/album";
-import { ISinger } from "@/models/singer";
-import { IPlaylist } from "@/models/playlist";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { FieldPath, FieldValues, UseFormRegisterReturn } from "react-hook-form";
 
@@ -11,7 +7,7 @@ interface CustomOptionProps {
   classes?: string;
   multiple?: boolean;
   icon?: React.ReactNode;
-  data: IPlaylist[] | IGenre[] | IAlbum[] | ISinger[];
+  data: { _id: string; name: string }[];
   error?: React.ReactNode | string;
   register: UseFormRegisterReturn<FieldPath<FieldValues>>;
 }

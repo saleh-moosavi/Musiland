@@ -1,5 +1,5 @@
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 // Types
 export interface TokenPayload {
@@ -24,16 +24,17 @@ export async function comparePassword(
 
 // Generate JWT token
 export function generateToken(payload: TokenPayload): string {
-  const secret = process.env.JWT_SECRET || 'your-secret-key-change-this';
-  return jwt.sign(payload, secret, { expiresIn: '7d' });
+  const secret = process.env.JWT_SECRET || "your-secret-key-change-this";
+  return jwt.sign(payload, secret, { expiresIn: "7d" });
 }
 
 // Verify JWT token
 export function verifyToken(token: string): TokenPayload | null {
   try {
-    const secret = process.env.JWT_SECRET || 'your-secret-key-change-this';
+    const secret = process.env.JWT_SECRET || "your-secret-key-change-this";
     return jwt.verify(token, secret) as TokenPayload;
-  } catch (error) {
+  } catch (error: unknown) {
+    console.error(error);
     return null;
   }
 }
@@ -41,8 +42,8 @@ export function verifyToken(token: string): TokenPayload | null {
 // Cookie options
 export const cookieOptions = {
   httpOnly: true,
-  secure: process.env.NODE_ENV === 'production',
-  sameSite: 'strict' as const,
-  path: '/',
+  secure: process.env.NODE_ENV === "production",
+  sameSite: "strict" as const,
+  path: "/",
   maxAge: 7 * 24 * 60 * 60, // 7 days in seconds
 };

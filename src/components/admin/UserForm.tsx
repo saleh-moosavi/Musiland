@@ -1,34 +1,41 @@
 "use client";
 
-import { useEffect } from "react";
 import Button from "../shared/Button";
 import { IMode } from "@/models/song";
-import { useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
+import useToastStore from "@/store/toastStore";
 import { Resolver, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import CustomInput from "@/components/auth/CustomInput";
-import { UserFormData, userSchema } from "@/models/user";
 import CustomOption from "@/components/auth/CustomOption";
-import { useUserFormData } from "@/hooks/useUserFormData";
-import { useUserFormSubmit } from "@/hooks/useUserFormSubmit";
+import { addUser, editUser, getUser } from "@/services/user";
+import { useRouter, useSearchParams } from "next/navigation";
+import { IUser, UserFormData, userSchema } from "@/models/user";
 import { User, Shield, MailIcon, EyeClosed } from "lucide-react";
 
 export default function UserForm({ mode }: { mode: IMode }) {
+  const router = useRouter();
+  const { setIsToastOpen, setToastColor, setToastTitle } = useToastStore();
   const searchParams = useSearchParams();
   const userId = searchParams.get("userId");
+  const [user, setUser] = useState<IUser | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
-  const { user, error: fetchError } = useUserFormData({ mode, userId });
-  const {
-    submit,
-    error: submitError,
-    isSubmitting,
-  } = useUserFormSubmit({
-    mode,
-    userId,
-  });
+  // Get User Data In Edit Mode
+  useEffect(() => {
+    if (mode === "edit" && userId) {
+      getUser(userId)
+        .then((data) => {
+          if (data.success) setUser(data?.data ?? null);
+          else setError(data?.message || "");
+        })
+        .catch(() => setError("Failed to load user"));
+    }
+  }, [mode, userId]);
 
+  // Form Hook & Initialize
   const {
-    formState: { errors },
+    formState: { errors, isSubmitting },
     register,
     handleSubmit,
     setValue,
@@ -42,7 +49,33 @@ export default function UserForm({ mode }: { mode: IMode }) {
       setValue("role", user.role);
       setValue("email", user.email);
     }
-  }, [user, mode, setValue]);
+  }, [user, mode]);
+
+  // Submit Handler
+  const submit = async (data: UserFormData) => {
+    setError(null);
+
+    try {
+      const result = await (mode === "add"
+        ? addUser(data)
+        : editUser(userId!, data));
+      if (!result.success)
+        throw new Error(result.message || "Something went wrong");
+
+      // Successful Toast
+      setIsToastOpen(true);
+      setToastColor("green");
+      setToastTitle(
+        `User ${mode === "add" ? "Added" : "Updated"} Successfully`
+      );
+      router.push("/admin/dashboard/user");
+    } catch (error: unknown) {
+      setError(error instanceof Error ? error.message : "Error");
+      setIsToastOpen(true);
+      setToastColor("red");
+      setToastTitle(`SomeThing Went Wrong!`);
+    }
+  };
 
   return (
     <article className="p-6 rounded-3xl bg-my-white-low dark:bg-my-black-max mt-10 shadow-md dark:shadow-my-black-low/30 text-my-black-max dark:text-my-white-low space-y-6">
@@ -90,10 +123,8 @@ export default function UserForm({ mode }: { mode: IMode }) {
             isSubmitting={isSubmitting}
             mode={mode}
           />
-          {(fetchError || submitError) && (
-            <p className="text-my-red-med text-sm text-center">
-              {fetchError || submitError}
-            </p>
+          {error && (
+            <p className="text-my-red-med text-sm text-center">{error}</p>
           )}
         </div>
       </form>

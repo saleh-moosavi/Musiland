@@ -44,3 +44,8 @@ export interface IAuth {
   message?: string;
   data?: IUser;
 }
+export interface IGetAllAuth {
+  success: boolean;
+  message?: string;
+  data?: IUser[];
+}

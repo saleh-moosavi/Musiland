@@ -1,7 +1,7 @@
 import "../globals.css";
 import { lazy } from "react";
 import type { Metadata } from "next";
-import { connectDB } from "@/libs/mongodb";
+import { connectDB } from "@/configs/mongodb";
 import SideBar from "@/components/admin/SideBar";
 import DeleteConfirm from "@/components/shared/PopUp";
 import SideBarMobile from "@/components/admin/SideBarMobile";
