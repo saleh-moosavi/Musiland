@@ -1,24 +1,51 @@
 "use client";
 
+import z from "zod";
 import Button from "../shared/Button";
 import { UserIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import useToastStore from "@/store/toastStore";
-import { formSchemas } from "@/constants/zodSchema";
+import { IGenreResponse } from "@/models/genre";
+import { IAlbumResponse } from "@/models/album";
+import { ISingerResponse } from "@/models/singer";
+import { IPlaylistResponse } from "@/models/playlist";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { iconClasses } from "@/constants/styleClasses";
 import CustomInput from "@/components/auth/CustomInput";
 import { useRouter, useSearchParams } from "next/navigation";
-import { GenericAddFormProps, GenericEditFormProps } from "@/types/inputTypes";
+
+const Schema = z.object({
+  name: z.string().min(1, "Please Enter Singer Name"),
+});
+
+type IResponse =
+  | ISingerResponse
+  | IGenreResponse
+  | IAlbumResponse
+  | IPlaylistResponse;
+
+interface IPropsBase {
+  title: string;
+  redirectPath: string;
+}
+
+interface IPropsAdd extends IPropsBase {
+  mode: "add";
+  submitFn: (name: string) => Promise<IResponse>;
+}
+
+interface IPropsEdit extends IPropsBase {
+  mode: "edit";
+  submitFn: (name: string, id: string) => Promise<IResponse>;
+}
 
 export default function GenericForm({
   mode,
   title,
   submitFn,
-  schemaKey,
   redirectPath,
-}: GenericAddFormProps | GenericEditFormProps) {
+}: IPropsAdd | IPropsEdit) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const itemId = searchParams.get("itemId") || "";
@@ -27,15 +54,13 @@ export default function GenericForm({
 
   const [error, setError] = useState<string | null>(null);
 
-  const schema = formSchemas[schemaKey];
-
   const {
     formState: { errors, isSubmitting },
     register,
     handleSubmit,
     reset,
   } = useForm({
-    resolver: zodResolver(schema),
+    resolver: zodResolver(Schema),
   });
 
   useEffect(() => {

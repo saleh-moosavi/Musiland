@@ -6,7 +6,6 @@ export default function editPlaylistPage() {
     <GenericForm
       mode="edit"
       title="Playlist"
-      schemaKey="playlist"
       redirectPath="/playlist"
       submitFn={editPlaylist}
     />

@@ -6,7 +6,6 @@ export default function addAlbumPage() {
     <GenericForm
       mode="add"
       title="Album"
-      schemaKey="album"
       redirectPath="/album"
       submitFn={createAlbum}
     />

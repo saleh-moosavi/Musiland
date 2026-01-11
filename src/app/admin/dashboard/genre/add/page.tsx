@@ -6,7 +6,6 @@ export default function addGenrePage() {
     <GenericForm
       mode="add"
       title="Genre"
-      schemaKey="genre"
       redirectPath="/genre"
       submitFn={createGenre}
     />

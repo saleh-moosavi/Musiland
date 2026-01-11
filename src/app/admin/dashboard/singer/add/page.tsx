@@ -6,7 +6,6 @@ export default function AddSingerPage() {
     <GenericForm
       mode="add"
       title="Singer"
-      schemaKey="singer"
       submitFn={createSinger}
       redirectPath="/singer"
     />

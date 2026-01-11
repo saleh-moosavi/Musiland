@@ -1,4 +1,5 @@
 "use client";
+import z from "zod";
 import Link from "next/link";
 import CustomInput from "./CustomInput";
 import Loading from "../shared/Loading";
@@ -8,8 +9,12 @@ import { loginUser } from "@/services/auth";
 import { useEffect, useState } from "react";
 import useUserStore from "@/store/userStore";
 import { LockIcon, MailIcon } from "lucide-react";
-import { signInSchema } from "@/constants/zodSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+
+const signInSchema = z.object({
+  email: z.string().email("Please Enter Your email"),
+  password: z.string().min(1, "Please Enter Your Password"),
+});
 
 const iconClasses =
   "absolute left-2 top-1/2 -translate-y-1/2 size-5 stroke-emerald-500";

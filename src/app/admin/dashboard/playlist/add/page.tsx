@@ -6,7 +6,6 @@ export default function addPlaylistPage() {
     <GenericForm
       mode="add"
       title="Playlist"
-      schemaKey="playlist"
       redirectPath="/playlist"
       submitFn={createPlaylist}
     />

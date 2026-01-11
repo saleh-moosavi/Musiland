@@ -6,7 +6,6 @@ export default function EditSingerPage() {
     <GenericForm
       mode="edit"
       title="Singer"
-      schemaKey="singer"
       submitFn={editSinger}
       redirectPath="/singer"
     />

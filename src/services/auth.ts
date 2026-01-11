@@ -11,8 +11,7 @@ export const registerUser = async (
     email,
     password,
   });
-  console.log(res);
-  return res;
+  return res.data;
 };
 
 export const loginUser = async (

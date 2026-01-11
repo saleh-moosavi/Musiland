@@ -1,4 +1,5 @@
 "use client";
+import z from "zod";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
@@ -6,10 +7,15 @@ import { useEffect, useState } from "react";
 import useUserStore from "@/store/userStore";
 import { registerUser } from "@/services/auth";
 import Loading from "@/components/shared/Loading";
-import { signUpSchema } from "@/constants/zodSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import CustomInput from "@/components/auth/CustomInput";
 import { AtSign, LockIcon, MailIcon } from "lucide-react";
+
+const signUpSchema = z.object({
+  username: z.string().min(1, "Please Enter Your Name"),
+  email: z.string().email("Please Enter Your Email"),
+  password: z.string().min(1, "Please Enter Your Password"),
+});
 
 const iconClasses =
   "absolute left-2 top-1/2 -translate-y-1/2 size-5 stroke-emerald-500";
@@ -45,10 +51,10 @@ export default function RegisterView() {
     try {
       const res = await registerUser(username, email, password);
 
-      if (res.data) {
+      if (res.success && res.data) {
         router.push("/profile");
       } else {
-        setError(res.error || "Register failed");
+        setError(res.message || "Register failed");
       }
     } catch (err) {
       setError(`Server Error! : ${err}`);

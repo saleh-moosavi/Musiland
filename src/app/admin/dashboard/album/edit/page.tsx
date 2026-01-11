@@ -6,7 +6,6 @@ export default function editAlbumPage() {
     <GenericForm
       mode="edit"
       title="Album"
-      schemaKey="album"
       submitFn={editAlbum}
       redirectPath="/album"
     />
