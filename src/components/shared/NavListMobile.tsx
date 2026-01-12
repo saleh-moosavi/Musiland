@@ -5,8 +5,26 @@ import { ChevronDown } from "lucide-react";
 import useUserStore from "@/store/userStore";
 import { IPlaylist } from "@/models/playlist";
 import useWindowStore from "@/store/windowStore";
-import { menuItems } from "@/constants/menuItems";
 import MobileMenuWrapper from "./MobileMenuWrapper";
+
+const menuItems = (playlists: IPlaylist[], genres: IGenre[]) => {
+  return [
+    {
+      title: "Playlists",
+      type: "playlist",
+      show: false,
+      content: playlists,
+    },
+    {
+      title: "Genres",
+      type: "genre",
+      show: false,
+      content: genres,
+    },
+    { title: "About Us", content: null, show: true, link: "/about" },
+    { title: "Contact US", content: null, show: true, link: "/contact" },
+  ];
+};
 
 export default function NavListMobile({
   genres,

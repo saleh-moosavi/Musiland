@@ -8,7 +8,7 @@ import {
   User,
 } from "lucide-react";
 
-export const links = [
+export const SideBarLinks = [
   { name: "Dashboard", path: "/", icon: <HomeIcon /> },
   { name: "Song", path: "song", icon: <Music /> },
   { name: "Singer", path: "singer", icon: <MicVocal /> },

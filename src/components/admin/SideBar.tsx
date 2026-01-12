@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import useTheme from "@/hooks/useTheme";
-import { links } from "@/constants/sidebarMenu";
+import { SideBarLinks } from "@/constants";
 import { ChevronsLeft, ChevronsRight, Moon, Sun } from "lucide-react";
-import Image from "next/image";
 
 export default function SideBar() {
   const { theme, handleTheme } = useTheme();
@@ -39,7 +39,7 @@ export default function SideBar() {
           </Link>
         </li>
         <hr />
-        {links.map((link) => (
+        {SideBarLinks.map((link) => (
           <li
             key={link.path}
             className={`flex hover:bg-my-black-low/30 transition-all duration-300 rounded-xl p-2 items-center ${

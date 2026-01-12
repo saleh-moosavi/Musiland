@@ -11,7 +11,6 @@ import { IAlbumResponse } from "@/models/album";
 import { ISingerResponse } from "@/models/singer";
 import { IPlaylistResponse } from "@/models/playlist";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { iconClasses } from "@/constants/styleClasses";
 import CustomInput from "@/components/auth/CustomInput";
 import { useRouter, useSearchParams } from "next/navigation";
 
@@ -104,7 +103,9 @@ export default function GenericForm({
 
         <CustomInput
           register={register("name")}
-          icon={<UserIcon className={iconClasses} />}
+          icon={
+            <UserIcon className="absolute left-2 top-1/2 -translate-y-1/3 size-5 stroke-emerald-500" />
+          }
           name={`Enter Name of ${title}`}
           error={
             typeof errors.name?.message === "string"

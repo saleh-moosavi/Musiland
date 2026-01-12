@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { links } from "@/constants/sidebarMenu";
+import { SideBarLinks } from "@/constants";
 
 export default function dashboardPage() {
   return (
@@ -7,7 +7,7 @@ export default function dashboardPage() {
       <p className="text-xl font-bold ">WellCome To Admin Page</p>
 
       <ul className="grid justify-center grid-cols-2 md:grid-cols-3 items-start gap-10 *:col-span-1 *:cursor-pointer bg-my-white-low dark:bg-my-black-max p-10 rounded-3xl shadow-md shadow-my-black-low/50">
-        {links.map((link) => {
+        {SideBarLinks.map((link) => {
           if (link.name !== "Dashboard") {
             return (
               <li

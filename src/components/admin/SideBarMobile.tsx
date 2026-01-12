@@ -1,12 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import useTheme from "@/hooks/useTheme";
+import { SideBarLinks } from "@/constants";
 import { Menu, Moon, Sun } from "lucide-react";
-import { links } from "@/constants/sidebarMenu";
 import useWindowStore from "@/store/windowStore";
 import MobileMenuWrapper from "../shared/MobileMenuWrapper";
-import Image from "next/image";
 
 export default function SideBar() {
   const { theme, handleTheme } = useTheme();
@@ -42,7 +42,7 @@ export default function SideBar() {
               </Link>
             </li>
             <hr />
-            {links.map((link) => (
+            {SideBarLinks.map((link) => (
               <Link
                 key={link.path}
                 href={`/admin/dashboard/${link.path}`}
