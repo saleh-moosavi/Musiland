@@ -1,13 +1,13 @@
 import apiClient from "@/configs/axios";
-import { IAuth, IGetAllAuth } from "@/models/user";
+import { IAuthResponse, IGetAllUsersResponse } from "@/models/user";
 
-export const getAllUsers = async (): Promise<IGetAllAuth> => {
-  const res = await apiClient.get<IGetAllAuth>("/user");
+export const getAllUsers = async (): Promise<IGetAllUsersResponse> => {
+  const res = await apiClient.get<IGetAllUsersResponse>("/user");
   return res.data;
 };
 
-export const getUser = async (id: string): Promise<IAuth> => {
-  const res = await apiClient.get<IAuth>(`/user/${id}`);
+export const getUser = async (id: string): Promise<IAuthResponse> => {
+  const res = await apiClient.get<IAuthResponse>(`/user/${id}`);
   return res.data;
 };
 
@@ -17,17 +17,20 @@ interface IProps {
   email: string;
 }
 
-export const addUser = async (data: IProps): Promise<IAuth> => {
-  const res = await apiClient.post<IAuth>("/user", data);
+export const addUser = async (data: IProps): Promise<IAuthResponse> => {
+  const res = await apiClient.post<IAuthResponse>("/user", data);
   return res.data;
 };
 
-export const editUser = async (id: string, data: IProps): Promise<IAuth> => {
-  const res = await apiClient.put<IAuth>("/user", { data, id });
+export const editUser = async (
+  id: string,
+  data: IProps
+): Promise<IAuthResponse> => {
+  const res = await apiClient.put<IAuthResponse>("/user", { data, id });
   return res.data;
 };
 
-export const deleteUser = async (id: string): Promise<IAuth> => {
-  const res = await apiClient.delete<IAuth>(`user/${id}`);
+export const deleteUser = async (id: string): Promise<IAuthResponse> => {
+  const res = await apiClient.delete<IAuthResponse>(`user/${id}`);
   return res.data;
 };

@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
           success: true,
           user: {
             id: "admin",
-            name: "Admin Name",
+            name: "admin",
             email: email,
             role: "admin",
           },
@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
     }
 
     // Find User
-    const user = await UserModel.findOne({ email }).select("+password");
+    const user = await UserModel.findOne({ email });
 
     if (!user) {
       return NextResponse.json(
@@ -88,32 +88,26 @@ export async function POST(req: NextRequest) {
     const cookieStore = await cookies();
     cookieStore.set("user", token, cookieOptions);
 
-    // Remove password from response
-    const userResponse = {
-      id: user._id,
-      username: user.username,
-      email: user.email,
-      name: user.name,
-      role: user.role || "user",
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
-    };
-
     return NextResponse.json(
       {
         success: true,
-        data: userResponse,
+        data: {
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          role: user.role || "user",
+        },
       },
       { status: 200 }
     );
-  } catch (error: unknown) {
-    if (error instanceof Error)
-      return NextResponse.json(
-        {
-          success: false,
-          message: error.message || "Internal server error",
-        },
-        { status: 500 }
-      );
+  } catch (error) {
+    return NextResponse.json(
+      {
+        success: false,
+        message:
+          error instanceof Error ? error.message : "Internal server error",
+      },
+      { status: 500 }
+    );
   }
 }

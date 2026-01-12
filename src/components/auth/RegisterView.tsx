@@ -12,10 +12,12 @@ import CustomInput from "@/components/auth/CustomInput";
 import { AtSign, LockIcon, MailIcon } from "lucide-react";
 
 const signUpSchema = z.object({
-  username: z.string().min(1, "Please Enter Your Name"),
+  name: z.string().min(1, "Please Enter Your Name"),
   email: z.string().email("Please Enter Your Email"),
   password: z.string().min(1, "Please Enter Your Password"),
 });
+
+type IFormType = z.infer<typeof signUpSchema>;
 
 const iconClasses =
   "absolute left-2 top-1/2 -translate-y-1/2 size-5 stroke-emerald-500";
@@ -39,25 +41,17 @@ export default function RegisterView() {
     }
   }, [isLoggedIn]);
 
-  const submitForm = async ({
-    username,
-    email,
-    password,
-  }: {
-    username: string;
-    email: string;
-    password: string;
-  }) => {
+  const submitForm = async (data: IFormType) => {
     try {
-      const res = await registerUser(username, email, password);
+      const res = await registerUser(data.name, data.email, data.password);
 
       if (res.success && res.data) {
         router.push("/profile");
       } else {
         setError(res.message || "Register failed");
       }
-    } catch (err) {
-      setError(`Server Error! : ${err}`);
+    } catch (error) {
+      setError(error instanceof Error ? error.message : "Server Error!");
     }
   };
 
@@ -68,10 +62,10 @@ export default function RegisterView() {
   return (
     <form onSubmit={handleSubmit(submitForm)} className="grid gap-y-5">
       <CustomInput
-        register={register("username")}
+        register={register("name")}
         icon={<AtSign className={iconClasses} />}
-        name="Username"
-        error={errors?.username?.message}
+        name="Name"
+        error={errors?.name?.message}
       />
       <CustomInput
         register={register("email")}

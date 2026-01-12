@@ -13,13 +13,15 @@ export async function POST() {
     });
 
     return NextResponse.json({
-      ok: true,
+      success: true,
       message: "Logged out successfully",
     });
   } catch (error) {
-    console.error("Logout error:", error);
     return NextResponse.json(
-      { ok: false, error: "Server Error" },
+      {
+        success: false,
+        message: error instanceof Error ? error.message : "Server Error",
+      },
       { status: 500 }
     );
   }

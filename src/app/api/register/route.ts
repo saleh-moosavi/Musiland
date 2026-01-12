@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         {
           success: false,
-          message: "Email already in use",
+          message: "Email Already in Use",
         },
         { status: 400 }
       );
@@ -52,31 +52,26 @@ export async function POST(req: NextRequest) {
     const cookieStore = await cookies();
     cookieStore.set("user", token, cookieOptions);
 
-    // Remove password from response
-    const userResponse = {
-      id: user._id,
-      name: user.name,
-      email: user.email,
-      role: user.role,
-      createdAt: user.createdAt,
-      updatedAt: user.updatedAt,
-    };
-
     return NextResponse.json(
       {
         success: true,
-        data: userResponse,
+        data: {
+          id: user._id,
+          name: user.name,
+          email: user.email,
+          role: user.role,
+        },
       },
       { status: 201 }
     );
-  } catch (error: unknown) {
-    if (error instanceof Error)
-      return NextResponse.json(
-        {
-          success: false,
-          message: error.message || "Internal server error",
-        },
-        { status: 500 }
-      );
+  } catch (error) {
+    return NextResponse.json(
+      {
+        success: false,
+        message:
+          error instanceof Error ? error.message : "Internal server error",
+      },
+      { status: 500 }
+    );
   }
 }

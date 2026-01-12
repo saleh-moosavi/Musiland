@@ -28,24 +28,34 @@ export const userSchema = z.object({
 
 export type UserFormData = z.infer<typeof userSchema>;
 
-export interface IUser {
+export interface IAuth {
   id: string;
-  username: string;
-  email: string;
-  likedSongs?: string[];
   name: string;
+  email: string;
   role: "user" | "admin" | "manager";
+}
+
+export interface IUser extends IAuth {
+  likedSongs?: string[];
+  comments?: string[];
   createdAt: string;
   updatedAt: string;
 }
 
-export interface IAuth {
+export interface IUserResponse {
   success: boolean;
   message?: string;
   data?: IUser;
 }
-export interface IGetAllAuth {
+
+export interface IGetAllUsersResponse {
   success: boolean;
   message?: string;
   data?: IUser[];
+}
+
+export interface IAuthResponse {
+  success: boolean;
+  message?: string;
+  data?: IAuth;
 }

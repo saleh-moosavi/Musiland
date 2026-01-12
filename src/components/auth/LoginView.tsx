@@ -16,6 +16,8 @@ const signInSchema = z.object({
   password: z.string().min(1, "Please Enter Your Password"),
 });
 
+type IFormType = z.infer<typeof signInSchema>;
+
 const iconClasses =
   "absolute left-2 top-1/2 -translate-y-1/2 size-5 stroke-emerald-500";
 
@@ -38,15 +40,9 @@ export default function LoginView() {
     }
   }, [isLoggedIn]);
 
-  const submitForm = async ({
-    email,
-    password,
-  }: {
-    email: string;
-    password: string;
-  }) => {
+  const submitForm = async (data: IFormType) => {
     try {
-      const result = await loginUser(email, password);
+      const result = await loginUser(data.email, data.password);
 
       if (result.success) {
         setIsLoggedIn(true);
@@ -54,7 +50,7 @@ export default function LoginView() {
       } else {
         setError(result.message || "Email Or Password Is Incorrect!");
       }
-    } catch (error: unknown) {
+    } catch (error) {
       setIsLoggedIn(false);
       setError(error instanceof Error ? error.message : "Server Error!");
     }
