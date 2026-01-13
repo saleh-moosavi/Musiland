@@ -1,27 +1,25 @@
 "use client";
 
+import useToast from "@/hooks/useToast";
 import { useRouter } from "next/navigation";
 import PopUpStore from "@/store/popUpStore";
-import useToastStore from "@/store/toastStore";
 
 export default function DeleteConfirm() {
   const { id, name, type, isOpen, setIsOpen, popUpFn } = PopUpStore();
-  const { setIsToastOpen, setToastTitle, setToastColor } = useToastStore();
+  const { showToast } = useToast();
   const router = useRouter();
 
   const handleDelete = async () => {
     try {
       const data = await popUpFn?.(id);
       if (data && data.success) {
-        setIsToastOpen(true);
-        setToastTitle(`${name} Deleted Successfully`);
-        setToastColor("green");
+        showToast(`${name} Deleted Successfully`, "red");
       }
     } catch (err) {
-      alert("Failed to delete.");
-      setIsToastOpen(true);
-      setToastTitle(String(err));
-      setToastColor("red");
+      showToast(
+        err instanceof Error ? String(err.message) : "Failed To Delete",
+        "green"
+      );
     } finally {
       setIsOpen(false);
       router.refresh();

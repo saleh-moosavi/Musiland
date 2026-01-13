@@ -6,13 +6,13 @@ import { likeToggler } from "@/services/like";
 export default function useToggleLike() {
   const { showToast } = useToast();
   const { setLikesCount, likesCount } = useMusicStore();
-  const { likedSongs, setLikedSongs, userId } = useUserStore();
+  const { likedSongs, setLikedSongs, userData } = useUserStore();
 
   const toggleLike = async (songId: string) => {
-    if (!userId) return showToast("Please Login First");
+    if (!userData?.id) return showToast("Please Login First");
 
     try {
-      const res = await likeToggler(userId, songId);
+      const res = await likeToggler(userData?.id, songId);
       setLikesCount(res.data);
       const updated = likedSongs.includes(songId)
         ? likedSongs.filter((id) => id !== songId)

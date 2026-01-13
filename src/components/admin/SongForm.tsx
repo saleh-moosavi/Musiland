@@ -1,9 +1,9 @@
 "use client";
 
 import Button from "../shared/Button";
+import useToast from "@/hooks/useToast";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import useToastStore from "@/store/toastStore";
 import { getAllAlbums } from "@/services/album";
 import { getAllGenres } from "@/services/genre";
 import { getAllSingers } from "@/services/singer";
@@ -37,7 +37,7 @@ export default function SongForm({ mode }: { mode: IMode }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const songId = searchParams.get("itemId");
-  const { setIsToastOpen, setToastTitle, setToastColor } = useToastStore();
+  const { showToast } = useToast();
 
   // State برای داده‌های فرم
   const [singers, setSingers] = useState<ISinger[]>([]);
@@ -150,11 +150,10 @@ export default function SongForm({ mode }: { mode: IMode }) {
 
       // بررسی موفقیت‌آمیز بودن عملیات
       if (result.success) {
-        setIsToastOpen(true);
-        setToastTitle(
-          `Song ${mode === "add" ? "added" : "updated"} successfully!`
+        showToast(
+          `Song ${mode === "add" ? "added" : "updated"} successfully!`,
+          mode === "add" ? "green" : "orange"
         );
-        setToastColor(mode === "add" ? "green" : "orange");
 
         // Reset فرم
         reset();

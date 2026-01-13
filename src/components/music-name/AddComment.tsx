@@ -4,11 +4,11 @@ import z from "zod";
 import Link from "next/link";
 import Button from "../shared/Button";
 import useAuth from "@/hooks/useAuth";
+import useToast from "@/hooks/useToast";
 import { useForm } from "react-hook-form";
 import { useEffect, useRef } from "react";
 import useUserStore from "@/store/userStore";
 import useMusicStore from "@/store/musicStore";
-import useToastStore from "@/store/toastStore";
 import { addComment } from "@/services/comment";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -17,7 +17,7 @@ export default function AddComment({ id: songId }: { id: string }) {
   const { userData } = useUserStore();
   const userIdRef = useRef<null | string>(null);
   const { comments, setComments } = useMusicStore();
-  const { setIsToastOpen, setToastColor, setToastTitle } = useToastStore();
+  const { showToast } = useToast();
   const {
     register,
     handleSubmit,
@@ -36,9 +36,7 @@ export default function AddComment({ id: songId }: { id: string }) {
     if (userData) {
       userIdRef.current = userData.id;
     } else {
-      setIsToastOpen(true);
-      setToastColor("orange");
-      setToastTitle(error || "Authentication required");
+      showToast(error || "Authentication Required", "orange");
     }
   }, [userData, error]);
 
@@ -49,9 +47,7 @@ export default function AddComment({ id: songId }: { id: string }) {
     if (res.success) {
       setComments([res.data, ...comments]);
     } else {
-      setIsToastOpen(true);
-      setToastColor("red");
-      setToastTitle("Error Adding Comment");
+      showToast("Error Adding Comment", "red");
     }
   };
 

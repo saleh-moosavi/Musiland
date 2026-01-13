@@ -1,37 +1,33 @@
 "use client";
 import { Trash } from "lucide-react";
+import useToast from "@/hooks/useToast";
 import { useEffect, useState } from "react";
 import useUserStore from "@/store/userStore";
-import useToastStore from "@/store/toastStore";
 import { IComment } from "@/models/comment";
 import TimeAgo from "@/components/music-name/TimeAgo";
 import { deleteComment, getUserComments } from "@/services/comment";
 
 export default function Page() {
-  const { userId } = useUserStore();
+  const { userData } = useUserStore();
   const [comments, setComments] = useState<IComment[] | null>(null);
-  const { setIsToastOpen, setToastColor, setToastTitle } = useToastStore();
+  const { showToast } = useToast();
 
   useEffect(() => {
-    getUserComments(userId)
+    getUserComments(userData?.id)
       .then((data) => {
         setComments(data.data);
       })
       .catch((err) => console.log(err));
-  }, [userId]);
+  }, [userData]);
 
   const handleDelete = async (id: string) => {
     const data = await deleteComment(id);
-    if (data.ok === true) {
-      setIsToastOpen(true);
-      setToastColor("green");
-      setToastTitle(data.message || "Comment Deleted Successfully");
+    if (data.success === true) {
+      showToast(data.message || "Comment Deleted Successfully", "green");
       const newComments = comments?.filter((item) => item._id !== id) || null;
       setComments(newComments);
     } else {
-      setIsToastOpen(true);
-      setToastColor("red");
-      setToastTitle(data.error || "Error Deleting Comment");
+      showToast(data.message || "Error Deleting Comment", "red");
     }
   };
 

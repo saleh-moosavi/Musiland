@@ -2,8 +2,8 @@
 
 import Button from "../shared/Button";
 import { IMode } from "@/models/song";
+import useToast from "@/hooks/useToast";
 import { useEffect, useState } from "react";
-import useToastStore from "@/store/toastStore";
 import { Resolver, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import CustomInput from "@/components/auth/CustomInput";
@@ -15,7 +15,7 @@ import { User, Shield, MailIcon, EyeClosed } from "lucide-react";
 
 export default function UserForm({ mode }: { mode: IMode }) {
   const router = useRouter();
-  const { setIsToastOpen, setToastColor, setToastTitle } = useToastStore();
+  const { showToast } = useToast();
   const searchParams = useSearchParams();
   const userId = searchParams.get("userId");
   const [user, setUser] = useState<IUser | null>(null);
@@ -63,17 +63,17 @@ export default function UserForm({ mode }: { mode: IMode }) {
         throw new Error(result.message || "Something went wrong");
 
       // Successful Toast
-      setIsToastOpen(true);
-      setToastColor("green");
-      setToastTitle(
-        `User ${mode === "add" ? "Added" : "Updated"} Successfully`
+      showToast(
+        `User ${mode === "add" ? "Added" : "Updated"} Successfully`,
+        "green"
       );
       router.push("/admin/dashboard/user");
     } catch (error: unknown) {
       setError(error instanceof Error ? error.message : "Error");
-      setIsToastOpen(true);
-      setToastColor("red");
-      setToastTitle(`SomeThing Went Wrong!`);
+      showToast(
+        error instanceof Error ? error.message : "SomeThing Went Wrong",
+        "red"
+      );
     }
   };
 

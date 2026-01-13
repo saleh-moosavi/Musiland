@@ -2,10 +2,10 @@
 
 import z from "zod";
 import Button from "../shared/Button";
+import useToast from "@/hooks/useToast";
 import { UserIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
-import useToastStore from "@/store/toastStore";
 import { IGenreResponse } from "@/models/genre";
 import { IAlbumResponse } from "@/models/album";
 import { ISingerResponse } from "@/models/singer";
@@ -49,7 +49,7 @@ export default function GenericForm({
   const searchParams = useSearchParams();
   const itemId = searchParams.get("itemId") || "";
   const itemName = searchParams.get("itemName") || undefined;
-  const { setIsToastOpen, setToastTitle, setToastColor } = useToastStore();
+  const { showToast } = useToast();
 
   const [error, setError] = useState<string | null>(null);
 
@@ -78,11 +78,10 @@ export default function GenericForm({
 
       if (result.success) {
         reset();
-        setIsToastOpen(true);
-        setToastTitle(
-          `${title} ${mode === "add" ? "added" : "updated"} successfully!`
+        showToast(
+          `${title} ${mode === "add" ? "added" : "updated"} successfully!`,
+          mode === "add" ? "green" : "orange"
         );
-        setToastColor(mode === "add" ? "green" : "orange");
         router.push("/admin/dashboard" + redirectPath);
       } else {
         setError(result.message || "Operation failed.");
