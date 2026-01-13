@@ -1,25 +1,26 @@
 "use client";
 import { useEffect } from "react";
+import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
-import useAuthCheck from "@/hooks/useAuthCheck";
+import useUserStore from "@/store/userStore";
 import Loading from "@/components/shared/Loading";
 import MobileView from "@/components/profile/MobileView";
 import DesktopView from "@/components/profile/DesktopView";
 
-export default function profileLayout({
+export default function ProfileLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   const router = useRouter();
-  const { isLoggedIn, userData, isLoading, logOut } = useAuthCheck();
+  const { logOut } = useAuth();
+  const { userData } = useUserStore();
 
   useEffect(() => {
-    if (!isLoading) return;
-    if (!isLoggedIn) {
+    if (userData === null) {
       router.push("/login");
     }
-  }, [isLoading]);
+  }, [userData]);
 
   if (!userData) {
     return <Loading />;

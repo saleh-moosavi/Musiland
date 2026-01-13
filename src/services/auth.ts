@@ -26,6 +26,11 @@ export const loginUser = async (
 };
 
 export const logoutUser = async (): Promise<IAuthResponse> => {
-  const res = await apiClient.get<IAuthResponse>("/logout", {});
+  const res = await apiClient.get<IAuthResponse>("/logout");
+  return res.data;
+};
+
+export const checkAuthStatus = async (): Promise<IAuthResponse> => {
+  const res = await apiClient.get<IAuthResponse>("/check-auth-status");
   return res.data;
 };

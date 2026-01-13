@@ -3,18 +3,20 @@
 import z from "zod";
 import Link from "next/link";
 import Button from "../shared/Button";
+import useAuth from "@/hooks/useAuth";
 import { useForm } from "react-hook-form";
 import { useEffect, useRef } from "react";
+import useUserStore from "@/store/userStore";
 import useMusicStore from "@/store/musicStore";
 import useToastStore from "@/store/toastStore";
 import { addComment } from "@/services/comment";
-import useAuthCheck from "@/hooks/useAuthCheck";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function AddComment({ id: songId }: { id: string }) {
+  const { error } = useAuth();
+  const { userData } = useUserStore();
   const userIdRef = useRef<null | string>(null);
   const { comments, setComments } = useMusicStore();
-  const { isLoggedIn, userData, error, isLoading } = useAuthCheck();
   const { setIsToastOpen, setToastColor, setToastTitle } = useToastStore();
   const {
     register,
@@ -31,8 +33,6 @@ export default function AddComment({ id: songId }: { id: string }) {
 
   //get user id and user liked list
   useEffect(() => {
-    if (isLoading) return;
-
     if (userData) {
       userIdRef.current = userData.id;
     } else {
@@ -40,14 +40,14 @@ export default function AddComment({ id: songId }: { id: string }) {
       setToastColor("orange");
       setToastTitle(error || "Authentication required");
     }
-  }, [isLoading, userData, error]);
+  }, [userData, error]);
 
   //handle Send Comment
   const submitComment = async (data: { comment: string }) => {
     setValue("comment", "");
-    const addedComment = await addComment(data, userIdRef.current, songId);
-    if (addedComment.ok) {
-      setComments([addedComment.comment, ...comments]);
+    const res = await addComment(data.comment, userData?.id ?? "", songId);
+    if (res.success) {
+      setComments([res.data, ...comments]);
     } else {
       setIsToastOpen(true);
       setToastColor("red");
@@ -55,7 +55,7 @@ export default function AddComment({ id: songId }: { id: string }) {
     }
   };
 
-  if (isLoggedIn && userIdRef.current) {
+  if (userData && userIdRef.current) {
     return (
       <section className="w-full p-3 flex flex-col items-center gap-2 text-my-black-max dark:text-my-white-low dark:bg-my-black-max bg-my-white-low rounded-xl">
         <h2>Add New Comment</h2>

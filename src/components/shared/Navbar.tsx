@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { lazy, useState } from "react";
 import useTheme from "@/hooks/useTheme";
-import useAuthCheck from "@/hooks/useAuthCheck";
+import useUserStore from "@/store/userStore";
 import useWindowStore from "@/store/windowStore";
 import useNavbarData from "@/hooks/useNavbarData";
 import { LogIn, Menu, Moon, Sun, User } from "lucide-react";
@@ -13,7 +13,7 @@ const NavListMobile = lazy(() => import("./NavListMobile"));
 const NavListDesktop = lazy(() => import("./NavListDesktop"));
 
 export default function Navbar() {
-  const { isLoggedIn } = useAuthCheck();
+  const { userData } = useUserStore();
   const { theme, handleTheme } = useTheme();
   const { genres, playlists } = useNavbarData();
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
@@ -87,7 +87,7 @@ export default function Navbar() {
           </ul>
         </div>
         <button className="cursor-pointer">
-          {isLoggedIn ? (
+          {userData ? (
             <Link href="/profile">
               <User className="hidden lg:block" />
             </Link>

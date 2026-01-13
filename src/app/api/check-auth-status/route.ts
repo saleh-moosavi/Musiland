@@ -1,21 +1,17 @@
-import { GetSong } from "@/types/song";
 import { cookies } from "next/headers";
 import { UserModel } from "@/models/user";
 import { NextResponse } from "next/server";
 import { verifyToken } from "@/libs/authUtils";
 
-export async function GET(request: Request) {
+export async function GET() {
   try {
-    const urlObj = new URL(request.url);
-    const includeLikes = urlObj.searchParams.get("like");
-
     // Get token from cookie
     const cookieStore = await cookies();
     const token = cookieStore.get("user")?.value;
 
     if (!token) {
       return NextResponse.json(
-        { message: "Unauthorized", success: false },
+        { success: false, message: "User is Unauthorized" },
         { status: 401 }
       );
     }
@@ -25,7 +21,7 @@ export async function GET(request: Request) {
 
     if (!decoded) {
       return NextResponse.json(
-        { message: "Invalid token", success: false },
+        { message: "Token Is Invalid", success: false },
         { status: 401 }
       );
     }
@@ -37,7 +33,7 @@ export async function GET(request: Request) {
       // Admin user
       user = {
         id: "admin",
-        name: "Admin Name",
+        name: "admin",
         email: decoded.email,
         role: "admin",
       };
@@ -47,25 +43,13 @@ export async function GET(request: Request) {
 
       if (!user) {
         return NextResponse.json(
-          { message: "User not found", success: false },
+          { message: "Not Found", success: false },
           { status: 404 }
         );
       }
 
       // Convert to plain object
       user = user.toObject();
-
-      // Add liked songs if requested
-      if (includeLikes) {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/user/${user._id}`
-        );
-
-        if (res.success) {
-          const userLikes = res.likedSongs?.map((item: GetSong) => item._id);
-          user.likedSongs = userLikes;
-        }
-      }
     }
 
     return NextResponse.json({
@@ -75,9 +59,12 @@ export async function GET(request: Request) {
         id: user._id || user.id,
       },
     });
-  } catch (error: any) {
+  } catch (error) {
     return NextResponse.json(
-      { message: "Server error", success: false },
+      {
+        success: false,
+        message: error instanceof Error ? error.message : "Server error",
+      },
       { status: 500 }
     );
   }
