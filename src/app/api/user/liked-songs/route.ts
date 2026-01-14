@@ -2,13 +2,10 @@ import { UserModel } from "@/models/user";
 import { NextRequest, NextResponse } from "next/server";
 
 /*---------------- API ----------------*/
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function POST(req: NextRequest) {
   try {
-    const { id } = params;
-    if (!id)
+    const { userId } = await req.json();
+    if (!userId)
       return NextResponse.json(
         {
           success: false,
@@ -17,7 +14,7 @@ export async function GET(
         { status: 400 }
       );
 
-    const user = await UserModel.findById(id).populate({
+    const user = await UserModel.findById(userId).populate({
       path: "likedSongs",
       populate: ["singer", "album", "genres", "playlists"],
       options: { sort: { createdAt: -1 } },
@@ -40,11 +37,12 @@ export async function GET(
       },
       { status: 200 }
     );
-  } catch (err: any) {
+  } catch (error) {
     return NextResponse.json(
       {
         success: false,
-        message: err.message || "Internal server error",
+        message:
+          error instanceof Error ? error.message : "Internal server error",
       },
       { status: 500 }
     );

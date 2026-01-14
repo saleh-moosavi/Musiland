@@ -48,11 +48,12 @@ export async function POST(req: NextRequest) {
       },
       { status: 201 }
     );
-  } catch (err: any) {
+  } catch (error) {
     return NextResponse.json(
       {
         success: false,
-        message: err.message || "Internal server error",
+        message:
+          error instanceof Error ? error.message : "Internal server error",
       },
       { status: 500 }
     );

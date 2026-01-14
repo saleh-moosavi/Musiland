@@ -1,11 +1,20 @@
 import apiClient from "@/configs/axios";
+import { ILikeResponse, IToggleLikeResponse } from "@/types";
 
-export const likeToggler = async (userId: string, songId: string) => {
-  const res = await apiClient.post("/likes", { userId, songId });
-  return res;
+export const toogleLike = async (
+  userId: string,
+  songId: string
+): Promise<IToggleLikeResponse> => {
+  const res = await apiClient.post<IToggleLikeResponse>("/toggle-like", {
+    userId,
+    songId,
+  });
+  return res.data;
 };
 
-export const getUserLikes = async (userId: string) => {
-  const res = await apiClient.get(`/likes${userId}`);
-  return res;
+export const getUserLikes = async (userId: string): Promise<ILikeResponse> => {
+  const res = await apiClient.post<ILikeResponse>("/user/liked-songs", {
+    userId,
+  });
+  return res.data;
 };

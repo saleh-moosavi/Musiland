@@ -1,6 +1,7 @@
 "use client";
+import Image from "next/image";
 import { X } from "lucide-react";
-import { GetSong } from "@/types/song";
+import { ISong } from "@/models/song";
 import { useEffect, useState } from "react";
 import useUserStore from "@/store/userStore";
 import { getUserLikes } from "@/services/like";
@@ -8,23 +9,23 @@ import useToggleLike from "@/hooks/useToggleLike";
 import PlayButton from "@/components/shared/PlayButton";
 
 const LikedSongsPage: React.FC = () => {
-  const { userId } = useUserStore();
+  const { userData } = useUserStore();
   const { toggleLike } = useToggleLike();
   const [loading, setLoading] = useState(true);
-  const [songs, setSongs] = useState<GetSong[]>([]);
+  const [songs, setSongs] = useState<ISong[]>([]);
 
   useEffect(() => {
-    if (!userId) return;
-    getUserLikes(userId)
+    if (!userData) return;
+    getUserLikes(userData.id)
       .then((res) => setSongs(res.data || []))
       .catch((err) => console.error(err))
       .finally(() => setLoading(false));
-  }, [userId]);
+  }, [userData]);
 
   if (loading) return <p className="text-center">Loading...</p>;
 
   if (songs.length === 0)
-    return <p className="text-center">You Don't Have Any Liked Songs</p>;
+    return <p className="text-center">You Dont Have Any Liked Songs</p>;
 
   return (
     <ul className="grid lg:grid-cols-2 gap-5 w-full">
@@ -35,11 +36,12 @@ const LikedSongsPage: React.FC = () => {
         >
           <article className="w-full flex gap-5 h-full">
             <div className="relative group rounded-2xl overflow-hidden max-w-32">
-              <img
+              <Image
                 src={song.coverUrl || "/placeholder.jpg"}
                 alt={song.name}
                 className="w-full object-cover aspect-square"
-                loading="lazy"
+                width={100}
+                height={100}
               />
               <div className="absolute inset-0 flex justify-center items-center bg-my-black-max/30 opacity-0 group-hover:opacity-100 transition-all duration-300">
                 <PlayButton song={song} icon />

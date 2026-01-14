@@ -1,7 +1,7 @@
 import useToast from "./useToast";
+import { toogleLike } from "@/services/like";
 import useUserStore from "@/store/userStore";
 import useMusicStore from "@/store/musicStore";
-import { likeToggler } from "@/services/like";
 
 export default function useToggleLike() {
   const { showToast } = useToast();
@@ -12,7 +12,7 @@ export default function useToggleLike() {
     if (!userData?.id) return showToast("Please Login First");
 
     try {
-      const res = await likeToggler(userData?.id, songId);
+      const res = await toogleLike(userData?.id, songId);
       setLikesCount(res.data);
       const updated = likedSongs.includes(songId)
         ? likedSongs.filter((id) => id !== songId)
@@ -21,7 +21,7 @@ export default function useToggleLike() {
     } catch (error: unknown) {
       showToast(
         error instanceof Error ? error.message : "Something went wrong"
-      ); 
+      );
     }
   };
 
