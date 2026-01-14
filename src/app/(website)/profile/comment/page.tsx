@@ -13,16 +13,16 @@ export default function Page() {
   const { showToast } = useToast();
 
   useEffect(() => {
-    getUserComments(userData?.id)
+    getUserComments(userData?.id || "")
       .then((data) => {
-        setComments(data.data);
+        setComments(data.data || []);
       })
       .catch((err) => console.log(err));
   }, [userData]);
 
   const handleDelete = async (id: string) => {
     const data = await deleteComment(id);
-    if (data.success === true) {
+    if (data.success) {
       showToast(data.message || "Comment Deleted Successfully", "green");
       const newComments = comments?.filter((item) => item._id !== id) || null;
       setComments(newComments);

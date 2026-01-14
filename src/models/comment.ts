@@ -1,3 +1,5 @@
+import { IUser } from "./user";
+import { ISong } from "./song";
 import { model, models, Schema } from "mongoose";
 
 const CommentSchema = new Schema(
@@ -14,14 +16,18 @@ export const CommentModel = models.Comment ?? model("Comment", CommentSchema);
 export interface IComment {
   _id: string;
   description: string;
-  user: {
-    _id: string;
-    name: string;
-  };
-  song: {
-    _id: string;
-    name: string;
-  };
+  user:
+    | IUser
+    | {
+        _id: string;
+        name: string;
+      };
+  song:
+    | ISong
+    | {
+        _id: string;
+        name: string;
+      };
   createdAt: string;
   updatedAt: string;
 }

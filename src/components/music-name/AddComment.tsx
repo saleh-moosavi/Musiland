@@ -2,11 +2,11 @@
 
 import z from "zod";
 import Link from "next/link";
+import { useEffect } from "react";
 import Button from "../shared/Button";
 import useAuth from "@/hooks/useAuth";
 import useToast from "@/hooks/useToast";
 import { useForm } from "react-hook-form";
-import { useEffect, useRef } from "react";
 import useUserStore from "@/store/userStore";
 import useMusicStore from "@/store/musicStore";
 import { addComment } from "@/services/comment";
@@ -15,7 +15,6 @@ import { zodResolver } from "@hookform/resolvers/zod";
 export default function AddComment({ id: songId }: { id: string }) {
   const { error } = useAuth();
   const { userData } = useUserStore();
-  const userIdRef = useRef<null | string>(null);
   const { comments, setComments } = useMusicStore();
   const { showToast } = useToast();
   const {
@@ -33,9 +32,7 @@ export default function AddComment({ id: songId }: { id: string }) {
 
   //get user id and user liked list
   useEffect(() => {
-    if (userData) {
-      userIdRef.current = userData.id;
-    } else {
+    if (!userData) {
       showToast(error || "Authentication Required", "orange");
     }
   }, [userData, error]);
@@ -44,14 +41,14 @@ export default function AddComment({ id: songId }: { id: string }) {
   const submitComment = async (data: { comment: string }) => {
     setValue("comment", "");
     const res = await addComment(data.comment, userData?.id ?? "", songId);
-    if (res.success) {
+    if (res.success && res.data) {
       setComments([res.data, ...comments]);
     } else {
       showToast("Error Adding Comment", "red");
     }
   };
 
-  if (userData && userIdRef.current) {
+  if (userData) {
     return (
       <section className="w-full p-3 flex flex-col items-center gap-2 text-my-black-max dark:text-my-white-low dark:bg-my-black-max bg-my-white-low rounded-xl">
         <h2>Add New Comment</h2>

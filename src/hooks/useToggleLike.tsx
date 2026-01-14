@@ -21,7 +21,7 @@ export default function useToggleLike() {
     } catch (error: unknown) {
       showToast(
         error instanceof Error ? error.message : "Something went wrong"
-      );
+      ); 
     }
   };
 

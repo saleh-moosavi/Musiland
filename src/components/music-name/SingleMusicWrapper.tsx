@@ -18,8 +18,11 @@ export default async function SingleMusicWrapper({ id }: { id: string }) {
   if (song && song.name) {
     return (
       <>
-        <SingleMusicView song={song} commentCount={comments.count} />
-        <Comments comments={comments.data} commentCount={comments.count} />
+        <SingleMusicView song={song} commentCount={comments?.length ?? 0} />
+        <Comments
+          comments={comments || []}
+          commentCount={comments?.length ?? 0}
+        />
         <AddComment id={song._id} />
         <div className="space-y-10 mt-10">
           <Slider
