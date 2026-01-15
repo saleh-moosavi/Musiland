@@ -19,7 +19,9 @@ const CustomInput = ({ register, icon, name, error, classes }: IProps) => {
               : "absolute left-2 top-1/2 *:-translate-y-1/2 *:size-5 *:stroke-my-green-med"
           }
         >
-          {icon}
+          <span className="absolute left-2 top-1/2 -translate-y-1/3 *:size-5 *:stroke-emerald-500">
+            {icon}
+          </span>
         </span>
         <input
           {...register}
@@ -29,9 +31,7 @@ const CustomInput = ({ register, icon, name, error, classes }: IProps) => {
         />
       </div>
       {error && typeof error === "string" && (
-        <p className="text-my-red-med text-xs font-semibold mt-2 ml-5">
-          {error}
-        </p>
+        <p className="text-my-red-med text-xs font-semibold mt-2">{error}</p>
       )}
     </section>
   );

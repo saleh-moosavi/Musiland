@@ -1,13 +1,13 @@
 "use client";
 
-import Button from "../shared/Button";
 import { IMode } from "@/models/song";
+import FormButton from "../FormButton";
 import useToast from "@/hooks/useToast";
 import { useEffect, useState } from "react";
+import CustomInput from "@/components/CustomInput";
+import CustomOption from "@/components/CustomOption";
 import { Resolver, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import CustomInput from "@/components/auth/CustomInput";
-import CustomOption from "@/components/auth/CustomOption";
 import { addUser, editUser, getUser } from "@/services/user";
 import { useRouter, useSearchParams } from "next/navigation";
 import { IUser, UserFormData, userSchema } from "@/models/user";
@@ -117,12 +117,9 @@ export default function UserForm({ mode }: { mode: IMode }) {
           />
         </article>
         <div className="space-y-2">
-          <Button
-            type="submit"
-            text="User"
-            isSubmitting={isSubmitting}
-            mode={mode}
-          />
+          <FormButton type="submit" isLoading={isSubmitting}>
+            {mode == "add" ? "Add" : "Edit"} New User
+          </FormButton>
           {error && (
             <p className="text-my-red-med text-sm text-center">{error}</p>
           )}

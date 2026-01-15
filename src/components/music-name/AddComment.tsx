@@ -3,8 +3,8 @@
 import z from "zod";
 import Link from "next/link";
 import { useEffect } from "react";
-import Button from "../shared/Button";
 import useAuth from "@/hooks/useAuth";
+import FormButton from "../FormButton";
 import useToast from "@/hooks/useToast";
 import { useForm } from "react-hook-form";
 import useUserStore from "@/store/userStore";
@@ -68,12 +68,9 @@ export default function AddComment({ id: songId }: { id: string }) {
               )}
           </article>
           <div className="min-w-lg">
-            <Button
-              mode="add"
-              type="submit"
-              text="Comment"
-              isSubmitting={isSubmitting}
-            />
+            <FormButton type="submit" isLoading={isSubmitting}>
+              Add New Comment
+            </FormButton>
           </div>
         </form>
       </section>

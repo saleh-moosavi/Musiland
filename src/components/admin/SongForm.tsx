@@ -1,16 +1,16 @@
 "use client";
 
-import Button from "../shared/Button";
+import FormButton from "../FormButton";
 import useToast from "@/hooks/useToast";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { getAllAlbums } from "@/services/album";
 import { getAllGenres } from "@/services/genre";
 import { getAllSingers } from "@/services/singer";
+import CustomInput from "@/components/CustomInput";
+import CustomOption from "@/components/CustomOption";
 import { getAllPlaylists } from "@/services/playlist";
 import { zodResolver } from "@hookform/resolvers/zod";
-import CustomInput from "@/components/auth/CustomInput";
-import CustomOption from "@/components/auth/CustomOption";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createSong, editSong, getSong } from "@/services/song";
 import {
@@ -260,12 +260,9 @@ export default function SongForm({ mode }: { mode: IMode }) {
         {/* Submit Section */}
         <div className="pt-4 border-t border-gray-200 dark:border-gray-700">
           <div className="flex flex-row gap-3 justify-center items-center">
-            <Button
-              type="submit"
-              text="Song"
-              isSubmitting={isLoading}
-              mode={mode}
-            />
+            <FormButton type="submit" isLoading={isLoading}>
+              {mode == "add" ? "Add" : "Edit"} New Song
+            </FormButton>
 
             <button
               type="button"

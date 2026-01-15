@@ -1,14 +1,15 @@
 "use client";
 import z from "zod";
-import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import useUserStore from "@/store/userStore";
 import { registerUser } from "@/services/auth";
+import FormButton from "@/components/FormButton";
 import Loading from "@/components/shared/Loading";
+import CustomInput from "@/components/CustomInput";
 import { zodResolver } from "@hookform/resolvers/zod";
-import CustomInput from "@/components/auth/CustomInput";
+import ChangeLoginRegister from "./ChangeLoginRegister";
 import { AtSign, LockIcon, MailIcon } from "lucide-react";
 
 const signUpSchema = z.object({
@@ -19,12 +20,9 @@ const signUpSchema = z.object({
 
 type IFormType = z.infer<typeof signUpSchema>;
 
-const iconClasses =
-  "absolute left-2 top-1/2 -translate-y-1/2 size-5 stroke-emerald-500";
-
 export default function RegisterView() {
   const router = useRouter();
-  const { isLoggedIn } = useUserStore();
+  const { userData } = useUserStore();
   const [error, setError] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const {
@@ -34,12 +32,12 @@ export default function RegisterView() {
   } = useForm({ resolver: zodResolver(signUpSchema) });
 
   useEffect(() => {
-    if (isLoggedIn) {
+    if (userData) {
       router.push("/profile");
     } else {
       setIsLoading(false);
     }
-  }, [isLoggedIn]);
+  }, [userData]);
 
   const submitForm = async (data: IFormType) => {
     try {
@@ -63,37 +61,29 @@ export default function RegisterView() {
     <form onSubmit={handleSubmit(submitForm)} className="grid gap-y-5">
       <CustomInput
         register={register("name")}
-        icon={<AtSign className={iconClasses} />}
+        icon={<AtSign />}
         name="Name"
         error={errors?.name?.message}
       />
       <CustomInput
         register={register("email")}
-        icon={<MailIcon className={iconClasses} />}
+        icon={<MailIcon />}
         name="Email"
         error={errors?.email?.message}
       />
       <CustomInput
         register={register("password")}
-        icon={<LockIcon className={iconClasses} />}
+        icon={<LockIcon />}
         name="Password"
         error={errors?.password?.message}
       />
 
-      <h3 className="text-my-black-max dark:text-my-white-low">
-        Do You Have an Account?{" "}
-        <Link href={`/login`} className="text-my-blue-high cursor-pointer">
-          Log In
-        </Link>
-      </h3>
+      <ChangeLoginRegister to="login" />
       {error && <p className="text-my-red-med">{error}</p>}
-      <button
-        disabled={isSubmitting}
-        className="bg-gradient-to-r from-my-blue-high to-my-green-high text-my-white-low px-4 py-2 w-full font-bold rounded-md hover:opacity-80 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
-        type="submit"
-      >
-        Submit
-      </button>
+
+      <FormButton type="submit" isLoading={isSubmitting}>
+        Sign Up
+      </FormButton>
     </form>
   );
 }

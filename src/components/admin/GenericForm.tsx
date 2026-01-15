@@ -1,7 +1,7 @@
 "use client";
 
 import z from "zod";
-import Button from "../shared/Button";
+import FormButton from "../FormButton";
 import useToast from "@/hooks/useToast";
 import { UserIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -9,9 +9,9 @@ import { useState, useEffect } from "react";
 import { IGenreResponse } from "@/models/genre";
 import { IAlbumResponse } from "@/models/album";
 import { ISingerResponse } from "@/models/singer";
+import CustomInput from "@/components/CustomInput";
 import { IPlaylistResponse } from "@/models/playlist";
 import { zodResolver } from "@hookform/resolvers/zod";
-import CustomInput from "@/components/auth/CustomInput";
 import { useRouter, useSearchParams } from "next/navigation";
 
 const Schema = z.object({
@@ -102,24 +102,16 @@ export default function GenericForm({
 
         <CustomInput
           register={register("name")}
-          icon={
-            <UserIcon className="absolute left-2 top-1/2 -translate-y-1/3 size-5 stroke-emerald-500" />
-          }
+          icon={<UserIcon />}
           name={`Enter Name of ${title}`}
-          error={
-            typeof errors.name?.message === "string"
-              ? errors.name.message
-              : undefined
-          }
+          error={errors?.name?.message}
         />
 
         <div className="space-y-2">
-          <Button
-            type="submit"
-            text={title}
-            isSubmitting={isSubmitting}
-            mode={mode}
-          />
+          <FormButton type="submit" isLoading={isSubmitting}>
+            {mode == "add" ? "Add" : "Edit"} New {title}
+          </FormButton>
+
           {error && (
             <p className="text-my-red-med text-sm text-center">{error}</p>
           )}
