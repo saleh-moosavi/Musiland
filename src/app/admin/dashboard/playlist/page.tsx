@@ -1,26 +1,20 @@
 import Link from "next/link";
-import Button from "@/components/shared/Button";
-import EditBtn from "@/components/admin/EditBtn";
-import DeleteBtn from "@/components/admin/DeleteBtn";
+import FormButton from "@/components/FormButton";
+import EditBtn from "@/app/admin/_components/EditBtn";
+import AlterّResult from "../../_components/AlterResult";
+import DeleteBtn from "@/app/admin/_components/DeleteBtn";
 import { deletePlaylist, getAllPlaylists } from "@/services/playlist";
 
 export default async function PlaylistList() {
   const data = await getAllPlaylists();
   const playlists = data.data;
 
-  if (!data.success) {
-    return (
-      <p className="dark:text-my-red-med font-semibold">
-        {data.error || "Something Went Wrong!!!"}
-      </p>
-    );
-  }
   return (
     <section className="h-full w-full flex flex-col justify-start gap-10 dark:text-my-white-low">
       <Link href="/admin/dashboard/playlist/add" className="w-fit self-end">
-        <Button text="Playlist" type="button" />
+        <FormButton type="button">Add Playlist</FormButton>
       </Link>
-      {data.success && playlists.length > 0 ? (
+      {data.success && playlists && playlists.length > 0 ? (
         <ul className="grid sm:grid-cols-2 lg:grid-cols-3 *:col-span-1 gap-5 w-full">
           {playlists.map((playlist) => {
             return (
@@ -47,7 +41,7 @@ export default async function PlaylistList() {
           })}
         </ul>
       ) : (
-        <p className="text-center">Sorry There Is No Playlist</p>
+        <AlterّResult title={data.message || "There Is No Playlist"} />
       )}
     </section>
   );

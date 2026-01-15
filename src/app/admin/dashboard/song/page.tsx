@@ -1,8 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
-import Button from "@/components/shared/Button";
-import EditBtn from "@/components/admin/EditBtn";
-import DeleteBtn from "@/components/admin/DeleteBtn";
+import FormButton from "@/components/FormButton";
+import EditBtn from "@/app/admin/_components/EditBtn";
+import AlterّResult from "../../_components/AlterResult";
+import DeleteBtn from "@/app/admin/_components/DeleteBtn";
 import { deleteSong, getAllSongs } from "@/services/song";
 
 export default async function SongList() {
@@ -12,9 +13,9 @@ export default async function SongList() {
   return (
     <section className="h-full w-full flex flex-col justify-start gap-10 dark:text-my-white-low">
       <Link href="/admin/dashboard/song/add" className="w-fit self-end">
-        <Button text="Song" type="button" />
+        <FormButton type="button">Add Song</FormButton>
       </Link>
-      {data.success && songs.length > 0 ? (
+      {data.success && songs && songs.length > 0 ? (
         <ul className="grid lg:grid-cols-2 gap-5 w-full">
           {songs.map((song) => (
             <li
@@ -58,7 +59,7 @@ export default async function SongList() {
           ))}
         </ul>
       ) : (
-        <p className="text-center">Sorry, There Is No Song</p>
+        <AlterّResult title={data.message || "There Is No Song"} />
       )}
     </section>
   );

@@ -6,7 +6,7 @@ import useTheme from "@/hooks/useTheme";
 import { SideBarLinks } from "@/constants";
 import { Menu, Moon, Sun } from "lucide-react";
 import useWindowStore from "@/store/windowStore";
-import MobileMenuWrapper from "../shared/MobileMenuWrapper";
+import MobileMenuWrapper from "../../../components/shared/MobileMenuWrapper";
 
 export default function SideBar() {
   const { theme, handleTheme } = useTheme();

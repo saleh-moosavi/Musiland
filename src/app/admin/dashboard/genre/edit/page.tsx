@@ -1,5 +1,5 @@
 import { editGenre } from "@/services/genre";
-import GenericForm from "@/components/admin/GenericForm";
+import GenericForm from "@/app/admin/_components/GenericForm";
 
 export default function editGenrePage() {
   return (

@@ -1,7 +1,8 @@
 import Link from "next/link";
-import Button from "@/components/shared/Button";
-import EditBtn from "@/components/admin/EditBtn";
-import DeleteBtn from "@/components/admin/DeleteBtn";
+import FormButton from "@/components/FormButton";
+import EditBtn from "@/app/admin/_components/EditBtn";
+import AlterّResult from "../../_components/AlterResult";
+import DeleteBtn from "@/app/admin/_components/DeleteBtn";
 import { deleteSinger, getAllSingers } from "@/services/singer";
 
 export default async function SingerList() {
@@ -11,9 +12,9 @@ export default async function SingerList() {
   return (
     <section className="h-full w-full flex flex-col justify-start gap-10 dark:text-my-white-low">
       <Link href="/admin/dashboard/singer/add" className="w-fit self-end">
-        <Button text="Singer" type="button" />
+        <FormButton type="button">Add Singer</FormButton>
       </Link>
-      {data.success && singers.length > 0 ? (
+      {data.success && singers && singers.length > 0 ? (
         <ul className="grid sm:grid-cols-2 lg:grid-cols-3 *:col-span-1 gap-5 w-full">
           {singers.map((singer) => {
             return (
@@ -36,7 +37,7 @@ export default async function SingerList() {
           })}
         </ul>
       ) : (
-        <p className="text-center">Sorry There Is No Singer</p>
+        <AlterّResult title={data.message || "There Is No Singer"} />
       )}
     </section>
   );

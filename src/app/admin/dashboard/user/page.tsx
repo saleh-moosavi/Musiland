@@ -1,25 +1,27 @@
 import Link from "next/link";
-import { GetUser } from "@/types/user";
-import { getUsers } from "@/services/user";
-import Button from "@/components/shared/Button";
-import EditBtn from "@/components/admin/EditBtn";
-import DeleteBtn from "@/components/admin/DeleteBtn";
+import { IUser } from "@/models/user";
+import FormButton from "@/components/FormButton";
+import EditBtn from "@/app/admin/_components/EditBtn";
+import AlterّResult from "../../_components/AlterResult";
+import DeleteBtn from "@/app/admin/_components/DeleteBtn";
+import { deleteUser, getAllUsers } from "@/services/user";
 
 export default async function page() {
-  const users = await getUsers();
+  const data = await getAllUsers();
+  const users = data.data || [];
 
   return (
     <section className="h-full w-full flex flex-col justify-start gap-10 dark:text-my-white-low">
       <Link href="/admin/dashboard/user/add" className="w-fit self-end">
-        <Button text="User" type="button" />
+        <FormButton type="button">Add User</FormButton>
       </Link>
       {users.length > 0 ? (
         <ul className="grid sm:grid-cols-2 lg:grid-cols-3 *:col-span-1 gap-5 w-full">
-          {users.map((user: GetUser) => {
+          {users.map((user: IUser) => {
             return (
               <li
                 className="w-full flex justify-between items-center gap-5 bg-my-white-low dark:bg-my-black-max shadow-md shadow-my-black-low/30 p-5 rounded-xl"
-                key={user?._id}
+                key={user?.id}
               >
                 <p>
                   {user.name} |{" "}
@@ -28,15 +30,20 @@ export default async function page() {
                   )}
                 </p>
                 <article className="flex gap-5 items-center">
-                  <EditBtn id={user._id} name={user.name} type="user" />
-                  <DeleteBtn id={user._id} name={user.name} type="user" />
+                  <EditBtn id={user.id} name={user.name} type="user" />
+                  <DeleteBtn
+                    id={user.id}
+                    name={user.name}
+                    type="user"
+                    deleteFn={deleteUser}
+                  />
                 </article>
               </li>
             );
           })}
         </ul>
       ) : (
-        <p className="text-center">Sorry There Is No User</p>
+        <AlterّResult title={data.message || "There Is No User"} />
       )}
     </section>
   );

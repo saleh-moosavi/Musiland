@@ -1,10 +1,8 @@
-import "../globals.css";
 import { lazy } from "react";
 import type { Metadata } from "next";
-import { connectDB } from "@/configs/mongodb";
-import SideBar from "@/components/admin/SideBar";
+import SideBar from "@/app/admin/_components/SideBar";
 import DeleteConfirm from "@/components/shared/PopUp";
-import SideBarMobile from "@/components/admin/SideBarMobile";
+import SideBarMobile from "@/app/admin/_components/SideBarMobile";
 const Toast = lazy(() => import("@/components/shared/Toast"));
 
 export const metadata: Metadata = {
@@ -12,27 +10,22 @@ export const metadata: Metadata = {
   description: "Made By Saleh",
 };
 
-export default async function RootLayout({
+export default async function AdminLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  await connectDB();
   return (
-    <html>
-      <body className="bg-my-white-med dark:bg-my-black-high">
-        <div className="flex gap-5 h-screen relative">
-          <section className="hidden md:block h-full p-2">
-            <SideBar />
-          </section>
-          <SideBarMobile />
-          <section className="p-5 md:p-10 w-full h-full flex justify-center items-center">
-            {children}
-          </section>
-          <DeleteConfirm />
-          <Toast />
-        </div>
-      </body>
-    </html>
+    <main className="flex gap-5 h-screen relative">
+      <section className="hidden md:block h-full p-2">
+        <SideBar />
+      </section>
+      <SideBarMobile />
+      <section className="p-5 md:p-10 w-full h-full flex justify-center items-center">
+        {children}
+      </section>
+      <DeleteConfirm />
+      <Toast />
+    </main>
   );
 }

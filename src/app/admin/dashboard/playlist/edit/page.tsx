@@ -1,5 +1,5 @@
 import { editPlaylist } from "@/services/playlist";
-import GenericForm from "@/components/admin/GenericForm";
+import GenericForm from "@/app/admin/_components/GenericForm";
 
 export default function editPlaylistPage() {
   return (

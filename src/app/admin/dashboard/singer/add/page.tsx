@@ -1,4 +1,4 @@
-import GenericForm from "@/components/admin/GenericForm";
+import GenericForm from "@/app/admin/_components/GenericForm";
 import { createSinger } from "@/services/singer";
 
 export default function AddSingerPage() {

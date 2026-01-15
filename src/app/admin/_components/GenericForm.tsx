@@ -1,7 +1,7 @@
 "use client";
 
 import z from "zod";
-import FormButton from "../FormButton";
+import FormButton from "../../../components/FormButton";
 import useToast from "@/hooks/useToast";
 import { UserIcon } from "lucide-react";
 import { useForm } from "react-hook-form";

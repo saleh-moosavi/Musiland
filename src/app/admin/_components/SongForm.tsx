@@ -1,6 +1,6 @@
 "use client";
 
-import FormButton from "../FormButton";
+import FormButton from "../../../components/FormButton";
 import useToast from "@/hooks/useToast";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";

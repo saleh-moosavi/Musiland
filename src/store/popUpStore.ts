@@ -4,6 +4,7 @@ import { IGenreResponse } from "@/models/genre";
 import { IAlbumResponse } from "@/models/album";
 import { ISingerResponse } from "@/models/singer";
 import { IPlaylistResponse } from "@/models/playlist";
+import { IUserResponse } from "@/models/user";
 
 interface PopUpStoreType {
   id: string;
@@ -14,7 +15,11 @@ interface PopUpStoreType {
     | ((
         id: string
       ) => Promise<
-        IPlaylistResponse | IGenreResponse | ISingerResponse | IAlbumResponse
+        | IPlaylistResponse
+        | IGenreResponse
+        | ISingerResponse
+        | IAlbumResponse
+        | IUserResponse
       >)
     | null;
   // Setters
@@ -26,7 +31,11 @@ interface PopUpStoreType {
     popUpFn: (
       id: string
     ) => Promise<
-      IPlaylistResponse | IGenreResponse | ISingerResponse | IAlbumResponse
+      | IPlaylistResponse
+      | IGenreResponse
+      | ISingerResponse
+      | IAlbumResponse
+      | IUserResponse
     >
   ) => void;
 }

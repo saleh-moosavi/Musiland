@@ -1,26 +1,20 @@
 import Link from "next/link";
-import Button from "@/components/shared/Button";
-import EditBtn from "@/components/admin/EditBtn";
-import DeleteBtn from "@/components/admin/DeleteBtn";
+import FormButton from "@/components/FormButton";
+import EditBtn from "@/app/admin/_components/EditBtn";
+import AlterّResult from "../../_components/AlterResult";
+import DeleteBtn from "@/app/admin/_components/DeleteBtn";
 import { deleteGenre, getAllGenres } from "@/services/genre";
 
 export default async function GenreList() {
   const data = await getAllGenres();
   const genres = data.data;
 
-  if (!data.success) {
-    return (
-      <p className="dark:text-my-red-med font-semibold">
-        {data.error || "Something Went Wrong!!!"}
-      </p>
-    );
-  }
   return (
     <section className="h-full w-full flex flex-col justify-start gap-10 dark:text-my-white-low">
       <Link href="/admin/dashboard/genre/add" className="w-fit self-end">
-        <Button text="Genre" type="button" />
+        <FormButton type="button">Add Genre</FormButton>
       </Link>
-      {genres.length > 0 ? (
+      {data.success && genres && genres.length > 0 ? (
         <ul className="grid sm:grid-cols-2 lg:grid-cols-3 *:col-span-1 gap-5 w-full">
           {genres.map((genre) => {
             return (
@@ -43,7 +37,7 @@ export default async function GenreList() {
           })}
         </ul>
       ) : (
-        <p className="text-center">Sorry There Is No Genre</p>
+        <AlterّResult title={data.message || "There Is No Genre"} />
       )}
     </section>
   );

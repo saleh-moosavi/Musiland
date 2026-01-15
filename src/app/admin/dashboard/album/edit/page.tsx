@@ -1,5 +1,5 @@
 import { editAlbum } from "@/services/album";
-import GenericForm from "@/components/admin/GenericForm";
+import GenericForm from "@/app/admin/_components/GenericForm";
 
 export default function editAlbumPage() {
   return (

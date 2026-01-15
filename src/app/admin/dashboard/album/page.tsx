@@ -1,27 +1,20 @@
 import Link from "next/link";
-import Button from "@/components/shared/Button";
-import EditBtn from "@/components/admin/EditBtn";
-import DeleteBtn from "@/components/admin/DeleteBtn";
+import FormButton from "@/components/FormButton";
+import EditBtn from "@/app/admin/_components/EditBtn";
+import AlterّResult from "../../_components/AlterResult";
+import DeleteBtn from "@/app/admin/_components/DeleteBtn";
 import { deleteAlbum, getAllAlbums } from "@/services/album";
 
 export default async function AlbumList() {
   const data = await getAllAlbums();
-  const albums = data.data;
-
-  if (!data.success) {
-    return (
-      <p className="dark:text-my-red-med font-semibold">
-        {"There Is No Album Here!!!"}
-      </p>
-    );
-  }
+  const albums = data.data || [];
 
   return (
     <section className="h-full w-full flex flex-col justify-start gap-10 dark:text-my-white-low">
       <Link href="/admin/dashboard/album/add" className="w-fit self-end">
-        <Button text="Album" type="button" />
+        <FormButton type="button">Add Album</FormButton>
       </Link>
-      {data.success && albums.length > 0 ? (
+      {data.success && albums && albums?.length > 0 ? (
         <ul className="grid sm:grid-cols-2 lg:grid-cols-3 *:col-span-1 gap-5 w-full">
           {albums.map((album) => {
             return (
@@ -44,7 +37,7 @@ export default async function AlbumList() {
           })}
         </ul>
       ) : (
-        <p className="text-center">Sorry There Is No Album</p>
+        <AlterّResult title={data.message || "There Is No Album"} />
       )}
     </section>
   );

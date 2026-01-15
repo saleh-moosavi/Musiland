@@ -34,7 +34,7 @@ export const editUser = async (
   return res.data;
 };
 
-export const deleteUser = async (id: string): Promise<IAuthResponse> => {
-  const res = await apiClient.delete<IAuthResponse>(`user/${id}`);
+export const deleteUser = async (id: string): Promise<IUserResponse> => {
+  const res = await apiClient.delete<IUserResponse>(`user/${id}`);
   return res.data;
 };

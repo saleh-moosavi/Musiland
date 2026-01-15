@@ -1,5 +1,5 @@
 import { createPlaylist } from "@/services/playlist";
-import GenericForm from "@/components/admin/GenericForm";
+import GenericForm from "@/app/admin/_components/GenericForm";
 
 export default function addPlaylistPage() {
   return (
