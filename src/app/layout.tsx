@@ -7,7 +7,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-    await connectDB();
+  await connectDB();
   return (
     <html lang="en">
       <body className="bg-my-white-med dark:bg-my-black-high">{children}</body>

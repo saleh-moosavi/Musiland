@@ -1,9 +1,9 @@
 "use client";
 
 import { IMode } from "@/models/song";
-import FormButton from "../../../components/FormButton";
 import useToast from "@/hooks/useToast";
 import { useEffect, useState } from "react";
+import FormButton from "@/components/FormButton";
 import CustomInput from "@/components/CustomInput";
 import CustomOption from "@/components/CustomOption";
 import { Resolver, useForm } from "react-hook-form";

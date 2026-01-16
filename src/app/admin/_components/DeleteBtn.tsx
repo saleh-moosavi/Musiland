@@ -8,12 +8,7 @@ import { IAlbumResponse } from "@/models/album";
 import { ISingerResponse } from "@/models/singer";
 import { IPlaylistResponse } from "@/models/playlist";
 
-export default function DeleteBtn({
-  id,
-  name,
-  type,
-  deleteFn,
-}: {
+interface IProps {
   id: string;
   name: string;
   type: deleteTypes;
@@ -26,7 +21,9 @@ export default function DeleteBtn({
     | IAlbumResponse
     | IUserResponse
   >;
-}) {
+}
+
+export default function DeleteBtn({ id, name, type, deleteFn }: IProps) {
   const { setType, setName, setIsOpen, setId, setPopUpFn } = PopUpStore();
   const handleDelete = () => {
     setId(id);

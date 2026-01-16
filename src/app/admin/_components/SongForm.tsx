@@ -1,11 +1,11 @@
 "use client";
 
-import FormButton from "../../../components/FormButton";
 import useToast from "@/hooks/useToast";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import { getAllAlbums } from "@/services/album";
 import { getAllGenres } from "@/services/genre";
+import FormButton from "@/components/FormButton";
 import { getAllSingers } from "@/services/singer";
 import CustomInput from "@/components/CustomInput";
 import CustomOption from "@/components/CustomOption";
