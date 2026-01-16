@@ -1,7 +1,7 @@
 import { lazy } from "react";
 import { Metadata } from "next";
-import HeroCarousel from "@/components/home/HeroCarousel";
-const Slider = lazy(() => import("@/components/shared/Slider"));
+import HeroCarousel from "@/app/(website)/_components/HeroCarousel";
+const Slider = lazy(() => import("@/app/(website)/_components/Slider"));
 
 export const metadata: Metadata = {
   title: "Home",

@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
-import PlayButton from "./PlayButton";
 import SliderWrapper from "./SliderWrapper";
 import { getAllSongs } from "@/services/song";
+import PlayButton from "@/components/shared/PlayButton";
 
 interface IProp {
   title: string;
