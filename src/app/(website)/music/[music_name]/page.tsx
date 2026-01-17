@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import { Suspense } from "react";
 import Loading from "@/components/shared/Loading";
-import SingleMusicWrapper from "@/components/music-name/SingleMusicWrapper";
+import SingleMusicWrapper from "@/app/(website)/music/_components/SingleMusicWrapper";
 
 export async function generateMetadata({
   params,

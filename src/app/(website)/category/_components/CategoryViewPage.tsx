@@ -2,8 +2,8 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ISong } from "@/models/song";
-import PlayButton from "../shared/PlayButton";
 import { getAllSongs } from "@/services/song";
+import PlayButton from "@/components/shared/PlayButton";
 
 interface IProp {
   query: string;

@@ -2,9 +2,9 @@
 import { Trash } from "lucide-react";
 import useToast from "@/hooks/useToast";
 import { useEffect, useState } from "react";
-import useUserStore from "@/store/userStore";
 import { IComment } from "@/models/comment";
-import TimeAgo from "@/components/music-name/TimeAgo";
+import useUserStore from "@/store/userStore";
+import TimeAgo from "@/app/(website)/music/_components/TimeAgo";
 import { deleteComment, getUserComments } from "@/services/comment";
 
 export default function Page() {

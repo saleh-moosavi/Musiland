@@ -4,12 +4,12 @@ import z from "zod";
 import Link from "next/link";
 import { useEffect } from "react";
 import useAuth from "@/hooks/useAuth";
-import FormButton from "../FormButton";
 import useToast from "@/hooks/useToast";
 import { useForm } from "react-hook-form";
 import useUserStore from "@/store/userStore";
 import useMusicStore from "@/store/musicStore";
 import { addComment } from "@/services/comment";
+import FormButton from "@/components/FormButton";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function AddComment({ id: songId }: { id: string }) {

@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { Suspense } from "react";
 import Loading from "@/components/shared/Loading";
 import { objectToQueryString } from "@/libs/objectToQueryString";
-import CategoryViewPage from "@/components/music-category/CategoryViewPage";
+import CategoryViewPage from "@/app/(website)/category/_components/CategoryViewPage";
 
 interface IProps {
   params: { music_category: string };

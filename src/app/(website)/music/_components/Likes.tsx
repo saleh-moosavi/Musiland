@@ -2,22 +2,20 @@
 import { useEffect } from "react";
 import { Heart } from "lucide-react";
 import useToast from "@/hooks/useToast";
-import useAuthCheck from "@/hooks/useAuthCheck";
+import useUserStore from "@/store/userStore";
 import useToggleLike from "@/hooks/useToggleLike";
 
 export default function Likes({ count, id }: { count: number; id: string }) {
   const { showToast } = useToast();
   const { toggleLike, likesCount } = useToggleLike();
-  const { likedSongs, isLoading, userData } = useAuthCheck(true);
+  const { userData } = useUserStore();
 
   //get user id and user liked list
   useEffect(() => {
-    if (isLoading) return;
-
     if (!userData) {
       showToast("You need to be logged in to like a song", "orange");
     }
-  }, [isLoading, userData]);
+  }, [userData]);
 
   return (
     <p
