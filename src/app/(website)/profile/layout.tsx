@@ -4,8 +4,8 @@ import useAuth from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import useUserStore from "@/store/userStore";
 import Loading from "@/components/shared/Loading";
-import MobileView from "@/components/profile/MobileView";
-import DesktopView from "@/components/profile/DesktopView";
+import MobileView from "@/app/(website)/profile/_components/MobileView";
+import DesktopView from "@/app/(website)/profile/_components/DesktopView";
 
 export default function ProfileLayout({
   children,
