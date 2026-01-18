@@ -1,8 +1,7 @@
 import { Metadata } from "next";
-import { Suspense } from "react";
-import Loading from "@/components/shared/Loading";
+import { getAllSongs } from "@/services/song";
 import { objectToQueryString } from "@/libs/objectToQueryString";
-import CategoryViewPage from "@/app/(website)/category/_components/CategoryViewPage";
+import CategoryItems from "@/app/(website)/category/_components/CategoryItems";
 
 interface IProps {
   params: { music_category: string };
@@ -24,10 +23,25 @@ export default async function MusicCategoryPage({
   const music_category = (await params).music_category;
   const decoded_music_category = decodeURIComponent(music_category);
   const stringQuery = await objectToQueryString(await searchParams);
+  const res = await getAllSongs(stringQuery);
+  const songs = res.data;
 
-  return (
-    <Suspense fallback={<Loading />}>
-      <CategoryViewPage query={stringQuery} title={decoded_music_category} />
-    </Suspense>
-  );
+  if (res.success && songs && songs.length > 0) {
+    return (
+      <>
+        <h2 className="mb-5 text-center font-semibold text-lg dark:text-my-white-low">
+          {decoded_music_category.toLocaleLowerCase().includes("song")
+            ? decoded_music_category
+            : decoded_music_category + " Songs"}
+        </h2>
+        <CategoryItems songs={songs} />
+      </>
+    );
+  } else {
+    return (
+      <div className="text-my-red-med font-bold text-center mt-5">
+        Songs Not Found
+      </div>
+    );
+  }
 }
