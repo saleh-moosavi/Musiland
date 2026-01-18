@@ -1,12 +1,11 @@
 "use client";
 import z from "zod";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { loginUser } from "@/services/auth";
-import { useEffect, useState } from "react";
 import useUserStore from "@/store/userStore";
 import FormButton from "@/components/FormButton";
-import Loading from "@/components/shared/Loading";
 import { LockIcon, MailIcon } from "lucide-react";
 import CustomInput from "@/components/CustomInput";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,22 +20,13 @@ type IFormType = z.infer<typeof signInSchema>;
 
 export default function LoginView() {
   const router = useRouter();
+  const { setUserData } = useUserStore();
   const [error, setError] = useState<string>();
-  const [isLoading, setIsLoading] = useState(true);
-  const { userData, setUserData } = useUserStore();
   const {
     formState: { errors, isSubmitting },
     register,
     handleSubmit,
   } = useForm({ resolver: zodResolver(signInSchema) });
-
-  useEffect(() => {
-    if (userData) {
-      router.push("/profile");
-    } else {
-      setIsLoading(false);
-    }
-  }, [userData]);
 
   const submitForm = async (data: IFormType) => {
     try {
@@ -53,10 +43,6 @@ export default function LoginView() {
       setError(error instanceof Error ? error.message : "Server Error!");
     }
   };
-
-  if (isLoading) {
-    return <Loading />;
-  }
 
   return (
     <form onSubmit={handleSubmit(submitForm)} className="grid gap-y-5">

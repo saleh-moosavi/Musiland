@@ -1,7 +1,7 @@
 "use client";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import useUserStore from "@/store/userStore";
-import { useLayoutEffect, useState } from "react";
 import {
   loginUser,
   logoutUser,
@@ -11,12 +11,8 @@ import {
 
 export default function useAuth() {
   const router = useRouter();
-  const { setUserData } = useUserStore();
+  const { userData, setUserData } = useUserStore();
   const [error, setError] = useState<string | null>(null);
-
-  useLayoutEffect(() => {
-    checkAuth();
-  }, []);
 
   const logOut = async () => {
     const data = await logoutUser();
@@ -52,6 +48,7 @@ export default function useAuth() {
   };
 
   const checkAuth = async () => {
+    if (userData !== null) return;
     const res = await checkAuthStatus();
     if (res.success && res.data) {
       setUserData({ ...res.data });

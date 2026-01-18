@@ -1,6 +1,6 @@
 "use client";
-import { useEffect } from "react";
 import useAuth from "@/hooks/useAuth";
+import { useLayoutEffect } from "react";
 import { useRouter } from "next/navigation";
 import useUserStore from "@/store/userStore";
 import Loading from "@/components/shared/Loading";
@@ -16,15 +16,16 @@ export default function ProfileLayout({
   const { logOut } = useAuth();
   const { userData } = useUserStore();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (userData === null) {
       router.push("/login");
     }
-  }, [userData]);
+  }, [userData, router]);
 
   if (!userData) {
     return <Loading />;
   }
+
   return (
     <div className="p-2 flex flex-col items-center gap-3 md:gap-10 dark:text-my-white-low">
       <h1 className="text-xl font-semibold">Your Profile</h1>

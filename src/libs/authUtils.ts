@@ -24,14 +24,14 @@ export async function comparePassword(
 
 // Generate JWT token
 export function generateToken(payload: TokenPayload): string {
-  const secret = process.env.JWT_SECRET || "your-secret-key-change-this";
+  const secret = process.env.JWT_SECRET!;
   return jwt.sign(payload, secret, { expiresIn: "7d" });
 }
 
 // Verify JWT token
 export function verifyToken(token: string): TokenPayload | null {
   try {
-    const secret = process.env.JWT_SECRET || "your-secret-key-change-this";
+    const secret = process.env.JWT_SECRET!;
     return jwt.verify(token, secret) as TokenPayload;
   } catch (error: unknown) {
     console.error(error);

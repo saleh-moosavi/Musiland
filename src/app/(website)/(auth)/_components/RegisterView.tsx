@@ -1,12 +1,10 @@
 "use client";
 import z from "zod";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import useUserStore from "@/store/userStore";
 import { registerUser } from "@/services/auth";
 import FormButton from "@/components/FormButton";
-import Loading from "@/components/shared/Loading";
 import CustomInput from "@/components/CustomInput";
 import { zodResolver } from "@hookform/resolvers/zod";
 import ChangeLoginRegister from "./ChangeLoginRegister";
@@ -22,22 +20,12 @@ type IFormType = z.infer<typeof signUpSchema>;
 
 export default function RegisterView() {
   const router = useRouter();
-  const { userData } = useUserStore();
   const [error, setError] = useState<string>();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   const {
     formState: { errors, isSubmitting },
     register,
     handleSubmit,
   } = useForm({ resolver: zodResolver(signUpSchema) });
-
-  useEffect(() => {
-    if (userData) {
-      router.push("/profile");
-    } else {
-      setIsLoading(false);
-    }
-  }, [userData]);
 
   const submitForm = async (data: IFormType) => {
     try {
@@ -52,10 +40,6 @@ export default function RegisterView() {
       setError(error instanceof Error ? error.message : "Server Error!");
     }
   };
-
-  if (isLoading) {
-    return <Loading />;
-  }
 
   return (
     <form onSubmit={handleSubmit(submitForm)} className="grid gap-y-5">
