@@ -1,8 +1,16 @@
+import { lazy } from "react";
 import { Metadata } from "next";
-import { Suspense } from "react";
-import Loading from "@/components/shared/Loading";
-import SingleMusicWrapper from "@/app/(website)/music/_components/SingleMusicWrapper";
+import { IGenre } from "@/models/genre";
+import { getSong } from "@/services/song";
+import { IPlaylist } from "@/models/playlist";
+import { getSongComments } from "@/services/comment";
+import SingleMusicView from "../_components/SingleMusicView";
+/**************** Lazy Loads ****************/
+const Comments = lazy(() => import("../_components/Comments"));
+const AddComment = lazy(() => import("../_components/AddComment"));
+const Slider = lazy(() => import("@/app/(website)/_components/Slider"));
 
+/**************** Page Meta Data ****************/
 export async function generateMetadata({
   params,
 }: {
@@ -15,6 +23,7 @@ export async function generateMetadata({
   };
 }
 
+/**************** Page View Component ****************/
 export default async function MusicNamePage({
   params,
 }: {
@@ -22,10 +31,38 @@ export default async function MusicNamePage({
 }) {
   const { music_name } = await params;
   const [, id] = decodeURIComponent(music_name).split("-");
+  const [songRes, commentRes] = await Promise.all([
+    getSong(id),
+    getSongComments(id),
+  ]);
+  const [song, comments] = [songRes.data, commentRes.data];
 
-  return (
-    <Suspense fallback={<Loading />}>
-      <SingleMusicWrapper id={id} />
-    </Suspense>
-  );
+  if (songRes.success && song) {
+    return (
+      <>
+        <SingleMusicView song={song} commentCount={comments?.length ?? 0} />
+        <Comments
+          comments={comments || []}
+          commentCount={comments?.length ?? 0}
+        />
+        <AddComment id={song._id} />
+        <div className="space-y-10 mt-10">
+          <Slider
+            title="Related Songs"
+            query={`genre=${song.genre
+              .map((g: IGenre) => g.name)
+              .join(",")}&playlist=${song.playlist
+              .map((p: IPlaylist) => p.name)
+              .join(",")}`}
+          />
+        </div>
+      </>
+    );
+  } else {
+    return (
+      <div className="text-my-red-med font-bold text-center mt-5">
+        Song Not Found
+      </div>
+    );
+  }
 }
