@@ -1,8 +1,7 @@
 import { lazy } from "react";
 import { Metadata } from "next";
-import { IGenre } from "@/models/genre";
 import { getSong } from "@/services/song";
-import { IPlaylist } from "@/models/playlist";
+import { SongQueries } from "@/constants";
 import { getSongComments } from "@/services/comment";
 import SingleMusicView from "../_components/SingleMusicView";
 /**************** Lazy Loads ****************/
@@ -48,12 +47,8 @@ export default async function MusicNamePage({
         <AddComment id={song._id} />
         <div className="space-y-10 mt-10">
           <Slider
-            title="Related Songs"
-            query={`genre=${song.genre
-              .map((g: IGenre) => g.name)
-              .join(",")}&playlist=${song.playlist
-              .map((p: IPlaylist) => p.name)
-              .join(",")}`}
+            title={SongQueries.related.title}
+            query={SongQueries.related.query(song.genre, song.playlist)}
           />
         </div>
       </>

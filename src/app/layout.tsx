@@ -9,7 +9,7 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  await connectDB();
+  // await connectDB();
   const { checkAuth } = useAuth();
   useLayoutEffect(() => {
     checkAuth();
