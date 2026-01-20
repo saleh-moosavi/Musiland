@@ -50,7 +50,7 @@ export default function Player() {
     return () => {
       audio.removeEventListener("ended", handleEnded);
     };
-  }, [audioSrc, sameSongsList]);
+  }, [sameSongsList]);
 
   const handlePrevSong = () => {
     const currentIndex = sameSongsList.findIndex(

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Navbar from "@/components/shared/Navbar";
 import Player from "@/components/shared/Player";
 const Toast = lazy(() => import("@/components/shared/Toast"));
-const SameSongs = lazy(() => import("@/components/shared/SameSongs"));
+const SameSongs = lazy(() => import("@/components/SameSongs"));
 
 export const metadata: Metadata = {
   title: {
