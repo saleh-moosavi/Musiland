@@ -3,7 +3,7 @@ import React from "react";
 import Image from "next/image";
 import { Heart } from "lucide-react";
 import { ISong } from "@/models/song";
-import PlayButton from "./shared/PlayButton";
+import PlayButton from "./PlayButton";
 import useUserStore from "@/store/userStore";
 import useMusicStore from "@/store/musicStore";
 import useToggleLike from "@/hooks/useToggleLike";
@@ -31,7 +31,7 @@ export default function SameSongsContent({ song }: { song: ISong }) {
           loading="lazy"
         />
         <p className="absolute inset-0 flex justify-center items-center bg-my-black-max/30 opacity-0 group-hover:opacity-100 transition-all duration-300">
-          <PlayButton song={song} icon />
+          <PlayButton song={song} buttonType="ICON" />
         </p>
       </div>
 

@@ -5,8 +5,8 @@ import { ISong } from "@/models/song";
 import { useEffect, useState } from "react";
 import useUserStore from "@/store/userStore";
 import { getUserLikes } from "@/services/like";
+import PlayButton from "@/components/PlayButton";
 import useToggleLike from "@/hooks/useToggleLike";
-import PlayButton from "@/components/shared/PlayButton";
 
 const LikedSongsPage: React.FC = () => {
   const { userData } = useUserStore();
@@ -40,7 +40,7 @@ const LikedSongsPage: React.FC = () => {
                   height={100}
                 />
                 <div className="absolute inset-0 flex justify-center items-center bg-my-black-max/30 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                  <PlayButton song={song} icon />
+                  <PlayButton song={song} buttonType="ICON" />
                 </div>
               </div>
               <div className="w-full flex flex-col justify-between text-sm">

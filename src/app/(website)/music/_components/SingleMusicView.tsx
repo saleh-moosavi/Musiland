@@ -5,7 +5,7 @@ import { ISong } from "@/models/song";
 import { IGenre } from "@/models/genre";
 import { IPlaylist } from "@/models/playlist";
 import { MessageSquareMore } from "lucide-react";
-import PlayButton from "@/components/shared/PlayButton";
+import PlayButton from "@/components/PlayButton";
 
 interface IProps {
   song: ISong;
@@ -71,7 +71,7 @@ export default function SingleMusicView({ song, commentCount }: IProps) {
           >
             Download
           </a>
-          <PlayButton song={song} />
+          <PlayButton song={song} buttonType="NORMAL" />
 
           <div className="flex gap-5 items-center text-sm justify-between">
             <p className="flex items-center gap-2">

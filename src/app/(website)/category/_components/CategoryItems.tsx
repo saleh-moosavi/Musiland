@@ -2,7 +2,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { ISong } from "@/models/song";
-import PlayButton from "@/components/shared/PlayButton";
+import PlayButton from "@/components/PlayButton";
 
 interface IProp {
   songs: ISong[];
@@ -24,7 +24,7 @@ export default async function CategoryItems({ songs }: IProp) {
               loading="lazy"
             />
             <p className="absolute inset-0 flex justify-center items-center bg-my-black-max/30 opacity-0 group-hover:opacity-100 transition-all duration-300">
-              <PlayButton song={song} icon />
+              <PlayButton song={song} buttonType="ICON" />
             </p>
           </div>
           <Link
