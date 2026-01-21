@@ -1,80 +1,19 @@
 "use client";
-import { ISong } from "@/models/song";
-import PlayBtn from "./player/PlayBtn";
-import { useEffect, useRef } from "react";
+import usePlayer from "@/hooks/usePlayer";
 import VolumeBtn from "./player/VolumeBtn";
 import ProgressBar from "./player/ProgressBar";
-import useMusicStore from "@/store/musicStore";
 import MusicDetail from "./player/MusicDetail";
-import { SkipBack, SkipForward } from "lucide-react";
-import useSameSongsStore from "@/store/sameSongStore";
+import { Pause, Play, SkipBack, SkipForward } from "lucide-react";
 
 export default function Player() {
-  const audioRef = useRef<HTMLAudioElement>(null);
-
-  const { sameSongsList } = useSameSongsStore();
   const {
+    audioRef,
     audioSrc,
-    setAudioSrc,
-    setAudioCover,
-    setAudioName,
-    setAudioGenres,
-    setAudioPlaylists,
-  } = useMusicStore();
-
-  const songSetter = (song: ISong) => {
-    setAudioSrc(song.audioUrl);
-    setAudioCover(song.coverUrl);
-    setAudioName(song.name);
-    setAudioGenres(song.genre);
-    setAudioPlaylists(song.playlist);
-  };
-
-  useEffect(() => {
-    const audio = audioRef.current;
-    if (!audio) return;
-
-    const handleEnded = () => {
-      const currentIndex = sameSongsList.findIndex(
-        (song) => song.audioUrl === audioSrc
-      );
-
-      if (currentIndex !== -1 && currentIndex < sameSongsList.length - 1) {
-        const nextSong = sameSongsList[currentIndex + 1];
-        songSetter(nextSong);
-      }
-    };
-
-    audio.addEventListener("ended", handleEnded);
-
-    return () => {
-      audio.removeEventListener("ended", handleEnded);
-    };
-  }, [sameSongsList]);
-
-  const handlePrevSong = () => {
-    const currentIndex = sameSongsList.findIndex(
-      (song) => song.audioUrl === audioSrc
-    );
-
-    if (currentIndex > 0) {
-      // Set the audioSrc to the previous song's audioUrl
-      const song = sameSongsList[currentIndex - 1];
-      songSetter(song);
-    }
-  };
-
-  const handleNextSong = () => {
-    const currentIndex = sameSongsList.findIndex(
-      (song) => song.audioUrl === audioSrc
-    );
-
-    if (currentIndex !== -1 && currentIndex < sameSongsList.length - 1) {
-      // Set the audioSrc to the next song's audioUrl
-      const song = sameSongsList[currentIndex + 1];
-      songSetter(song);
-    }
-  };
+    isPlaying,
+    handlePlayPause,
+    nextSong,
+    previousSong,
+  } = usePlayer();
 
   return (
     <footer className="pb-2 fixed bottom-0 inset-x-0 z-50 max-w-[90rem] mx-5 xl:mx-auto">
@@ -85,14 +24,22 @@ export default function Player() {
         onError={() => alert("Audio playback failed. Please try another song.")}
       ></audio>
       <section className="flex flex-col justify-between w-full gap-3 shadow-md shadow-my-black-low/50 p-3 bg-my-white-low dark:bg-my-black-max sticky inset-0 rounded-2xl">
+        {/******************* Handler Time *******************/}
         <ProgressBar audioContext={audioRef} />
         <article className="grid grid-cols-3 justify-between gap-x-5 items-center">
+          {/******************* Music Details *******************/}
           <MusicDetail />
+          {/******************* Handler Buttons *******************/}
           <div className="flex gap-x-5 items-center justify-self-center *:cursor-pointer *:dark:stroke-my-white-low *:stroke-my-black-high *:hover:stroke-my-green-med *:transition-all *:duration-300">
-            <SkipBack onClick={handlePrevSong} />
-            <PlayBtn audioContext={audioRef} />
-            <SkipForward onClick={handleNextSong} />
+            <SkipBack onClick={previousSong} />
+            {isPlaying ? (
+              <Pause onClick={handlePlayPause} />
+            ) : (
+              <Play onClick={handlePlayPause} />
+            )}
+            <SkipForward onClick={nextSong} />
           </div>
+          {/******************* Handler Volume *******************/}
           <VolumeBtn audioContext={audioRef} />
         </article>
       </section>

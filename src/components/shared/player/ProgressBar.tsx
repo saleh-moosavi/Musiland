@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
 import RangeInput from "./RangeInput";
+import { RefObject, useEffect, useState } from "react";
 
 export default function ProgressBar({
   audioContext,
 }: {
-  audioContext: React.MutableRefObject<HTMLAudioElement | null>;
+  audioContext: RefObject<HTMLAudioElement | null>;
 }) {
   const [progress, setProgress] = useState(0);
 
@@ -17,7 +17,7 @@ export default function ProgressBar({
       audio.addEventListener("timeupdate", updateProgress);
       return () => audio.removeEventListener("timeupdate", updateProgress);
     }
-  }, []);
+  }, [audioContext]);
 
   const handleProgressChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const audio = audioContext.current;

@@ -1,11 +1,12 @@
 "use client";
+import { ChangeEvent } from "react";
 
 export default function RangeInput({
   progress,
   handleProgressChange,
 }: {
   progress: number;
-  handleProgressChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleProgressChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }) {
   return (
     <input

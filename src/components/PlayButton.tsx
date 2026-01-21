@@ -29,7 +29,7 @@ export default function PlayButton({ song, children, buttonType }: IProps) {
   if (buttonType === "ICON") {
     return (
       <button
-        className="w-full text-center inline-block py-2 shadow-md shadow-my-black-low/50 dark:shadow-my-black-med/50 hover:shadow-my-black-low dark:hover:shadow-my-black-med rounded-lg text-sm cursor-pointer bg-my-white-low dark:bg-my-black-max transition-all duration-300"
+        className="scale-150 cursor-pointer text-my-white-low"
         onClick={handlePlaySong}
       >
         <PlayCircleIcon />
@@ -38,7 +38,7 @@ export default function PlayButton({ song, children, buttonType }: IProps) {
   } else if (buttonType === "NORMAL") {
     return (
       <button
-        className="scale-150 cursor-pointer text-my-white-low"
+        className="w-full text-center inline-block py-2 shadow-md shadow-my-black-low/50 dark:shadow-my-black-med/50 hover:shadow-my-black-low dark:hover:shadow-my-black-med rounded-lg text-sm cursor-pointer bg-my-white-low dark:bg-my-black-max transition-all duration-300"
         onClick={handlePlaySong}
       >
         Play

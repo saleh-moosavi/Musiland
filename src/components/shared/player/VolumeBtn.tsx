@@ -13,7 +13,7 @@ export default function VolumeBtn({
 
   useEffect(() => {
     const savedVolume = Number(localStorage.getItem("volume"));
-    setVolumeVal(savedVolume);
+    setVolumeVal(savedVolume ?? 100);
     if (audioContext?.current) {
       audioContext.current.volume = savedVolume / 100;
     }
