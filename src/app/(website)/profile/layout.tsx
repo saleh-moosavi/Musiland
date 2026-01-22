@@ -3,7 +3,7 @@ import useAuth from "@/hooks/useAuth";
 import { useLayoutEffect } from "react";
 import { useRouter } from "next/navigation";
 import useUserStore from "@/store/userStore";
-import Loading from "@/components/shared/Loading";
+import Loading from "@/components/Loading";
 import MobileView from "@/app/(website)/profile/_components/MobileView";
 import DesktopView from "@/app/(website)/profile/_components/DesktopView";
 

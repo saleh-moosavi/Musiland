@@ -1,8 +1,8 @@
 import { lazy } from "react";
 import type { Metadata } from "next";
-import Navbar from "@/components/shared/Navbar";
-import Player from "@/components/shared/Player";
-const Toast = lazy(() => import("@/components/shared/Toast"));
+import Navbar from "@/components/Navbar";
+import Player from "@/components/Player";
+const Toast = lazy(() => import("@/components/Toast"));
 const SameSongs = lazy(() => import("@/components/SameSongs"));
 
 export const metadata: Metadata = {
