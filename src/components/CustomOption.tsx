@@ -1,10 +1,9 @@
-import { useState } from "react";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { useRef, useState } from "react";
+import { ChevronUp } from "lucide-react";
 import { FieldPath, FieldValues, UseFormRegisterReturn } from "react-hook-form";
 
 interface CustomOptionProps {
   title: string;
-  classes?: string;
   multiple?: boolean;
   icon?: React.ReactNode;
   data: { _id: string; name: string }[];
@@ -19,37 +18,70 @@ export default function CustomOption({
   data,
   error,
   multiple = false,
-  classes,
 }: CustomOptionProps) {
+  const selected = useRef<string[]>([]);
   const [isVisible, setIsVisible] = useState(false);
-  const showSubMenu = () => {
-    setIsVisible((perv) => !perv);
+
+  // TimeOut To Invisible The Sub Menu
+  let timeOutRef: NodeJS.Timeout;
+  const toggleSubMenuVisibility = (status?: boolean) => {
+    if (timeOutRef) {
+      clearTimeout(timeOutRef);
+    }
+    if (status && status == isVisible) return;
+    timeOutRef = setTimeout(() => {
+      setIsVisible((perv) => status ?? !perv);
+    }, 200);
   };
+
+  // Change Value Of Title
+  const handleInputTitle = (name?: string) => {
+    if (name && multiple) {
+      selected.current = selected.current.includes(name)
+        ? selected.current?.filter((item) => item !== name)
+        : [...selected.current, name];
+      return;
+    } else if (name && !multiple) {
+      selected.current = [name];
+    }
+    toggleSubMenuVisibility();
+  };
+
   return (
-    <section className="w-full">
-      <div
-        className={`relative bg-my-white-med h-fit rounded-lg ${
-          classes && classes
-        }`}
-      >
+    <section
+      className="w-full"
+      onMouseEnter={() => toggleSubMenuVisibility(true)}
+      onMouseLeave={() => toggleSubMenuVisibility(false)}
+    >
+      <div className={`relative bg-my-white-med h-fit rounded-lg`}>
         <label
           className="flex items-center justify-between bg-my-white-low/10 p-3 rounded-full cursor-pointer"
-          onClick={showSubMenu}
+          onClick={() => toggleSubMenuVisibility()}
         >
           <div className="flex items-center gap-3">
             <span className="*:size-5 *:stroke-my-green-med">{icon}</span>
-            <p className="text-my-black-med">{title}</p>
+            <p className="text-my-black-med select-none">
+              {selected.current?.join(" , ") || title}
+            </p>
           </div>
-          {isVisible ? (
-            <ChevronUp className="text-my-black-low" />
-          ) : (
-            <ChevronDown className="text-my-black-low" />
-          )}
+          <ChevronUp
+            className={`text-my-black-low transition-all duration-300 ${
+              isVisible ? "" : "rotate-180"
+            }`}
+          />
         </label>
-        {isVisible && data && (
-          <div className="grid gap-2 p-3 mt-3 absolute bg-my-white-med dark:bg-my-black-high w-full rounded-lg border z-50 overflow-y-scroll max-h-52">
+        {
+          <div
+            className={`grid gap-2 p-3 mt-3 absolute bg-my-white-med dark:bg-my-black-high dark:text-my-white-low w-full max-h-52 rounded-lg border z-50 overflow-y-scroll transition-all duration-300 ${
+              isVisible && data ? "opacity-100 visible" : "opacity-0 invisible"
+            }`}
+          >
             {data.map((item) => (
-              <label key={item._id} className="flex items-center gap-2">
+              <label
+                key={item._id}
+                className="flex items-center gap-2 cursor-pointer"
+                onInput={() => handleInputTitle(item.name)}
+              >
                 <input
                   type={multiple ? "checkbox" : "radio"}
                   value={item._id}
@@ -60,7 +92,7 @@ export default function CustomOption({
               </label>
             ))}
           </div>
-        )}
+        }
       </div>
       {error && (
         <p className="text-my-red-med text-xs font-semibold mt-2 ml-5">
