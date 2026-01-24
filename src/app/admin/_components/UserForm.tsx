@@ -78,53 +78,47 @@ export default function UserForm({ mode }: { mode: IMode }) {
   };
 
   return (
-    <article className="p-6 rounded-3xl bg-my-white-low dark:bg-my-black-max mt-10 shadow-md dark:shadow-my-black-low/30 text-my-black-max dark:text-my-white-low space-y-6">
-      <h3 className="text-center text-2xl font-semibold">
-        {mode === "add" ? "Add New User" : "Edit User"}
-      </h3>
+    <form onSubmit={handleSubmit(submit)} className="space-y-5">
+      <article className="grid md:grid-cols-2 *:col-span-1 justify-items-center gap-5">
+        <CustomInput
+          register={register("name")}
+          icon={<User />}
+          name="Full Name"
+          error={errors.name?.message}
+        />
+        <CustomInput
+          register={register("email")}
+          icon={<MailIcon />}
+          name="Email"
+          error={errors.email?.message}
+        />
+        <CustomInput
+          register={register("password")}
+          icon={<EyeClosed />}
+          name="Password"
+          error={errors.password?.message}
+        />
 
-      <form onSubmit={handleSubmit(submit)} className="space-y-5">
-        <article className="grid md:grid-cols-2 *:col-span-1 justify-items-center gap-5">
-          <CustomInput
-            register={register("name")}
-            icon={<User />}
-            name="Full Name"
-            error={errors.name?.message}
-          />
-          <CustomInput
-            register={register("email")}
-            icon={<MailIcon />}
-            name="Email"
-            error={errors.email?.message}
-          />
-          <CustomInput
-            register={register("password")}
-            icon={<EyeClosed />}
-            name="Password"
-            error={errors.password?.message}
-          />
-
-          <CustomOption
-            title="Role"
-            icon={<Shield />}
-            register={register("role")}
-            data={[
-              { _id: "user", name: "User" },
-              { _id: "manager", name: "Manager" },
-              { _id: "admin", name: "Admin" },
-            ]}
-            error={errors.role?.message}
-          />
-        </article>
-        <div className="space-y-2">
-          <FormButton type="submit" isLoading={isSubmitting}>
-            {mode == "add" ? "Add" : "Edit"} New User
-          </FormButton>
-          {error && (
-            <p className="text-my-red-med text-sm text-center">{error}</p>
-          )}
-        </div>
-      </form>
-    </article>
+        <CustomOption
+          title="Role"
+          icon={<Shield />}
+          register={register("role")}
+          data={[
+            { _id: "user", name: "User" },
+            { _id: "manager", name: "Manager" },
+            { _id: "admin", name: "Admin" },
+          ]}
+          error={errors.role?.message}
+        />
+      </article>
+      <div className="space-y-2">
+        <FormButton type="submit" isLoading={isSubmitting}>
+          {mode == "add" ? "Add" : "Edit"} New User
+        </FormButton>
+        {error && (
+          <p className="text-my-red-med text-sm text-center">{error}</p>
+        )}
+      </div>
+    </form>
   );
 }
