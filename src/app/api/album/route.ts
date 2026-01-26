@@ -1,24 +1,44 @@
-import { AlbumModel } from "@/models/album";
+import { supabase } from "@/libs/supabase/client";
 import { NextRequest, NextResponse } from "next/server";
 
 /*---------------- API ----------------*/
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
-    const albums = await AlbumModel.find().sort({ createdAt: -1 });
+    const { searchParams } = new URL(req.url);
+    const name = searchParams.get("name");
+    const sortBy = searchParams.get("sort");
+    const order = searchParams.get("order");
+    const page = searchParams.get("page");
+    const limit = searchParams.get("skip") || "10";
+
+    let result = supabase.from("albums").select("*");
+    if (name) {
+      result = result.eq("name", name);
+    }
+    if (sortBy) {
+      result = result.order(sortBy, { ascending: order === "asc" });
+    }
+    if (page) {
+      const offset = (parseInt(page) - 1) * parseInt(limit);
+      result = result.range(offset, offset + parseInt(limit) - 1);
+    }
+
+    const albums = await result;
     return NextResponse.json(
       {
         success: true,
         data: albums,
       },
-      { status: 200 }
+      { status: 200 },
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
       {
         success: false,
-        message: error.message || "Internal server error",
+        message:
+          error instanceof Error ? error.message : "Internal server error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -33,35 +53,60 @@ export async function POST(req: NextRequest) {
           success: false,
           message: "Name is required",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
-    const existing = await AlbumModel.findOne({ name });
-    if (existing)
+    const existingResult = await supabase
+      .from("albums")
+      .select("*")
+      .eq("name", name);
+    if (existingResult.data && existingResult.data.length > 0)
       return NextResponse.json(
         {
           success: false,
           message: "Album already exists",
         },
-        { status: 409 }
+        { status: 409 },
       );
 
-    const album = await AlbumModel.create({ name });
+    const now = new Date().toISOString();
+    const insertData = {
+      name,
+      created_at: now,
+      updated_at: now,
+    };
+    const { data: album, error } = await supabase
+      .from("albums")
+      .insert([insertData])
+      .select()
+      .single();
+
+    if (error) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Failed to create album",
+        },
+        { status: 402 },
+      );
+    }
+
     return NextResponse.json(
       {
         success: true,
         data: album,
       },
-      { status: 201 }
+      { status: 201 },
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
       {
         success: false,
-        message: error.message || "Internal server error",
+        message:
+          error instanceof Error ? error.message : "Internal server error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -71,39 +116,30 @@ export async function PUT(req: NextRequest) {
   try {
     const { name, id } = await req.json();
 
-    if (!id) {
+    if (!id || !name) {
       return NextResponse.json(
         {
           success: false,
-          message: "ID is required",
+          message: "ID and name are required",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
-    if (!name) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Name is required",
-        },
-        { status: 400 }
-      );
-    }
+    const { data: album, error } = await supabase
+      .from("albums")
+      .update({ name, updated_at: new Date().toISOString() })
+      .eq("id", id)
+      .select()
+      .single();
 
-    const album = await AlbumModel.findByIdAndUpdate(
-      id,
-      { name },
-      { new: true }
-    );
-
-    if (!album) {
+    if (error) {
       return NextResponse.json(
         {
           success: false,
           message: "album not found",
         },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -111,14 +147,14 @@ export async function PUT(req: NextRequest) {
       success: true,
       data: album,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
       {
         success: false,
-        message: error.message || "Internal server error",
+        message:
+          error instanceof Error ? error.message : "Internal server error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
-

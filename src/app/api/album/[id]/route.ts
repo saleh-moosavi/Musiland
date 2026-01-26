@@ -1,22 +1,26 @@
-import { AlbumModel } from "@/models/album";
+import { supabase } from "@/libs/supabase/client";
 import { NextRequest, NextResponse } from "next/server";
 
 /*---------------- API ----------------*/
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   try {
     const { id } = params;
+    const { data: album, error } = await supabase
+      .from("albums")
+      .select("*")
+      .eq("id", id)
+      .single();
 
-    const album = await AlbumModel.findById(id);
-    if (!album)
+    if (error)
       return NextResponse.json(
         {
           success: false,
           message: "Album not found",
         },
-        { status: 404 }
+        { status: 404 },
       );
 
     return NextResponse.json(
@@ -24,15 +28,16 @@ export async function GET(
         success: true,
         data: album,
       },
-      { status: 200 }
+      { status: 200 },
     );
-  } catch (err: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
       {
         success: false,
-        message: err.message || "Internal server error",
+        message:
+          error instanceof Error ? error.message : "Internal server error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -40,7 +45,7 @@ export async function GET(
 /*---------------- API ----------------*/
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   try {
     const { id } = params;
@@ -51,19 +56,24 @@ export async function DELETE(
           success: false,
           message: "Album ID is required",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
-    const album = await AlbumModel.findByIdAndDelete(id);
+    const { data: album, error } = await supabase
+      .from("albums")
+      .delete()
+      .eq("id", id)
+      .select()
+      .single();
 
-    if (!album) {
+    if (error) {
       return NextResponse.json(
         {
           success: false,
           message: "Album not found",
         },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -71,13 +81,14 @@ export async function DELETE(
       success: true,
       data: album,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
       {
         success: false,
-        message: error.message || "Internal server error",
+        message:
+          error instanceof Error ? error.message : "Internal server error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

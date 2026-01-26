@@ -1,20 +1,10 @@
-import { model, models, Schema } from "mongoose";
-
-const AlbumSchema = new Schema(
-  {
-    name: { type: String },
-  },
-  { timestamps: true }
-);
-
-export const AlbumModel = models.Album ?? model("Album", AlbumSchema);
+/***************** Data Types *****************/
 
 export interface IAlbum {
-  _id: string;
+  id: string;
   name: string;
   createdAt: string;
   updatedAt: string;
-  __v: number;
 }
 
 export interface IAlbumResponse {

@@ -1,6 +1,24 @@
 "use server";
 import apiClient from "@/configs/axios";
-import { IAlbumResponse, IGetAllAlbumResponse } from "@/models/album";
+
+export interface IAlbum {
+  id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface IAlbumResponse {
+  success: boolean;
+  data?: IAlbum;
+  message?: string;
+}
+
+export interface IGetAllAlbumResponse {
+  success: boolean;
+  data?: IAlbum[];
+  message?: string;
+}
 
 export const getAllAlbums = async (): Promise<IGetAllAlbumResponse> => {
   const data = await apiClient.get<IGetAllAlbumResponse>(`/album`);
@@ -21,7 +39,7 @@ export const createAlbum = async (name: string): Promise<IAlbumResponse> => {
 
 export const editAlbum = async (
   name: string,
-  id: string
+  id: string,
 ): Promise<IAlbumResponse> => {
   const data = await apiClient.put<IAlbumResponse>(`/album/`, {
     name,
