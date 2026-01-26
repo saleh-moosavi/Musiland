@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { deleteTypes } from "@/types";
-import { IGenreResponse } from "@/models/genre";
+import { IGenreResponse } from "@/services/genre";
 import { IAlbumResponse } from "@/models/album";
 import { ISingerResponse } from "@/models/singer";
 import { IPlaylistResponse } from "@/models/playlist";

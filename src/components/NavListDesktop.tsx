@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { IGenre } from "@/models/genre";
+import { IGenre } from "@/services/genre";
 import { IPlaylist } from "@/models/playlist";
 
 interface IProps {

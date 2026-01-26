@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useState } from "react";
-import { IGenre } from "@/models/genre";
+import { IGenre } from "@/services/genre";
 import { ChevronDown } from "lucide-react";
 import useUserStore from "@/store/userStore";
 import { IPlaylist } from "@/models/playlist";

@@ -1,6 +1,25 @@
 "use server";
 import apiClient from "@/configs/axios";
-import { IGenreResponse, IGetAllGenreResponse } from "@/models/genre";
+
+export interface IGenre {
+  _id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+export interface IGenreResponse {
+  success: boolean;
+  data?: IGenre;
+  message?: string;
+}
+
+export interface IGetAllGenreResponse {
+  success: boolean;
+  data?: IGenre[];
+  message?: string;
+}
 
 export const getAllGenres = async (): Promise<IGetAllGenreResponse> => {
   const data = await apiClient.get<IGetAllGenreResponse>(`/genre`);
@@ -21,7 +40,7 @@ export const createGenre = async (name: string): Promise<IGenreResponse> => {
 
 export const editGenre = async (
   name: string,
-  id: string
+  id: string,
 ): Promise<IGenreResponse> => {
   const data = await apiClient.put<IGenreResponse>(`/genre/`, {
     name,

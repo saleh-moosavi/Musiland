@@ -2,7 +2,7 @@ import Likes from "./Likes";
 import Link from "next/link";
 import Image from "next/image";
 import { ISong } from "@/models/song";
-import { IGenre } from "@/models/genre";
+import { IGenre } from "@/services/genre";
 import { IPlaylist } from "@/models/playlist";
 import { MessageSquareMore } from "lucide-react";
 import PlayButton from "@/components/PlayButton";

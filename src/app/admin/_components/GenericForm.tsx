@@ -6,7 +6,7 @@ import useToast from "@/hooks/useToast";
 import { UserIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
-import { IGenreResponse } from "@/models/genre";
+import { IGenreResponse } from "@/services/genre";
 import { IAlbumResponse } from "@/models/album";
 import { ISingerResponse } from "@/models/singer";
 import CustomInput from "@/components/CustomInput";

@@ -3,7 +3,7 @@ import { Trash } from "lucide-react";
 import { deleteTypes } from "@/types";
 import PopUpStore from "@/store/popUpStore";
 import { IUserResponse } from "@/models/user";
-import { IGenreResponse } from "@/models/genre";
+import { IGenreResponse } from "@/services/genre";
 import { IAlbumResponse } from "@/models/album";
 import { ISingerResponse } from "@/models/singer";
 import { IPlaylistResponse } from "@/models/playlist";

@@ -1,22 +1,26 @@
-import { GenreModel } from "@/models/genre";
+import { supabase } from "@/libs/supabase/client";
 import { NextRequest, NextResponse } from "next/server";
 
 /*---------------- API ----------------*/
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   try {
     const { id } = params;
+    const { data: genre, error } = await supabase
+      .from("genres")
+      .select("*")
+      .eq("id", id)
+      .single();
 
-    const genre = await GenreModel.findById(id);
-    if (!genre)
+    if (error)
       return NextResponse.json(
         {
           success: false,
           message: "Genre not found",
         },
-        { status: 404 }
+        { status: 404 },
       );
 
     return NextResponse.json(
@@ -24,15 +28,16 @@ export async function GET(
         success: true,
         data: genre,
       },
-      { status: 200 }
+      { status: 200 },
     );
-  } catch (err: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
       {
         success: false,
-        message: err.message || "Internal server error",
+        message:
+          error instanceof Error ? error.message : "Internal server error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -40,7 +45,7 @@ export async function GET(
 /*---------------- API ----------------*/
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   try {
     const { id } = params;
@@ -51,19 +56,24 @@ export async function DELETE(
           success: false,
           message: "Genre ID is required",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
-    const genre = await GenreModel.findByIdAndDelete(id);
+    const { data: genre, error } = await supabase
+      .from("genres")
+      .delete()
+      .eq("id", id)
+      .select()
+      .single();
 
-    if (!genre) {
+    if (error) {
       return NextResponse.json(
         {
           success: false,
           message: "Genre not found",
         },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -71,13 +81,14 @@ export async function DELETE(
       success: true,
       data: genre,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
       {
         success: false,
-        message: error.message || "Internal server error",
+        message:
+          error instanceof Error ? error.message : "Internal server error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

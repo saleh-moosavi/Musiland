@@ -1,6 +1,6 @@
 import z from "zod";
 import { IAlbum } from "./album";
-import { IGenre } from "./genre";
+import { IGenre } from "@/services/genre";
 import { ISinger } from "./singer";
 import { IPlaylist } from "./playlist";
 import { model, models, Schema } from "mongoose";

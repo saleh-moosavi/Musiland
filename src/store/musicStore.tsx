@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { IGenre } from "@/models/genre";
+import { IGenre } from "@/services/genre";
 import { IComment } from "@/models/comment";
 import { IPlaylist } from "@/models/playlist";
 

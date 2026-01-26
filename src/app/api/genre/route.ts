@@ -1,24 +1,44 @@
-import { GenreModel } from "@/models/genre";
+import { supabase } from "@/libs/supabase/client";
 import { NextRequest, NextResponse } from "next/server";
 
 /*---------------- API ----------------*/
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
-    const genres = await GenreModel.find();
+    const { searchParams } = new URL(req.url);
+    const name = searchParams.get("name");
+    const sortBy = searchParams.get("sort");
+    const order = searchParams.get("order");
+    const page = searchParams.get("page");
+    const limit = searchParams.get("skip") || "10";
+
+    let result = supabase.from("genres").select("*");
+    if (name) {
+      result = result.eq("name", name);
+    }
+    if (sortBy) {
+      result = result.order(sortBy, { ascending: order === "asc" });
+    }
+    if (page) {
+      const offset = (parseInt(page) - 1) * parseInt(limit);
+      result = result.range(offset, offset + parseInt(limit) - 1);
+    }
+
+    const genres = await result;
     return NextResponse.json(
       {
         success: true,
         data: genres,
       },
-      { status: 200 }
+      { status: 200 },
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
       {
         success: false,
-        message: error.message || "Unknown error",
+        message:
+          error instanceof Error ? error.message : "Internal server error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -27,43 +47,66 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   try {
     const { name } = await req.json();
-
     if (!name) {
       return NextResponse.json(
         {
           success: false,
           message: "Name is required",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
-    const existingGenre = await GenreModel.findOne({ name });
-    if (existingGenre) {
+
+    const existingResult = await supabase
+      .from("genres")
+      .select("*")
+      .eq("name", name);
+    if (existingResult.data && existingResult.data.length > 0)
       return NextResponse.json(
         {
           success: false,
           message: "Genre already exists",
         },
-        { status: 400 }
+        { status: 409 },
+      );
+
+    const now = new Date().toISOString();
+    const insertData = {
+      name,
+      created_at: now,
+      updated_at: now,
+    };
+    const { data: genre, error } = await supabase
+      .from("genres")
+      .insert([insertData])
+      .select()
+      .single();
+
+    if (error) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Failed to create Genre",
+        },
+        { status: 402 },
       );
     }
-    const genre = await GenreModel.create({ name });
 
     return NextResponse.json(
       {
         success: true,
         data: genre,
       },
-      { status: 201 }
+      { status: 201 },
     );
-  } catch (error: any) {
-    console.error("Error creating genre:", error);
+  } catch (error: unknown) {
     return NextResponse.json(
       {
         success: false,
-        message: error?.message || "Internal server error",
+        message:
+          error instanceof Error ? error.message : "Internal server error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -73,39 +116,30 @@ export async function PUT(req: NextRequest) {
   try {
     const { name, id } = await req.json();
 
-    if (!id) {
+    if (!id || !name) {
       return NextResponse.json(
         {
           success: false,
-          message: "Genre ID is required",
+          message: "ID and name are required",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
-    if (!name) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Name is required",
-        },
-        { status: 400 }
-      );
-    }
+    const { data: genre, error } = await supabase
+      .from("genres")
+      .update({ name, updated_at: new Date().toISOString() })
+      .eq("id", id)
+      .select()
+      .single();
 
-    const genre = await GenreModel.findByIdAndUpdate(
-      id,
-      { name },
-      { new: true, runValidators: true }
-    );
-
-    if (!genre) {
+    if (error) {
       return NextResponse.json(
         {
           success: false,
           message: "Genre not found",
         },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -113,14 +147,14 @@ export async function PUT(req: NextRequest) {
       success: true,
       data: genre,
     });
-  } catch (error: any) {
-    console.error("Error updating genre:", error);
+  } catch (error: unknown) {
     return NextResponse.json(
       {
         success: false,
-        message: error.message || "Internal server error",
+        message:
+          error instanceof Error ? error.message : "Internal server error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

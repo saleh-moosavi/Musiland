@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { IGenre } from "@/models/genre";
+import { IGenre } from "@/services/genre";
 import { IPlaylist } from "@/models/playlist";
 
 interface WindowStore {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getAllGenres } from "@/services/genre";
 import { getAllPlaylists } from "@/services/playlist";
-import { IGenre } from "@/models/genre";
+import { IGenre } from "@/services/genre";
 import { IPlaylist } from "@/models/playlist";
 
 export default function useNavbarData() {

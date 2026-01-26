@@ -7,7 +7,7 @@ import {
   Music,
   User,
 } from "lucide-react";
-import { IGenre } from "./models/genre";
+import { IGenre } from "./services/genre";
 import { IPlaylist } from "./models/playlist";
 
 export const SideBarLinks = [
