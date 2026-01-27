@@ -1,5 +1,5 @@
 import { IUser } from "./user";
-import { ISong } from "./song";
+import { ISong } from "@/services/song";
 import { model, models, Schema } from "mongoose";
 
 const CommentSchema = new Schema(

@@ -1,6 +1,6 @@
 "use client";
 import { useEffect } from "react";
-import { ISong } from "@/models/song";
+import { ISong } from "@/services/song";
 import { SongQueries } from "@/constants";
 import { getAllSongs } from "@/services/song";
 import useMusicStore from "@/store/musicStore";

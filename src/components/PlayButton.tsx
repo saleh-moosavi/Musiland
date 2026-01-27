@@ -1,5 +1,5 @@
 "use client";
-import { ISong } from "@/models/song";
+import { ISong } from "@/services/song";
 import { PlayCircleIcon } from "lucide-react";
 import useMusicStore from "@/store/musicStore";
 import { ComponentProps, ReactNode } from "react";

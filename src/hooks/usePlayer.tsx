@@ -1,4 +1,4 @@
-import { ISong } from "@/models/song";
+import { ISong } from "@/services/song";
 import useMusicStore from "@/store/musicStore";
 import { useEffect, useRef, useState } from "react";
 import useSameSongsStore from "@/store/sameSongStore";

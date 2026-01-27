@@ -1,10 +1,10 @@
-import { SongModel } from "@/models/song";
+import { supabase } from "@/libs/supabase/client";
 import { NextRequest, NextResponse } from "next/server";
 
 /*---------------- API ----------------*/
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   try {
     const { id } = await params;
@@ -13,26 +13,33 @@ export async function GET(
       return NextResponse.json(
         {
           success: false,
-          message: "Song ID is required",
+          message: "Song ID is Required",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
-    const song = await SongModel.findById(id).populate([
-      "singer",
-      "album",
-      "genre",
-      "playlist",
-    ]);
+    const { data: song, error } = await supabase
+      .from("songs")
+      .select(
+        `
+        *,
+        singer:singer_id (id, name, created_at, updated_at),
+        album:album_id (id, name, created_at, updated_at),
+        genres:genre_ids (id, name, created_at, updated_at),
+        playlists:playlist_ids (id, name, created_at, updated_at)
+      `,
+      )
+      .eq("id", id)
+      .single();
 
-    if (!song) {
+    if (error) {
       return NextResponse.json(
         {
           success: false,
           message: "Song not found",
         },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -41,16 +48,15 @@ export async function GET(
         success: true,
         data: song,
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error: unknown) {
-    console.error("Error fetching song:", error);
     return NextResponse.json(
       {
         success: false,
-        message: error instanceof Error ? error?.message : "Unknown error",
+        message: error instanceof Error ? error.message : "Server Error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -58,7 +64,7 @@ export async function GET(
 /*---------------- API ----------------*/
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   try {
     const { id } = params;
@@ -67,21 +73,26 @@ export async function DELETE(
       return NextResponse.json(
         {
           success: false,
-          message: "Genre ID is required",
+          message: "Song ID is Required",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
-    const song = await SongModel.findByIdAndDelete(id);
+    const { data: song, error } = await supabase
+      .from("songs")
+      .delete()
+      .eq("id", id)
+      .select()
+      .single();
 
-    if (!song) {
+    if (error) {
       return NextResponse.json(
         {
           success: false,
-          message: "Song not found",
+          message: "Not Found",
         },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -94,9 +105,9 @@ export async function DELETE(
       {
         success: false,
         message:
-          error instanceof Error ? error?.message : "Internal server error",
+          error instanceof Error ? error.message : "Internal Server Error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -1,4 +1,4 @@
-import { ISong } from "./models/song";
+import { ISong } from "./services/song";
 
 export type deleteTypes =
   | "song"

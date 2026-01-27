@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import { X } from "lucide-react";
-import { ISong } from "@/models/song";
+import { ISong } from "@/services/song";
 import { useEffect, useState } from "react";
 import useUserStore from "@/store/userStore";
 import { getUserLikes } from "@/services/like";

@@ -26,8 +26,8 @@ import {
   IMode,
   ISong,
   ISongResponse,
-  SongFormData,
-} from "@/models/song";
+  SongFormData
+} from "@/services/song";
 import { IAlbum, IGetAllAlbumResponse } from "@/models/album";
 import { IGenre, IGetAllGenreResponse } from "@/services/genre";
 import { IGetAllSingerResponse, ISinger } from "@/models/singer";

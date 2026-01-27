@@ -1,7 +1,7 @@
 import Likes from "./Likes";
 import Link from "next/link";
 import Image from "next/image";
-import { ISong } from "@/models/song";
+import { ISong } from "@/services/song";
 import { IGenre } from "@/services/genre";
 import { IPlaylist } from "@/models/playlist";
 import { MessageSquareMore } from "lucide-react";

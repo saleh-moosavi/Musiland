@@ -2,7 +2,7 @@
 import React from "react";
 import Image from "next/image";
 import { Heart } from "lucide-react";
-import { ISong } from "@/models/song";
+import { ISong } from "@/services/song";
 import PlayButton from "./PlayButton";
 import useUserStore from "@/store/userStore";
 import useMusicStore from "@/store/musicStore";

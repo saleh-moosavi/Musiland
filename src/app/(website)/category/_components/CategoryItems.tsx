@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ISong } from "@/models/song";
+import { ISong } from "@/services/song";
 import PlayButton from "@/components/PlayButton";
 
 interface IProp {
