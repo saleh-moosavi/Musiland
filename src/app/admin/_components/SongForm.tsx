@@ -31,7 +31,7 @@ import {
 import { IAlbum, IGetAllAlbumResponse } from "@/models/album";
 import { IGenre, IGetAllGenreResponse } from "@/services/genre";
 import { IGetAllSingerResponse, ISinger } from "@/models/singer";
-import { IGetAllPlaylistResponse, IPlaylist } from "@/models/playlist";
+import { IGetAllPlaylistResponse, IPlaylist } from "@/services/playlist";
 
 export default function SongForm({ mode }: { mode: IMode }) {
   const router = useRouter();

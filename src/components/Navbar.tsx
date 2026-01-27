@@ -8,7 +8,7 @@ import useWindowStore from "@/store/windowStore";
 import useNavbarData from "@/hooks/useNavbarData";
 import { LogIn, Menu, Moon, Sun, User } from "lucide-react";
 import { IGenre } from "@/services/genre";
-import { IPlaylist } from "@/models/playlist";
+import { IPlaylist } from "@/services/playlist";
 const NavListMobile = lazy(() => import("./NavListMobile"));
 const NavListDesktop = lazy(() => import("./NavListDesktop"));
 

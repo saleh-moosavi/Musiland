@@ -1,38 +1,43 @@
-import { PlaylistModel } from "@/models/playlist";
+import { supabase } from "@/libs/supabase/client";
 import { NextRequest, NextResponse } from "next/server";
 
 /*---------------- API ----------------*/
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   try {
     const { id } = params;
+    const { data, error } = await supabase
+      .from("playlists")
+      .select("*")
+      .eq("id", id)
+      .single();
 
-    const playlist = await PlaylistModel.findById(id);
-    if (!playlist)
+    if (error)
       return NextResponse.json(
         {
           success: false,
-          message: "Playlist not found",
+          message: "Not Found",
         },
-        { status: 404 }
+        { status: 404 },
       );
 
     return NextResponse.json(
       {
         success: true,
-        data: playlist,
+        data,
       },
-      { status: 200 }
+      { status: 200 },
     );
-  } catch (err: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
       {
         success: false,
-        message: err.message || "Internal server error",
+        message:
+          error instanceof Error ? error.message : "Internal server error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -40,7 +45,7 @@ export async function GET(
 /*---------------- API ----------------*/
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   try {
     const { id } = params;
@@ -49,35 +54,41 @@ export async function DELETE(
       return NextResponse.json(
         {
           success: false,
-          message: "Playlist ID is required",
+          message: "ID is required",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
-    const playlist = await PlaylistModel.findByIdAndDelete(id);
+    const { data, error } = await supabase
+      .from("playlists")
+      .delete()
+      .eq("id", id)
+      .select()
+      .single();
 
-    if (!playlist) {
+    if (error) {
       return NextResponse.json(
         {
           success: false,
-          message: "Playlist not found",
+          message: "Not Found",
         },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
     return NextResponse.json({
       success: true,
-      data: playlist,
+      data,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
       {
         success: false,
-        message: error.message || "Internal server error",
+        message:
+          error instanceof Error ? error.message : "Internal server error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

@@ -8,7 +8,7 @@ export async function GET(
 ) {
   try {
     const { id } = params;
-    const { data: album, error } = await supabase
+    const { data, error } = await supabase
       .from("albums")
       .select("*")
       .eq("id", id)
@@ -18,7 +18,7 @@ export async function GET(
       return NextResponse.json(
         {
           success: false,
-          message: "Album not found",
+          message: "Not Found",
         },
         { status: 404 },
       );
@@ -26,7 +26,7 @@ export async function GET(
     return NextResponse.json(
       {
         success: true,
-        data: album,
+        data,
       },
       { status: 200 },
     );
@@ -35,7 +35,7 @@ export async function GET(
       {
         success: false,
         message:
-          error instanceof Error ? error.message : "Internal server error",
+          error instanceof Error ? error.message : "Internal Server Error",
       },
       { status: 500 },
     );
@@ -54,13 +54,13 @@ export async function DELETE(
       return NextResponse.json(
         {
           success: false,
-          message: "Album ID is required",
+          message: "ID is Required",
         },
         { status: 400 },
       );
     }
 
-    const { data: album, error } = await supabase
+    const { data, error } = await supabase
       .from("albums")
       .delete()
       .eq("id", id)
@@ -71,7 +71,7 @@ export async function DELETE(
       return NextResponse.json(
         {
           success: false,
-          message: "Album not found",
+          message: "Not Found",
         },
         { status: 404 },
       );
@@ -79,14 +79,14 @@ export async function DELETE(
 
     return NextResponse.json({
       success: true,
-      data: album,
+      data,
     });
   } catch (error: unknown) {
     return NextResponse.json(
       {
         success: false,
         message:
-          error instanceof Error ? error.message : "Internal server error",
+          error instanceof Error ? error.message : "Internal Server Error",
       },
       { status: 500 },
     );

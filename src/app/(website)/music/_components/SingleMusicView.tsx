@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ISong } from "@/services/song";
 import { IGenre } from "@/services/genre";
-import { IPlaylist } from "@/models/playlist";
+import { IPlaylist } from "@/services/playlist";
 import { MessageSquareMore } from "lucide-react";
 import PlayButton from "@/components/PlayButton";
 

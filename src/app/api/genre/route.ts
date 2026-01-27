@@ -23,11 +23,11 @@ export async function GET(req: NextRequest) {
       result = result.range(offset, offset + parseInt(limit) - 1);
     }
 
-    const genres = await result;
+    const data = await result;
     return NextResponse.json(
       {
         success: true,
-        data: genres,
+        data,
       },
       { status: 200 },
     );
@@ -36,7 +36,7 @@ export async function GET(req: NextRequest) {
       {
         success: false,
         message:
-          error instanceof Error ? error.message : "Internal server error",
+          error instanceof Error ? error.message : "Internal Server Error",
       },
       { status: 500 },
     );
@@ -65,7 +65,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         {
           success: false,
-          message: "Genre already exists",
+          message: "Already Exists",
         },
         { status: 409 },
       );
@@ -76,7 +76,7 @@ export async function POST(req: NextRequest) {
       created_at: now,
       updated_at: now,
     };
-    const { data: genre, error } = await supabase
+    const { data, error } = await supabase
       .from("genres")
       .insert([insertData])
       .select()
@@ -86,7 +86,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         {
           success: false,
-          message: "Failed to create Genre",
+          message: "Failed To Create",
         },
         { status: 402 },
       );
@@ -95,7 +95,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       {
         success: true,
-        data: genre,
+        data,
       },
       { status: 201 },
     );
@@ -104,7 +104,7 @@ export async function POST(req: NextRequest) {
       {
         success: false,
         message:
-          error instanceof Error ? error.message : "Internal server error",
+          error instanceof Error ? error.message : "Internal Server Error",
       },
       { status: 500 },
     );
@@ -120,13 +120,13 @@ export async function PUT(req: NextRequest) {
       return NextResponse.json(
         {
           success: false,
-          message: "ID and name are required",
+          message: "ID And Name Are Required",
         },
         { status: 400 },
       );
     }
 
-    const { data: genre, error } = await supabase
+    const { data, error } = await supabase
       .from("genres")
       .update({ name, updated_at: new Date().toISOString() })
       .eq("id", id)
@@ -137,7 +137,7 @@ export async function PUT(req: NextRequest) {
       return NextResponse.json(
         {
           success: false,
-          message: "Genre not found",
+          message: "Not Found",
         },
         { status: 404 },
       );
@@ -145,14 +145,14 @@ export async function PUT(req: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      data: genre,
+      data,
     });
   } catch (error: unknown) {
     return NextResponse.json(
       {
         success: false,
         message:
-          error instanceof Error ? error.message : "Internal server error",
+          error instanceof Error ? error.message : "Internal Server Error",
       },
       { status: 500 },
     );

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { IGenre } from "@/services/genre";
-import { IPlaylist } from "@/models/playlist";
+import { IPlaylist } from "@/services/playlist";
 
 interface IProps {
   navbarData: IGenre[] | IPlaylist[];

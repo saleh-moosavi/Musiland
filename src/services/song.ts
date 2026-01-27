@@ -1,10 +1,9 @@
-"use server";
 import z from "zod";
 import { IGenre } from "./genre";
 import apiClient from "@/configs/axios";
 import { IAlbum } from "@/models/album";
 import { ISinger } from "@/models/singer";
-import { IPlaylist } from "@/models/playlist";
+import { IPlaylist } from "./playlist";
 
 export const getAllSongs = async (query?: string): Promise<ISongsResponse> => {
   const data = await apiClient.get<ISongsResponse>(`/song?${query}`);

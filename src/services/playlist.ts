@@ -1,6 +1,5 @@
 "use server";
 import apiClient from "@/configs/axios";
-import { IGetAllPlaylistResponse, IPlaylistResponse } from "@/models/playlist";
 
 export const getAllPlaylists = async (): Promise<IGetAllPlaylistResponse> => {
   const data = await apiClient.get<IGetAllPlaylistResponse>(`/playlist`);
@@ -38,3 +37,22 @@ export const deletePlaylist = async (
   const data = await apiClient.delete<IPlaylistResponse>(`/playlist/${id}`);
   return data.data;
 };
+export interface IPlaylist {
+  _id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+export interface IPlaylistResponse {
+  success: boolean;
+  data?: IPlaylist;
+  message?: string;
+}
+
+export interface IGetAllPlaylistResponse {
+  success: boolean;
+  data?: IPlaylist[];
+  message?: string;
+}

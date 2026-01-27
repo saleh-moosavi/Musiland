@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { IGenre } from "@/services/genre";
-import { IPlaylist } from "@/models/playlist";
+import { IPlaylist } from "@/services/playlist";
 
 interface WindowStore {
   navbarData: IGenre[] | IPlaylist[];

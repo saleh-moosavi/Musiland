@@ -110,7 +110,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.json(
         {
           success: false,
-          message: "Failed to fetch songs",
+          message: "Failed to fetch Songs",
         },
         { status: 400 },
       );
@@ -127,7 +127,8 @@ export async function GET(req: NextRequest) {
     return NextResponse.json(
       {
         success: false,
-        message: error instanceof Error ? error.message : "Unknown error",
+        message:
+          error instanceof Error ? error.message : "Internal Server Error",
       },
       { status: 500 },
     );
@@ -151,7 +152,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         {
           success: false,
-          message: "All data are required",
+          message: "All Data Are Required",
         },
         { status: 400 },
       );
@@ -176,7 +177,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         {
           success: false,
-          message: "Song already exists",
+          message: "Song Already Exists",
         },
         { status: 400 },
       );
@@ -439,7 +440,7 @@ export async function PUT(req: NextRequest) {
       {
         success: false,
         message:
-          error instanceof Error ? error.message : "Internal server error",
+          error instanceof Error ? error.message : "Internal Server Error",
       },
       { status: 500 },
     );

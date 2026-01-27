@@ -8,7 +8,7 @@ import {
   User,
 } from "lucide-react";
 import { IGenre } from "./services/genre";
-import { IPlaylist } from "./models/playlist";
+import { IPlaylist } from "./services/playlist";
 
 export const SideBarLinks = [
   { name: "Dashboard", path: "/", icon: <HomeIcon /> },

@@ -37,7 +37,7 @@ export async function GET(
       return NextResponse.json(
         {
           success: false,
-          message: "Song not found",
+          message: "Song Not Found",
         },
         { status: 404 },
       );
@@ -54,7 +54,8 @@ export async function GET(
     return NextResponse.json(
       {
         success: false,
-        message: error instanceof Error ? error.message : "Server Error",
+        message:
+          error instanceof Error ? error.message : "Internal Server Error",
       },
       { status: 500 },
     );

@@ -10,7 +10,7 @@ import { IGenreResponse } from "@/services/genre";
 import { IAlbumResponse } from "@/models/album";
 import { ISingerResponse } from "@/models/singer";
 import CustomInput from "@/components/CustomInput";
-import { IPlaylistResponse } from "@/models/playlist";
+import { IPlaylistResponse } from "@/services/playlist";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter, useSearchParams } from "next/navigation";
 

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { IGenre } from "@/services/genre";
 import { ChevronDown } from "lucide-react";
 import useUserStore from "@/store/userStore";
-import { IPlaylist } from "@/models/playlist";
+import { IPlaylist } from "@/services/playlist";
 import useWindowStore from "@/store/windowStore";
 import MobileMenuWrapper from "./MobileMenuWrapper";
 
