@@ -7,7 +7,7 @@ import { UserIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import { IGenreResponse } from "@/services/genre";
-import { IAlbumResponse } from "@/models/album";
+import { IAlbumResponse } from "@/services/album";
 import { ISingerResponse } from "@/services/singer";
 import CustomInput from "@/components/CustomInput";
 import { IPlaylistResponse } from "@/services/playlist";

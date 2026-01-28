@@ -1,7 +1,7 @@
 import z from "zod";
 import { IGenre } from "./genre";
 import apiClient from "@/configs/axios";
-import { IAlbum } from "@/models/album";
+import { IAlbum } from "./album";
 import { ISinger } from "./singer";
 import { IPlaylist } from "./playlist";
 

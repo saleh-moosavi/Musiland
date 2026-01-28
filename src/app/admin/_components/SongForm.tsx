@@ -28,7 +28,7 @@ import {
   ISongResponse,
   SongFormData
 } from "@/services/song";
-import { IAlbum, IGetAllAlbumResponse } from "@/models/album";
+import { IAlbum, IGetAllAlbumResponse } from "@/services/album";
 import { IGenre, IGetAllGenreResponse } from "@/services/genre";
 import { IGetAllSingerResponse, ISinger } from "@/services/singer";
 import { IGetAllPlaylistResponse, IPlaylist } from "@/services/playlist";
