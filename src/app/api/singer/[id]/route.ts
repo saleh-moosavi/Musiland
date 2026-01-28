@@ -1,38 +1,43 @@
-import { SingerModel } from "@/models/singer";
+import { supabase } from "@/libs/supabase/client";
 import { NextRequest, NextResponse } from "next/server";
 
 /*---------------- API ----------------*/
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   try {
     const { id } = params;
+    const { data, error } = await supabase
+      .from("singers")
+      .select("*")
+      .eq("id", id)
+      .single();
 
-    const singer = await SingerModel.findById(id);
-    if (!singer)
+    if (error)
       return NextResponse.json(
         {
           success: false,
-          message: "not found",
+          message: "Not Found",
         },
-        { status: 404 }
+        { status: 404 },
       );
 
     return NextResponse.json(
       {
         success: true,
-        data: singer,
+        data,
       },
-      { status: 200 }
+      { status: 200 },
     );
-  } catch (err: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
       {
         success: false,
-        message: err.message || "Internal server error",
+        message:
+          error instanceof Error ? error.message : "Internal Server Error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -40,7 +45,7 @@ export async function GET(
 /*---------------- API ----------------*/
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: string } },
 ) {
   try {
     const { id } = params;
@@ -49,35 +54,41 @@ export async function DELETE(
       return NextResponse.json(
         {
           success: false,
-          message: "ID is required",
+          message: "ID is Required",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
-    const singer = await SingerModel.findByIdAndDelete(id);
+    const { data, error } = await supabase
+      .from("singers")
+      .delete()
+      .eq("id", id)
+      .select()
+      .single();
 
-    if (!singer) {
+    if (error) {
       return NextResponse.json(
         {
           success: false,
           message: "Not Found",
         },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
     return NextResponse.json({
       success: true,
-      data: singer,
+      data,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
       {
         success: false,
-        message: error.message || "Internal server error",
+        message:
+          error instanceof Error ? error.message : "Internal Server Error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

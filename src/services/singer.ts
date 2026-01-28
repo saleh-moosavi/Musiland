@@ -1,6 +1,5 @@
 "use server";
 import apiClient from "@/configs/axios";
-import { IGetAllSingerResponse, ISingerResponse } from "@/models/singer";
 
 export const getAllSingers = async (): Promise<IGetAllSingerResponse> => {
   const data = await apiClient.get<IGetAllSingerResponse>(`/singer`);
@@ -34,3 +33,22 @@ export const deleteSinger = async (id: string): Promise<ISingerResponse> => {
   const data = await apiClient.delete<ISingerResponse>(`/singer/${id}`);
   return data.data;
 };
+export interface ISinger {
+  _id: string;
+  name: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+export interface ISingerResponse {
+  success: boolean;
+  data?: ISinger;
+  message?: string;
+}
+
+export interface IGetAllSingerResponse {
+  success: boolean;
+  data?: ISinger[];
+  message?: string;
+}
