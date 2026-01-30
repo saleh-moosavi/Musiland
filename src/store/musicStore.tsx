@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { IGenre } from "@/services/genre";
-import { IComment } from "@/models/comment";
+import { IComment } from "@/services/comment";
 import { IPlaylist } from "@/services/playlist";
 
 interface MusicStore {

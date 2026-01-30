@@ -12,7 +12,7 @@ export const getPlaylist = async (id: string): Promise<IPlaylistResponse> => {
 };
 
 export const createPlaylist = async (
-  name: string
+  name: string,
 ): Promise<IPlaylistResponse> => {
   const data = await apiClient.post<IPlaylistResponse>(`/playlist`, {
     name,
@@ -22,7 +22,7 @@ export const createPlaylist = async (
 
 export const editPlaylist = async (
   name: string,
-  id: string
+  id: string,
 ): Promise<IPlaylistResponse> => {
   const data = await apiClient.put<IPlaylistResponse>(`/playlist/`, {
     name,
@@ -32,11 +32,13 @@ export const editPlaylist = async (
 };
 
 export const deletePlaylist = async (
-  id: string
+  id: string,
 ): Promise<IPlaylistResponse> => {
   const data = await apiClient.delete<IPlaylistResponse>(`/playlist/${id}`);
   return data.data;
 };
+
+/***************** Data Types *****************/
 export interface IPlaylist {
   _id: string;
   name: string;

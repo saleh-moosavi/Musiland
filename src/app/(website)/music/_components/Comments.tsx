@@ -1,7 +1,7 @@
 "use client";
 
 import TimeAgo from "./TimeAgo";
-import { IComment } from "@/models/comment";
+import { IComment } from "@/services/comment";
 import useMusicStore from "@/store/musicStore";
 import { useEffect, useRef, useState } from "react";
 

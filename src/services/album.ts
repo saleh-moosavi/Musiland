@@ -33,8 +33,8 @@ export const deleteAlbum = async (id: string): Promise<IAlbumResponse> => {
   const data = await apiClient.delete<IAlbumResponse>(`/album/${id}`);
   return data.data;
 };
-/***************** Data Types *****************/
 
+/***************** Data Types *****************/
 export interface IAlbum {
   id: string;
   name: string;

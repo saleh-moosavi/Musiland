@@ -2,7 +2,7 @@
 import { Trash } from "lucide-react";
 import useToast from "@/hooks/useToast";
 import { useEffect, useState } from "react";
-import { IComment } from "@/models/comment";
+import { IComment } from "@/services/comment";
 import useUserStore from "@/store/userStore";
 import TimeAgo from "@/app/(website)/music/_components/TimeAgo";
 import { deleteComment, getUserComments } from "@/services/comment";

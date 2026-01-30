@@ -1,5 +1,6 @@
 "use client";
 
+import z from "zod";
 import useToast from "@/hooks/useToast";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
@@ -21,17 +22,25 @@ import {
   Disc,
   List,
 } from "lucide-react";
-import {
-  addSongSchema,
-  IMode,
-  ISong,
-  ISongResponse,
-  SongFormData
-} from "@/services/song";
+import { IMode, ISong, ISongResponse } from "@/services/song";
 import { IAlbum, IGetAllAlbumResponse } from "@/services/album";
 import { IGenre, IGetAllGenreResponse } from "@/services/genre";
 import { IGetAllSingerResponse, ISinger } from "@/services/singer";
 import { IGetAllPlaylistResponse, IPlaylist } from "@/services/playlist";
+
+/***************** Zod Schema *****************/
+export const addSongSchema = z.object({
+  name: z.string().min(1, "Song name is required"),
+  lyric: z.string().optional(),
+  audioUrl: z.string().url("Url Must Fill Currectly"),
+  coverUrl: z.string().url("Url Must Fill Currectly"),
+  singer: z.string().min(1, "Select Singer"),
+  album: z.string().min(1, "Select Album"),
+  genre: z.array(z.string()).min(1, "Select Genre"),
+  playlist: z.array(z.string()).min(1, "Select Playlist"),
+});
+
+export type SongFormData = z.infer<typeof addSongSchema>;
 
 export default function SongForm({ mode }: { mode: IMode }) {
   const router = useRouter();
@@ -121,7 +130,7 @@ export default function SongForm({ mode }: { mode: IMode }) {
         setSubmitError(
           error instanceof Error
             ? error?.message
-            : "Failed to fetch required data. Please try again."
+            : "Failed to fetch required data. Please try again.",
         );
       }
     };
@@ -152,7 +161,7 @@ export default function SongForm({ mode }: { mode: IMode }) {
       if (result.success) {
         showToast(
           `Song ${mode === "add" ? "added" : "updated"} successfully!`,
-          mode === "add" ? "green" : "orange"
+          mode === "add" ? "green" : "orange",
         );
 
         // Reset فرم
@@ -168,7 +177,7 @@ export default function SongForm({ mode }: { mode: IMode }) {
       setSubmitError(
         error instanceof Error
           ? error?.message
-          : "Server connection error. Please try again."
+          : "Server connection error. Please try again.",
       );
     }
   };

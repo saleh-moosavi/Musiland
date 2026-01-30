@@ -38,7 +38,6 @@ export const deleteUser = async (id: string): Promise<IUserResponse> => {
 };
 
 /***************** Data Types *****************/
-
 export interface IAuth {
   id: string;
   name: string;

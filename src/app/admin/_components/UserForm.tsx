@@ -1,7 +1,7 @@
 "use client";
 
 import z from "zod";
-import { IUser } from "@/models/user";
+import { IUser } from "@/services/user";
 import { IMode } from "@/services/song";
 import useToast from "@/hooks/useToast";
 import { useEffect, useState } from "react";

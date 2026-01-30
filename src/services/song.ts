@@ -1,9 +1,10 @@
-import z from "zod";
+"use server";
 import { IGenre } from "./genre";
-import apiClient from "@/configs/axios";
 import { IAlbum } from "./album";
 import { ISinger } from "./singer";
 import { IPlaylist } from "./playlist";
+import apiClient from "@/configs/axios";
+import { SongFormData } from "@/app/admin/_components/SongForm";
 
 export const getAllSongs = async (query?: string): Promise<ISongsResponse> => {
   const data = await apiClient.get<ISongsResponse>(`/song?${query}`);
@@ -35,8 +36,8 @@ export const deleteSong = async (id: string): Promise<ISongResponse> => {
   const res = await apiClient.delete<ISongResponse>(`/song/${id}`);
   return res.data;
 };
-/***************** Data Types *****************/
 
+/***************** Data Types *****************/
 export interface ISong {
   _id: string;
   name: string;
@@ -66,16 +67,3 @@ export interface ISongsResponse {
 }
 
 export type IMode = "add" | "edit";
-/***************** Zod Schema *****************/
-export const addSongSchema = z.object({
-  name: z.string().min(1, "Song name is required"),
-  lyric: z.string().optional(),
-  audioUrl: z.string().url("Url Must Fill Currectly"),
-  coverUrl: z.string().url("Url Must Fill Currectly"),
-  singer: z.string().min(1, "Select Singer"),
-  album: z.string().min(1, "Select Album"),
-  genre: z.array(z.string()).min(1, "Select Genre"),
-  playlist: z.array(z.string()).min(1, "Select Playlist"),
-});
-
-export type SongFormData = z.infer<typeof addSongSchema>;

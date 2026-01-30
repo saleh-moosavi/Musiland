@@ -20,7 +20,7 @@ export const createSinger = async (name: string): Promise<ISingerResponse> => {
 
 export const editSinger = async (
   name: string,
-  id: string
+  id: string,
 ): Promise<ISingerResponse> => {
   const data = await apiClient.put<ISingerResponse>(`/singer/`, {
     name,
@@ -33,6 +33,8 @@ export const deleteSinger = async (id: string): Promise<ISingerResponse> => {
   const data = await apiClient.delete<ISingerResponse>(`/singer/${id}`);
   return data.data;
 };
+
+/***************** Data Types *****************/
 export interface ISinger {
   _id: string;
   name: string;
