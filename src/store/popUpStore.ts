@@ -4,7 +4,7 @@ import { IGenreResponse } from "@/services/genre";
 import { IAlbumResponse } from "@/services/album";
 import { ISingerResponse } from "@/services/singer";
 import { IPlaylistResponse } from "@/services/playlist";
-import { IUserResponse } from "@/models/user";
+import { IUserResponse } from "@/services/user";
 
 interface PopUpStoreType {
   id: string;

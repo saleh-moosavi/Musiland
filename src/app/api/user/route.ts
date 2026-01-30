@@ -1,18 +1,28 @@
-import { UserModel } from "@/models/user";
+import { supabase } from "@/libs/supabase/client";
 import { NextRequest, NextResponse } from "next/server";
 
 /*---------------- API ----------------*/
 export async function GET() {
   try {
-    const users = await UserModel.find()
-      .populate("likedSongs")
-      .populate("comments");
+    const { data, error } = await supabase
+      .from("users")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error)
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Fetch Error",
+        },
+        { status: 401 },
+      );
     return NextResponse.json(
       {
         success: true,
-        data: users,
+        data,
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error: unknown) {
     return NextResponse.json(
@@ -21,7 +31,7 @@ export async function GET() {
         message:
           error instanceof Error ? error.message : "Internal server error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -37,36 +47,53 @@ export async function POST(req: NextRequest) {
           success: false,
           message: "Name , Email , Password are required",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
-    const existingEmail = await UserModel.findOne({ email });
-    const existingName = await UserModel.findOne({ name });
+    const { data: existingEmail } = await supabase
+      .from("users")
+      .select("id")
+      .eq("email", email)
+      .single();
+
     if (existingEmail)
       return NextResponse.json(
         {
           success: false,
           message: "Email already exists",
         },
-        { status: 409 }
+        { status: 409 },
       );
-    if (existingName)
+
+    const { data, error: createError } = await supabase
+      .from("users")
+      .insert([
+        {
+          name,
+          email,
+          password,
+          role: "user",
+        },
+      ])
+      .select()
+      .single();
+
+    if (createError)
       return NextResponse.json(
         {
           success: false,
-          message: "Name Must be Unique",
+          message: "Failed To Add User",
         },
-        { status: 409 }
+        { status: 401 },
       );
 
-    const user = await UserModel.create({ name, password, email });
     return NextResponse.json(
       {
         success: true,
-        data: user,
+        data,
       },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (error: unknown) {
     return NextResponse.json(
@@ -75,7 +102,7 @@ export async function POST(req: NextRequest) {
         message:
           error instanceof Error ? error.message : "Internal server error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
@@ -91,7 +118,7 @@ export async function PUT(req: NextRequest) {
           success: false,
           message: "Valid role required",
         },
-        { status: 400 }
+        { status: 400 },
       );
 
     if (!id) {
@@ -100,7 +127,7 @@ export async function PUT(req: NextRequest) {
           success: false,
           message: "ID is required",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -110,29 +137,52 @@ export async function PUT(req: NextRequest) {
           success: false,
           message: "Name , Email , Password are required",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
-    const user = await UserModel.findByIdAndUpdate(
-      id,
-      { name, email, password },
-      { new: true }
-    );
+    const { data: existingUser, error: checkError } = await supabase
+      .from("users")
+      .select("*")
+      .eq("id", id)
+      .single();
 
-    if (!user) {
+    if (checkError || !existingUser) {
       return NextResponse.json(
         {
           success: false,
-          message: "User Not Found",
+          message: "Not Found",
         },
-        { status: 404 }
+        { status: 404 },
+      );
+    }
+
+    const { data, error: updateError } = await supabase
+      .from("users")
+      .update({
+        name,
+        email,
+        password,
+        role: role || existingUser.role,
+        updated_at: new Date().toISOString(),
+      })
+      .eq("id", id)
+      .select()
+      .single();
+
+    if (updateError) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: "Failed To Update",
+        },
+        { status: 404 },
       );
     }
 
     return NextResponse.json({
       success: true,
-      data: user,
+      data,
     });
   } catch (error: unknown) {
     return NextResponse.json(
@@ -141,7 +191,7 @@ export async function PUT(req: NextRequest) {
         message:
           error instanceof Error ? error.message : "Internal server error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

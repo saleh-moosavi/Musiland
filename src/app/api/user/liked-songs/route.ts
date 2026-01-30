@@ -1,41 +1,56 @@
-import { UserModel } from "@/models/user";
+import { supabase } from "@/libs/supabase/client";
 import { NextRequest, NextResponse } from "next/server";
 
-/*---------------- API ----------------*/
 export async function POST(req: NextRequest) {
   try {
     const { userId } = await req.json();
-    if (!userId)
+
+    if (!userId) {
       return NextResponse.json(
         {
           success: false,
-          message: "ID is required",
+          message: "User ID is required",
         },
-        { status: 400 }
+        { status: 400 },
       );
+    }
 
-    const user = await UserModel.findById(userId).populate({
-      path: "likedSongs",
-      populate: ["singer", "album", "genres", "playlists"],
-      options: { sort: { createdAt: -1 } },
-    });
+    // Get all liked songs with relations in one query
+    const { data, error } = await supabase
+      .from("user_liked_songs")
+      .select(
+        `
+        songs!inner (
+          *,
+          singer:singer_id (*),
+          album:album_id (*),
+          songs_genres!inner (
+            genres!inner (*)
+          ),
+          songs_playlists!inner (
+            playlists!inner (*)
+          )
+        )
+      `,
+      )
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false });
 
-    if (!user)
+    if (error)
       return NextResponse.json(
         {
           success: false,
-          message: "Not Found",
+          message: "Failed To Fetch Liked Songs",
         },
-        { status: 404 }
+        { status: 500 },
       );
 
-    const likedSongs = user.likedSongs || [];
     return NextResponse.json(
       {
-        success: false,
-        data: likedSongs,
+        success: true,
+        data,
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (error) {
     return NextResponse.json(
@@ -44,7 +59,7 @@ export async function POST(req: NextRequest) {
         message:
           error instanceof Error ? error.message : "Internal server error",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

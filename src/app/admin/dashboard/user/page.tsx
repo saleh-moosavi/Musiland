@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { IUser } from "@/models/user";
+import { IUser } from "@/services/user";
 import FormButton from "@/components/FormButton";
 import EditBtn from "@/app/admin/_components/EditBtn";
 import AlterّResult from "../../_components/AlterResult";
@@ -26,7 +26,7 @@ export default async function page() {
                 <p>
                   {user.name} |{" "}
                   {user.role.replace(/\b\w/g, (char: string) =>
-                    char.toUpperCase()
+                    char.toUpperCase(),
                   )}
                 </p>
                 <article className="flex gap-5 items-center">

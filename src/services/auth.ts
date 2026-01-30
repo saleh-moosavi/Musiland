@@ -1,5 +1,5 @@
 import apiClient from "@/configs/axios";
-import { IAuthResponse } from "@/models/user";
+import { IAuthResponse } from "./user";
 
 export const registerUser = async (
   name: string,

@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { IAuth } from "@/models/user";
+import { IAuth } from "@/services/user";
 
 interface UserStore {
   likedSongs: string[];

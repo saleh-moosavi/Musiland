@@ -2,7 +2,7 @@
 import { Trash } from "lucide-react";
 import { deleteTypes } from "@/types";
 import PopUpStore from "@/store/popUpStore";
-import { IUserResponse } from "@/models/user";
+import { IUserResponse } from "@/services/user";
 import { IGenreResponse } from "@/services/genre";
 import { IAlbumResponse } from "@/services/album";
 import { ISingerResponse } from "@/services/singer";

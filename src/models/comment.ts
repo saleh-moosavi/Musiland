@@ -1,4 +1,4 @@
-import { IUser } from "./user";
+import { IUser } from "@/services/user";
 import { ISong } from "@/services/song";
 import { model, models, Schema } from "mongoose";
 
