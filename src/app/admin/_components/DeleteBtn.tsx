@@ -7,19 +7,21 @@ import { IGenreResponse } from "@/services/genre";
 import { IAlbumResponse } from "@/services/album";
 import { ISingerResponse } from "@/services/singer";
 import { IPlaylistResponse } from "@/services/playlist";
+import { ISongResponse } from "@/services/song";
 
 interface IProps {
   id: string;
   name: string;
   type: deleteTypes;
   deleteFn: (
-    id: string
+    id: string,
   ) => Promise<
     | IGenreResponse
     | IPlaylistResponse
     | ISingerResponse
     | IAlbumResponse
     | IUserResponse
+    | ISongResponse
   >;
 }
 

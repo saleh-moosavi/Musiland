@@ -36,11 +36,10 @@ export const deleteSinger = async (id: string): Promise<ISingerResponse> => {
 
 /***************** Data Types *****************/
 export interface ISinger {
-  _id: string;
+  id: string;
   name: string;
   createdAt: string;
   updatedAt: string;
-  __v: number;
 }
 
 export interface ISingerResponse {

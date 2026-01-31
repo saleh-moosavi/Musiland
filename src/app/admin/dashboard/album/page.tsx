@@ -20,14 +20,14 @@ export default async function AlbumList() {
             return (
               <li
                 className="w-full flex justify-between items-center gap-5 bg-my-white-low dark:bg-my-black-max shadow-md shadow-my-black-low/30 p-5 rounded-xl"
-                key={album?._id}
+                key={album?.id}
               >
                 <p>{album.name}</p>
                 <article className="flex gap-5 items-center">
-                  <EditBtn id={album._id} name={album.name} type="album" />
+                  <EditBtn id={album.id} name={album.name} type="album" />
                   <DeleteBtn
                     type="album"
-                    id={album._id}
+                    id={album.id}
                     name={album.name}
                     deleteFn={deleteAlbum}
                   />

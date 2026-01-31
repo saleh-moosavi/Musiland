@@ -20,14 +20,14 @@ export default async function SingerList() {
             return (
               <li
                 className="w-full flex justify-between items-center gap-5 bg-my-white-low dark:bg-my-black-max shadow-md shadow-my-black-low/30 p-5 rounded-xl"
-                key={singer?._id}
+                key={singer?.id}
               >
                 <p>{singer.name}</p>
                 <article className="flex gap-5 items-center">
-                  <EditBtn id={singer._id} name={singer.name} type="singer" />
+                  <EditBtn id={singer.id} name={singer.name} type="singer" />
                   <DeleteBtn
                     type="singer"
-                    id={singer._id}
+                    id={singer.id}
                     name={singer.name}
                     deleteFn={deleteSinger}
                   />

@@ -119,7 +119,7 @@ export default function SongForm({ mode }: { mode: IMode }) {
             name: sData.name,
             lyric: sData.lyric,
             album: sData.album._id,
-            singer: sData.singer._id,
+            singer: sData.singer.id,
             genre: sData.genre.map((g) => g.id),
             audioUrl: sData.audioUrl,
             coverUrl: sData.coverUrl,

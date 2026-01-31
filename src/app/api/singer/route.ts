@@ -26,7 +26,7 @@ export async function GET(req: NextRequest) {
     const data = await result;
     return NextResponse.json(
       {
-        success: true,
+        success: !data.error,
         data: data.data,
       },
       { status: 200 },

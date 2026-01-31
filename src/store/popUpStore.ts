@@ -1,10 +1,11 @@
 import { create } from "zustand";
 import { deleteTypes } from "@/types";
+import { IUserResponse } from "@/services/user";
+import { ISongResponse } from "@/services/song";
 import { IGenreResponse } from "@/services/genre";
 import { IAlbumResponse } from "@/services/album";
 import { ISingerResponse } from "@/services/singer";
 import { IPlaylistResponse } from "@/services/playlist";
-import { IUserResponse } from "@/services/user";
 
 interface PopUpStoreType {
   id: string;
@@ -13,13 +14,14 @@ interface PopUpStoreType {
   type: deleteTypes;
   popUpFn?:
     | ((
-        id: string
+        id: string,
       ) => Promise<
         | IPlaylistResponse
         | IGenreResponse
         | ISingerResponse
         | IAlbumResponse
         | IUserResponse
+        | ISongResponse
       >)
     | null;
   // Setters
@@ -29,14 +31,15 @@ interface PopUpStoreType {
   setIsOpen: (isOpen: boolean) => void;
   setPopUpFn: (
     popUpFn: (
-      id: string
+      id: string,
     ) => Promise<
       | IPlaylistResponse
       | IGenreResponse
       | ISingerResponse
       | IAlbumResponse
       | IUserResponse
-    >
+      | ISongResponse
+    >,
   ) => void;
 }
 
