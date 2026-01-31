@@ -20,18 +20,18 @@ export default async function PlaylistList() {
             return (
               <li
                 className="w-full flex justify-between items-center gap-5 bg-my-white-low dark:bg-my-black-max shadow-md shadow-my-black-low/30 p-5 rounded-xl"
-                key={playlist?._id}
+                key={playlist?.id}
               >
                 <p>{playlist.name}</p>
                 <article className="flex gap-5 items-center">
                   <EditBtn
-                    id={playlist._id}
+                    id={playlist.id}
                     name={playlist.name}
                     type="playlist"
                   />
                   <DeleteBtn
                     type="playlist"
-                    id={playlist._id}
+                    id={playlist.id}
                     name={playlist.name}
                     deleteFn={deletePlaylist}
                   />

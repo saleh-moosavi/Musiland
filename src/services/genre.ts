@@ -36,11 +36,10 @@ export const deleteGenre = async (id: string): Promise<IGenreResponse> => {
 
 /***************** Data Types *****************/
 export interface IGenre {
-  _id: string;
+  id: string;
   name: string;
   createdAt: string;
   updatedAt: string;
-  __v: number;
 }
 
 export interface IGenreResponse {

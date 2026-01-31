@@ -1,8 +1,8 @@
+import { IGenre } from "@/services/genre";
 import { useEffect, useState } from "react";
+import { IPlaylist } from "@/services/playlist";
 import { getAllGenres } from "@/services/genre";
 import { getAllPlaylists } from "@/services/playlist";
-import { IGenre } from "@/services/genre";
-import { IPlaylist } from "@/services/playlist";
 
 export default function useNavbarData() {
   const [genres, setGenres] = useState<IGenre[]>([]);
@@ -15,7 +15,6 @@ export default function useNavbarData() {
           getAllGenres(),
           getAllPlaylists(),
         ]);
-
         setGenres(genresRes?.data ?? []);
         setPlaylists(playlistsRes?.data ?? []);
       } catch (err) {

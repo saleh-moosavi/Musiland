@@ -38,7 +38,7 @@ export default function SingleMusicView({ song, commentCount }: IProps) {
               Genre :
               {song.genre?.length
                 ? song.genre.map((g: IGenre) => (
-                    <li key={g._id}>
+                    <li key={g.id}>
                       <Link href={`/category/${g.name}?genre=${g.name}`}>
                         {g.name}
                       </Link>
@@ -51,7 +51,7 @@ export default function SingleMusicView({ song, commentCount }: IProps) {
               Playlist :
               {song.playlist?.length
                 ? song.playlist.map((p: IPlaylist) => (
-                    <li key={p._id}>
+                    <li key={p.id}>
                       <Link href={`/category/${p.name}?playlist=${p.name}`}>
                         {p.name}
                       </Link>

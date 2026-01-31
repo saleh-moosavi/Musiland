@@ -74,7 +74,7 @@ export default function NavListMobile({
               <div className="font-semibold p-2 bg-my-white-low dark:bg-my-black-high mt-2 w-full space-y-2 rounded-xl">
                 {item.content.map((data: IGenre | IPlaylist) => (
                   <Link
-                    key={data._id}
+                    key={data.id}
                     onClick={() => setShowMobileMenuPanel(false)}
                     href={`/category/${data.name}?${item.type}=${data.name}`}
                   >

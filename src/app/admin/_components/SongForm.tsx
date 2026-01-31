@@ -120,10 +120,10 @@ export default function SongForm({ mode }: { mode: IMode }) {
             lyric: sData.lyric,
             album: sData.album._id,
             singer: sData.singer._id,
-            genre: sData.genre.map((g) => g._id),
+            genre: sData.genre.map((g) => g.id),
             audioUrl: sData.audioUrl,
             coverUrl: sData.coverUrl,
-            playlist: sData.playlist.map((p) => p._id),
+            playlist: sData.playlist.map((p) => p.id),
           });
         }
       } catch (error: unknown) {

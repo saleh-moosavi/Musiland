@@ -20,14 +20,14 @@ export default async function GenreList() {
             return (
               <li
                 className="w-full flex justify-between items-center gap-5 bg-my-white-low dark:bg-my-black-max shadow-md shadow-my-black-low/30 p-5 rounded-xl"
-                key={genre?._id}
+                key={genre?.id}
               >
                 <p>{genre.name}</p>
                 <article className="flex gap-5 items-center">
-                  <EditBtn id={genre._id} name={genre.name} type="genre" />
+                  <EditBtn id={genre.id} name={genre.name} type="genre" />
                   <DeleteBtn
                     type="genre"
-                    id={genre._id}
+                    id={genre.id}
                     name={genre.name}
                     deleteFn={deleteGenre}
                   />

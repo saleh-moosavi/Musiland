@@ -40,11 +40,10 @@ export const deletePlaylist = async (
 
 /***************** Data Types *****************/
 export interface IPlaylist {
-  _id: string;
+  id: string;
   name: string;
   createdAt: string;
   updatedAt: string;
-  __v: number;
 }
 
 export interface IPlaylistResponse {
