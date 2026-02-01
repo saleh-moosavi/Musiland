@@ -6,7 +6,7 @@ interface CustomOptionProps {
   title: string;
   multiple?: boolean;
   icon?: React.ReactNode;
-  data: { _id: string; name: string }[];
+  data: { id: string; name: string }[];
   error?: React.ReactNode | string;
   register: UseFormRegisterReturn<FieldPath<FieldValues>>;
 }
@@ -78,13 +78,13 @@ export default function CustomOption({
           >
             {data.map((item) => (
               <label
-                key={item._id}
+                key={item.id}
                 className="flex items-center gap-2 cursor-pointer"
                 onInput={() => handleInputTitle(item.name)}
               >
                 <input
                   type={multiple ? "checkbox" : "radio"}
-                  value={item._id}
+                  value={item.id}
                   {...register}
                   className="h-4 w-4 text-my-green-med focus:ring-my-green-high"
                 />

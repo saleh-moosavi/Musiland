@@ -29,7 +29,7 @@ export default async function Slider({ title, query }: IProp) {
         </section>
         <SliderWrapper>
           {songs?.map((song) => (
-            <article key={song._id}>
+            <article key={song.id}>
               <div className="relative group rounded-xl overflow-hidden">
                 <Image
                   src={song.coverUrl}
@@ -46,7 +46,7 @@ export default async function Slider({ title, query }: IProp) {
               </div>
               <Link
                 className="group dark:text-white"
-                href={`/music/${song.singer?.name}-${song._id}`}
+                href={`/music/${song.singer?.name}-${song.id}`}
               >
                 <p className="font-semibold mt-2">{song.name}</p>
                 <p className="text-sm">

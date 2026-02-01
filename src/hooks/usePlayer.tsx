@@ -21,8 +21,8 @@ export default function usePlayer() {
     setAudioSrc(song.audioUrl);
     setAudioCover(song.coverUrl);
     setAudioName(song.name);
-    setAudioGenres(song.genre);
-    setAudioPlaylists(song.playlist);
+    setAudioGenres(song.songs_genres);
+    setAudioPlaylists(song.songs_playlists);
   };
 
   useEffect(() => {

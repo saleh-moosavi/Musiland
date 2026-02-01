@@ -12,7 +12,7 @@ export default async function CategoryItems({ songs }: IProp) {
   return (
     <section className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 items-center justify-start gap-10">
       {songs?.map((song) => (
-        <div className="self-start" key={song._id}>
+        <div className="self-start" key={song.id}>
           <div className="relative group rounded-xl overflow-hidden">
             <Image
               src={song.coverUrl}
@@ -29,7 +29,7 @@ export default async function CategoryItems({ songs }: IProp) {
           </div>
           <Link
             className="dark:text-my-white-low"
-            href={`/music/${song.singer.name || "Unknown"}-${song._id}`}
+            href={`/music/${song.singer.name || "Unknown"}-${song.id}`}
           >
             <p className="font-semibold mt-2">{song.name}</p>
             <p className="text-sm">{song.singer.name || "Unknown Artist"}</p>

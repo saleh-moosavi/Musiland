@@ -27,7 +27,7 @@ const LikedSongsPage: React.FC = () => {
       <ul className="grid lg:grid-cols-2 gap-5 w-full">
         {songs.map((song) => (
           <li
-            key={song._id}
+            key={song.id}
             className="w-full flex justify-between items-center gap-5 bg-my-white-low dark:bg-my-black-max p-2 rounded-3xl shadow-md shadow-my-black-low/20"
           >
             <article className="w-full flex gap-5 h-full">
@@ -48,9 +48,9 @@ const LikedSongsPage: React.FC = () => {
                   <p className="font-bold text-xl">{song.name}</p>
                   <X
                     onClick={() => {
-                      toggleLike(song._id);
+                      toggleLike(song.id);
                       setSongs((prev) =>
-                        prev.filter((s) => s._id !== song._id)
+                        prev.filter((s) => s.id !== song.id)
                       );
                     }}
                     className="md:me-5 cursor-pointer text-my-red-med hover:scale-125 transition-all duration-200"

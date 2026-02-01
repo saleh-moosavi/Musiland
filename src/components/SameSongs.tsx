@@ -36,7 +36,7 @@ export default function SameSongs() {
     <SameSongWrapper>
       {sameSongsList ? (
         sameSongsList.map((song: ISong) => (
-          <SameSongsContent key={song._id} song={song} />
+          <SameSongsContent key={song.id} song={song} />
         ))
       ) : (
         <p>There Is No Song Here !!!</p>

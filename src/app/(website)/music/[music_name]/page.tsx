@@ -44,11 +44,11 @@ export default async function MusicNamePage({
           comments={comments || []}
           commentCount={comments?.length ?? 0}
         />
-        <AddComment id={song._id} />
+        <AddComment id={song.id} />
         <div className="space-y-10 mt-10">
           <Slider
             title={SongQueries.related.title}
-            query={SongQueries.related.query(song.genre, song.playlist)}
+            query={SongQueries.related.query(song.songs_genres, song.songs_playlists)}
           />
         </div>
       </>

@@ -12,8 +12,8 @@ export default async function HeroCarousel() {
       <HeroCarouselWrapper>
         {songs.map((song, index) => (
           <Link
-            href={`/music/${song.singer?.name || "Unknown"}-${song._id}`}
-            key={song._id}
+            href={`/music/${song.singer?.name || "Unknown"}-${song.id}`}
+            key={song.id}
           >
             <div className="flex flex-col gap-2 absolute bottom-5 left-1/2 -translate-x-1/2 text-my-white-low text-center bg-my-black-max/50 px-2 py-1 rounded-xl">
               <p>{song.singer?.name || "Unknown Artist"}</p>

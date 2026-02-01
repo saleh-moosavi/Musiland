@@ -23,8 +23,8 @@ export default function PlayButton({ song, children, buttonType }: IProps) {
     setAudioName(song.name);
     setAudioSrc(song.audioUrl);
     setAudioCover(song.coverUrl);
-    setAudioGenres(song.genre);
-    setAudioPlaylists(song.playlist);
+    setAudioGenres(song.songs_genres);
+    setAudioPlaylists(song.songs_playlists);
   };
   if (buttonType === "ICON") {
     return (

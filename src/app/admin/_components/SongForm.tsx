@@ -114,19 +114,21 @@ export default function SongForm({ mode }: { mode: IMode }) {
         if (mode === "edit" && songRes && songRes.success) {
           const sData = songRes.data as ISong;
           setSongData(sData);
+          console.log(sData);
 
           reset({
             name: sData.name,
             lyric: sData.lyric,
-            album: sData.album._id,
+            album: sData.album.id,
             singer: sData.singer.id,
-            genre: sData.genre.map((g) => g.id),
             audioUrl: sData.audioUrl,
             coverUrl: sData.coverUrl,
-            playlist: sData.playlist.map((p) => p.id),
+            genre: sData.songs_genres.map((g) => g.id),
+            playlist: sData.songs_playlists.map((p) => p.id),
           });
         }
       } catch (error: unknown) {
+        console.log(error);
         setSubmitError(
           error instanceof Error
             ? error?.message

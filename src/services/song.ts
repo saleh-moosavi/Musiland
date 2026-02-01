@@ -39,7 +39,7 @@ export const deleteSong = async (id: string): Promise<ISongResponse> => {
 
 /***************** Data Types *****************/
 export interface ISong {
-  _id: string;
+  id: string;
   name: string;
   lyric: string;
   audioUrl: string;
@@ -48,11 +48,10 @@ export interface ISong {
   likes: number;
   comments: string[];
   album: IAlbum;
-  genre: IGenre[];
-  playlist: IPlaylist[];
+  songs_genres: IGenre[];
+  songs_playlists: IPlaylist[];
   singer: ISinger;
   updatedAt: string;
-  __v: number;
 }
 
 export interface ISongResponse {

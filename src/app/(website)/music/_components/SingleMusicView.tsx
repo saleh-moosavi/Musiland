@@ -36,8 +36,8 @@ export default function SingleMusicView({ song, commentCount }: IProps) {
             {/* genres section */}
             <ul className="font-semibold flex items-center gap-3">
               Genre :
-              {song.genre?.length
-                ? song.genre.map((g: IGenre) => (
+              {song.songs_genres?.length
+                ? song.songs_genres.map((g: IGenre) => (
                     <li key={g.id}>
                       <Link href={`/category/${g.name}?genre=${g.name}`}>
                         {g.name}
@@ -49,8 +49,8 @@ export default function SingleMusicView({ song, commentCount }: IProps) {
             {/* playlist section */}
             <ul className="font-semibold flex items-center gap-3">
               Playlist :
-              {song.playlist?.length
-                ? song.playlist.map((p: IPlaylist) => (
+              {song.songs_playlists?.length
+                ? song.songs_playlists.map((p: IPlaylist) => (
                     <li key={p.id}>
                       <Link href={`/category/${p.name}?playlist=${p.name}`}>
                         {p.name}
@@ -77,7 +77,7 @@ export default function SingleMusicView({ song, commentCount }: IProps) {
             <p className="flex items-center gap-2">
               {commentCount} <MessageSquareMore className="size-4" />
             </p>
-            <Likes count={song.likes} id={song._id} />
+            <Likes count={song.likes} id={song.id} />
             <p>{song.createdAt.split("T")[0]}</p>
           </div>
         </div>

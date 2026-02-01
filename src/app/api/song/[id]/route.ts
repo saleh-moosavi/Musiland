@@ -26,8 +26,8 @@ export async function GET(
         *,
         singer:singer_id (id, name, created_at, updated_at),
         album:album_id (id, name, created_at, updated_at),
-        genres:genre_ids (id, name, created_at, updated_at),
-        playlists:playlist_ids (id, name, created_at, updated_at)
+        songs_genres!inner (genre:genres (id, name, created_at, updated_at)),
+        songs_playlists!inner (playlist:playlists (id, name, created_at, updated_at))
       `,
       )
       .eq("id", id)

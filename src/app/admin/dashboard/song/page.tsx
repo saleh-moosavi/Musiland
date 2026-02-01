@@ -20,7 +20,7 @@ export default async function SongList() {
           {songs.map((song) => (
             <li
               className="w-full flex justify-between items-center gap-5 bg-my-white-low dark:bg-my-black-max p-2 rounded-3xl shadow-md shadow-my-black-low/20"
-              key={song._id}
+              key={song.id}
             >
               <article className="flex gap-5 h-full">
                 <Image
@@ -38,19 +38,19 @@ export default async function SongList() {
                   <p>Album : {song.album?.name || "None"}</p>
                   <p>
                     Genre :{" "}
-                    {song.genre?.map((g) => g.name).join(", ") || "None"}
+                    {song.songs_genres?.map((g) => g.name).join(", ") || "None"}
                   </p>
                   <p>
                     Playlist :{" "}
-                    {song.playlist?.map((p) => p.name).join(", ") || "None"}
+                    {song.songs_playlists?.map((p) => p.name).join(", ") || "None"}
                   </p>
                 </div>
               </article>
               <article className="h-full flex flex-col justify-between gap-2 p-2">
-                <EditBtn id={song._id} name={song.name} type="song" />
+                <EditBtn id={song.id} name={song.name} type="song" />
                 <DeleteBtn
                   type="song"
-                  id={song._id}
+                  id={song.id}
                   name={song.name}
                   deleteFn={deleteSong}
                 />

@@ -41,10 +41,10 @@ export default function SameSongsContent({ song }: { song: ISong }) {
       </div>
       <Heart
         onClick={() => {
-          toggleLike(song._id);
+          toggleLike(song.id);
         }}
         className={`ms-auto md:me-5 cursor-pointer hover:scale-125 transition-all duration-200 ${
-          likedSongs.includes(song._id)
+          likedSongs.includes(song.id)
             ? "fill-my-red-med stroke-my-red-med"
             : "stroke-my-black-med dark:stroke-my-white-high hover:fill-my-red-med hover:stroke-my-red-med"
         }`}
