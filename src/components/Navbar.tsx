@@ -5,17 +5,19 @@ import { lazy, useState } from "react";
 import useTheme from "@/hooks/useTheme";
 import useUserStore from "@/store/userStore";
 import useWindowStore from "@/store/windowStore";
-import useNavbarData from "@/hooks/useNavbarData";
 import { LogIn, Menu, Moon, Sun, User } from "lucide-react";
 import { IGenre } from "@/services/genre";
 import { IPlaylist } from "@/services/playlist";
+import { useGetAllGenres } from "@/hooks/ReactQuery/useGenre";
+import { useGetAllPlaylist } from "@/hooks/ReactQuery/usePlaylist";
 const NavListMobile = lazy(() => import("./NavListMobile"));
 const NavListDesktop = lazy(() => import("./NavListDesktop"));
 
 export default function Navbar() {
   const { userData } = useUserStore();
   const { theme, handleTheme } = useTheme();
-  const { genres, playlists } = useNavbarData();
+  const { data: genres } = useGetAllGenres();
+  const { data: playlists } = useGetAllPlaylist();
   const [timeoutId, setTimeoutId] = useState<NodeJS.Timeout | null>(null);
   const {
     navbarData,
@@ -39,7 +41,7 @@ export default function Navbar() {
 
   const handleNavbarData = (
     type: "genre" | "playlist",
-    data: IGenre[] | IPlaylist[]
+    data: IGenre[] | IPlaylist[],
   ) => {
     setNavbarData(data);
     setNavbarType(type);
@@ -78,10 +80,22 @@ export default function Navbar() {
             onMouseEnter={() => handleMouseToggle(true)}
             onMouseLeave={() => handleMouseToggle(false)}
           >
-            <li onMouseEnter={() => handleNavbarData("playlist", playlists)}>
+            <li
+              onMouseEnter={() =>
+                playlists !== undefined && playlists.data
+                  ? handleNavbarData("playlist", playlists.data)
+                  : null
+              }
+            >
               Playlists
             </li>
-            <li onMouseEnter={() => handleNavbarData("genre", genres)}>
+            <li
+              onMouseEnter={() =>
+                genres !== undefined && genres?.data
+                  ? handleNavbarData("genre", genres.data)
+                  : null
+              }
+            >
               Genres
             </li>
           </ul>
@@ -111,7 +125,9 @@ export default function Navbar() {
         )}
       </section>
 
-      <NavListMobile genres={genres} playlists={playlists} />
+      {genres?.data && playlists?.data && (
+        <NavListMobile genres={genres.data} playlists={playlists.data} />
+      )}
     </header>
   );
 }
