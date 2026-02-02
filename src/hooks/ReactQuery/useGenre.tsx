@@ -15,7 +15,7 @@ export const genreKeys = {
   detail: (id: string) => ["genre", id] as const,
 };
 
-// Get all genres hook
+// Get All Genres Hook
 export function useGetAllGenres() {
   return useQuery<IGetAllGenreResponse>({
     queryKey: genreKeys.all,
@@ -26,7 +26,7 @@ export function useGetAllGenres() {
   });
 }
 
-// Get single genre by ID hook
+// Get single Genre by ID hook
 export function useGetGenre(id: string) {
   return useQuery<IGenreResponse>({
     queryKey: genreKeys.detail(id),
