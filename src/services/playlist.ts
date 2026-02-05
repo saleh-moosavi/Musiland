@@ -1,14 +1,14 @@
 "use server";
-import apiClient from "@/configs/axios";
+import { apiClient } from "@/configs/apiConfig";
 
 export const getAllPlaylists = async (): Promise<IGetAllPlaylistResponse> => {
   const data = await apiClient.get<IGetAllPlaylistResponse>(`/playlist`);
-  return data.data;
+  return data;
 };
 
 export const getPlaylist = async (id: string): Promise<IPlaylistResponse> => {
   const data = await apiClient.get<IPlaylistResponse>(`/playlist/${id}`);
-  return data.data;
+  return data;
 };
 
 export const createPlaylist = async (
@@ -17,7 +17,7 @@ export const createPlaylist = async (
   const data = await apiClient.post<IPlaylistResponse>(`/playlist`, {
     name,
   });
-  return data.data;
+  return data;
 };
 
 export const editPlaylist = async (
@@ -28,14 +28,14 @@ export const editPlaylist = async (
     name,
     id,
   });
-  return data.data;
+  return data;
 };
 
 export const deletePlaylist = async (
   id: string,
 ): Promise<IPlaylistResponse> => {
   const data = await apiClient.delete<IPlaylistResponse>(`/playlist/${id}`);
-  return data.data;
+  return data;
 };
 
 /***************** Data Types *****************/

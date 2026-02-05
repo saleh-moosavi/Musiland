@@ -1,21 +1,30 @@
 "use server";
-import apiClient from "@/configs/axios";
+import { apiClient } from "@/configs/apiConfig";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 export const getAllAlbums = async (): Promise<IGetAllAlbumResponse> => {
-  const data = await apiClient.get<IGetAllAlbumResponse>(`/album`);
-  return data.data;
+  const data = await apiClient.get<IGetAllAlbumResponse>(`/album`, {
+    next: { tags: ["album"], revalidate: 300 },
+  });
+  return data;
 };
 
 export const getAlbum = async (id: string): Promise<IAlbumResponse> => {
-  const data = await apiClient.get<IAlbumResponse>(`/album/${id}`);
-  return data.data;
+  const data = await apiClient.get<IAlbumResponse>(`/album/${id}`, {
+    next: { tags: [`album-${id}`], revalidate: 300 },
+  });
+  return data;
 };
 
 export const createAlbum = async (name: string): Promise<IAlbumResponse> => {
   const data = await apiClient.post<IAlbumResponse>(`/album`, {
     name,
   });
-  return data.data;
+  if (data.success) {
+    revalidateTag("album");
+    revalidatePath("/albums");
+  }
+  return data;
 };
 
 export const editAlbum = async (
@@ -26,12 +35,23 @@ export const editAlbum = async (
     name,
     id,
   });
-  return data.data;
+  if (data.success) {
+    revalidateTag("album");
+    revalidateTag(`album-${id}`);
+    revalidatePath("/albums");
+    revalidatePath(`/album/${id}`);
+  }
+  return data;
 };
 
 export const deleteAlbum = async (id: string): Promise<IAlbumResponse> => {
   const data = await apiClient.delete<IAlbumResponse>(`/album/${id}`);
-  return data.data;
+  if (data.success) {
+    revalidateTag("album");
+    revalidateTag(`album-${id}`);
+    revalidatePath("/albums");
+  }
+  return data;
 };
 
 /***************** Data Types *****************/
