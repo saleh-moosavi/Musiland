@@ -1,40 +1,60 @@
 "use server";
-import apiClient from "@/configs/axios";
+import { apiClient } from "@/configs/apiConfig";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 export const getAllUsers = async (): Promise<IGetAllUsersResponse> => {
-  const res = await apiClient.get<IGetAllUsersResponse>("/user");
-  return res.data;
+  const data = await apiClient.get<IGetAllUsersResponse>("/user", {
+    next: { tags: ["user"], revalidate: 300 },
+  });
+  return data;
 };
 
 export const getUser = async (id: string): Promise<IUserResponse> => {
-  const res = await apiClient.get<IUserResponse>(`/user/${id}`);
-  return res.data;
+  const data = await apiClient.get<IUserResponse>(`/user/${id}`, {
+    next: { tags: [`user-${id}`], revalidate: 300 },
+  });
+  return data;
 };
 
-export const addUser = async (data: {
+export const addUser = async (user: {
   name: string;
   password: string;
   email: string;
 }): Promise<IAuthResponse> => {
-  const res = await apiClient.post<IAuthResponse>("/user", data);
-  return res.data;
+  const data = await apiClient.post<IAuthResponse>("/user", user);
+  if (data.success) {
+    revalidateTag("user");
+    revalidatePath("/users");
+  }
+  return data;
 };
 
 export const editUser = async (
   id: string,
-  data: {
+  user: {
     name: string;
     password: string;
     email: string;
   },
 ): Promise<IAuthResponse> => {
-  const res = await apiClient.put<IAuthResponse>("/user", { data, id });
-  return res.data;
+  const data = await apiClient.put<IAuthResponse>("/user", { ...user, id });
+  if (data.success) {
+    revalidateTag("user");
+    revalidateTag(`user-${id}`);
+    revalidatePath("/users");
+    revalidatePath(`/user/${id}`);
+  }
+  return data;
 };
 
 export const deleteUser = async (id: string): Promise<IUserResponse> => {
-  const res = await apiClient.delete<IUserResponse>(`user/${id}`);
-  return res.data;
+  const data = await apiClient.delete<IUserResponse>(`user/${id}`);
+  if (data.success) {
+    revalidateTag("user");
+    revalidateTag(`user-${id}`);
+    revalidatePath("/users");
+  }
+  return data;
 };
 
 /***************** Data Types *****************/

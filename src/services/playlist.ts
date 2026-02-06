@@ -1,13 +1,18 @@
 "use server";
 import { apiClient } from "@/configs/apiConfig";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 export const getAllPlaylists = async (): Promise<IGetAllPlaylistResponse> => {
-  const data = await apiClient.get<IGetAllPlaylistResponse>(`/playlist`);
+  const data = await apiClient.get<IGetAllPlaylistResponse>(`/playlist`, {
+    next: { tags: ["playlist"], revalidate: 300 },
+  });
   return data;
 };
 
 export const getPlaylist = async (id: string): Promise<IPlaylistResponse> => {
-  const data = await apiClient.get<IPlaylistResponse>(`/playlist/${id}`);
+  const data = await apiClient.get<IPlaylistResponse>(`/playlist/${id}`, {
+    next: { tags: [`playlist-${id}`], revalidate: 300 },
+  });
   return data;
 };
 
@@ -17,6 +22,10 @@ export const createPlaylist = async (
   const data = await apiClient.post<IPlaylistResponse>(`/playlist`, {
     name,
   });
+  if (data.success) {
+    revalidateTag("playlist");
+    revalidatePath("/playlists");
+  }
   return data;
 };
 
@@ -28,6 +37,12 @@ export const editPlaylist = async (
     name,
     id,
   });
+  if (data.success) {
+    revalidateTag("playlist");
+    revalidateTag(`playlist-${id}`);
+    revalidatePath("/playlists");
+    revalidatePath(`/playlist/${id}`);
+  }
   return data;
 };
 
@@ -35,6 +50,11 @@ export const deletePlaylist = async (
   id: string,
 ): Promise<IPlaylistResponse> => {
   const data = await apiClient.delete<IPlaylistResponse>(`/playlist/${id}`);
+  if (data.success) {
+    revalidateTag("playlist");
+    revalidateTag(`playlist-${id}`);
+    revalidatePath("/playlists");
+  }
   return data;
 };
 
