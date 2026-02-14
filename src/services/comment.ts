@@ -1,10 +1,10 @@
 import { ISong } from "./song";
 import { IUser } from "./user";
-import apiClient from "@/configs/axios";
+import { apiClient } from "@/configs/apiConfig";
 
 export const getAllComments = async (): Promise<IGetAllCommentsResponse> => {
   const res = await apiClient.get<IGetAllCommentsResponse>(`/comment`);
-  return res.data;
+  return res;
 };
 
 export const getSongComments = async (
@@ -13,7 +13,7 @@ export const getSongComments = async (
   const res = await apiClient.get<IGetAllCommentsResponse>(
     `/comment/song/${id}`,
   );
-  return res.data;
+  return res;
 };
 
 export const getUserComments = async (
@@ -22,7 +22,7 @@ export const getUserComments = async (
   const res = await apiClient.get<IGetAllCommentsResponse>(
     `/comment/user/${id}`,
   );
-  return res.data;
+  return res;
 };
 
 export const addComment = async (
@@ -35,7 +35,7 @@ export const addComment = async (
     user: userId,
     song: songId,
   });
-  return res.data;
+  return res;
 };
 
 export const editComment = async (
@@ -50,12 +50,12 @@ export const editComment = async (
     user: userId,
     song: songId,
   });
-  return res.data;
+  return res;
 };
 
 export const deleteComment = async (id: string): Promise<ICommentResponse> => {
   const res = await apiClient.delete<ICommentResponse>(`/comment/${id}`);
-  return res.data;
+  return res;
 };
 
 /***************** Data Types *****************/

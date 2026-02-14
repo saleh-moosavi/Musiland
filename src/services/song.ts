@@ -3,38 +3,57 @@ import { IGenre } from "./genre";
 import { IAlbum } from "./album";
 import { ISinger } from "./singer";
 import { IPlaylist } from "./playlist";
-import apiClient from "@/configs/axios";
+import { apiClient } from "@/configs/apiConfig";
 import { SongFormData } from "@/app/admin/_components/SongForm";
 
-export const getAllSongs = async (query?: string): Promise<ISongsResponse> => {
+export const getAllSongs = async (
+  query: string = "",
+): Promise<ISongsResponse> => {
   const data = await apiClient.get<ISongsResponse>(`/song?${query}`);
-  return data.data;
+  return data;
 };
 
 export const getSong = async (id: string): Promise<ISongResponse> => {
   const data = await apiClient.get<ISongResponse>(`/song/${id}`);
-  return data.data;
+  return data;
 };
 
 export const createSong = async (
   data: SongFormData,
 ): Promise<ISongResponse> => {
-  const res = await apiClient.post<ISongResponse>(`/song`, data);
+  const res = await apiClient.post<ISongResponse>(`/song`, {
+    name: data.name,
+    audioUrl: data.audioUrl,
+    coverUrl: data.coverUrl,
+    singer: data.singer,
+    album: data.album,
+    genre: data.genre.join(","),
+    playlist: data.playlist.join(","),
+  });
   console.log(res);
-  return res.data;
+  return res;
 };
 
 export const editSong = async (
   id: string,
   data: SongFormData,
 ): Promise<ISongResponse> => {
-  const res = await apiClient.put<ISongResponse>(`/song`, { id, data });
-  return res.data;
+  const res = await apiClient.put<ISongResponse>(`/song`, {
+    id,
+    name: data.name,
+    audioUrl: data.audioUrl,
+    coverUrl: data.coverUrl,
+    singer: data.singer,
+    album: data.album,
+    genre: data.genre.join(","),
+    playlist: data.playlist.join(","),
+  });
+  return res;
 };
 
 export const deleteSong = async (id: string): Promise<ISongResponse> => {
   const res = await apiClient.delete<ISongResponse>(`/song/${id}`);
-  return res.data;
+  return res;
 };
 
 /***************** Data Types *****************/
