@@ -7,7 +7,7 @@ import DeleteBtn from "@/app/admin/_components/DeleteBtn";
 import { deleteSong, getAllSongs } from "@/services/song";
 
 export default async function SongList() {
-  const data = await getAllSongs("");
+  const data = await getAllSongs();
   const songs = data.data;
 
   return (
@@ -26,7 +26,7 @@ export default async function SongList() {
                 <Image
                   width={500}
                   height={500}
-                  src={song.coverUrl || "/placeholder.jpg"}
+                  src={song.cover_url || "/placeholder.webp"}
                   alt="Song Image Cover"
                   className="object-cover max-w-18 sm:max-w-40 rounded-2xl hover:grayscale-75 transition-all duration-500"
                 />
@@ -38,11 +38,14 @@ export default async function SongList() {
                   <p>Album : {song.album?.name || "None"}</p>
                   <p>
                     Genre :{" "}
-                    {song.songs_genres?.map((g) => g.name).join(", ") || "None"}
+                    {song.songs_genres?.map((g) => g.genre.name).join(", ") ||
+                      "None"}
                   </p>
                   <p>
                     Playlist :{" "}
-                    {song.songs_playlists?.map((p) => p.name).join(", ") || "None"}
+                    {song.songs_playlists
+                      ?.map((p) => p.playlist.name)
+                      .join(", ") || "None"}
                   </p>
                 </div>
               </article>

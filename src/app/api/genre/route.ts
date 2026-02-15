@@ -28,6 +28,7 @@ export async function GET(req: NextRequest) {
       {
         success: !data.error,
         data: data.data,
+        message: data.error ? data.error.message : "Success",
       },
       { status: 200 },
     );
