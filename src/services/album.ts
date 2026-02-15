@@ -6,6 +6,10 @@ export const getAllAlbums = async (): Promise<IGetAllAlbumResponse> => {
   const data = await apiClient.get<IGetAllAlbumResponse>(`/album`, {
     next: { tags: ["album"], revalidate: 300 },
   });
+  if (!data.success) {
+    revalidateTag("album");
+    revalidatePath("/albums");
+  }
   return data;
 };
 
@@ -13,6 +17,10 @@ export const getAlbum = async (id: string): Promise<IAlbumResponse> => {
   const data = await apiClient.get<IAlbumResponse>(`/album/${id}`, {
     next: { tags: [`album-${id}`], revalidate: 300 },
   });
+  if (!data.success) {
+    revalidateTag(`album-${id}`);
+    revalidatePath(`/album/${id}`);
+  }
   return data;
 };
 

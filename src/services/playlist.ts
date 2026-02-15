@@ -6,6 +6,10 @@ export const getAllPlaylists = async (): Promise<IGetAllPlaylistResponse> => {
   const data = await apiClient.get<IGetAllPlaylistResponse>(`/playlist`, {
     next: { tags: ["playlist"], revalidate: 300 },
   });
+  if (!data.success) {
+    revalidateTag("playlist");
+    revalidatePath("/playlists");
+  }
   return data;
 };
 
@@ -13,6 +17,10 @@ export const getPlaylist = async (id: string): Promise<IPlaylistResponse> => {
   const data = await apiClient.get<IPlaylistResponse>(`/playlist/${id}`, {
     next: { tags: [`playlist-${id}`], revalidate: 300 },
   });
+  if (!data.success) {
+    revalidateTag(`playlist-${id}`);
+    revalidatePath(`/playlist/${id}`);
+  }
   return data;
 };
 

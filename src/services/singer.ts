@@ -6,6 +6,10 @@ export const getAllSingers = async (): Promise<IGetAllSingerResponse> => {
   const data = await apiClient.get<IGetAllSingerResponse>(`/singer`, {
     next: { tags: ["singer"], revalidate: 300 },
   });
+  if (!data.success) {
+    revalidateTag("singer");
+    revalidatePath("/singers");
+  }
   return data;
 };
 
@@ -13,6 +17,10 @@ export const getSinger = async (id: string): Promise<ISingerResponse> => {
   const data = await apiClient.get<ISingerResponse>(`/singer/${id}`, {
     next: { tags: [`singer-${id}`], revalidate: 300 },
   });
+  if (!data.success) {
+    revalidateTag(`singer-${id}`);
+    revalidatePath(`/singer/${id}`);
+  }
   return data;
 };
 

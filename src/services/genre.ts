@@ -6,6 +6,10 @@ export const getAllGenres = async (): Promise<IGetAllGenreResponse> => {
   const data = await apiClient.get<IGetAllGenreResponse>(`/genre`, {
     next: { tags: ["genre"], revalidate: 300 },
   });
+  if (!data.success) {
+    revalidateTag("genre");
+    revalidatePath("/genres");
+  }
   return data;
 };
 
@@ -13,6 +17,10 @@ export const getGenre = async (id: string): Promise<IGenreResponse> => {
   const data = await apiClient.get<IGenreResponse>(`/genre/${id}`, {
     next: { tags: [`genre-${id}`], revalidate: 300 },
   });
+  if (!data.success) {
+    revalidateTag(`genre-${id}`);
+    revalidatePath(`/genre/${id}`);
+  }
   return data;
 };
 

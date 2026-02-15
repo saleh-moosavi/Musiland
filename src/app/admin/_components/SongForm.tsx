@@ -4,16 +4,11 @@ import z from "zod";
 import useToast from "@/hooks/useToast";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import { getAllAlbums } from "@/services/album";
-import { getAllGenres } from "@/services/genre";
 import FormButton from "@/components/FormButton";
-import { getAllSingers } from "@/services/singer";
 import CustomInput from "@/components/CustomInput";
 import CustomOption from "@/components/CustomOption";
-import { getAllPlaylists } from "@/services/playlist";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter, useSearchParams } from "next/navigation";
-import { createSong, editSong, getSong } from "@/services/song";
 import {
   Music,
   FileText,
@@ -22,11 +17,16 @@ import {
   Disc,
   List,
 } from "lucide-react";
-import { IMode, ISong, ISongResponse } from "@/services/song";
-import { IAlbum, IGetAllAlbumResponse } from "@/services/album";
-import { IGenre, IGetAllGenreResponse } from "@/services/genre";
-import { IGetAllSingerResponse, ISinger } from "@/services/singer";
-import { IGetAllPlaylistResponse, IPlaylist } from "@/services/playlist";
+import { IMode, ISongResponse } from "@/services/song";
+import { useGetAllGenres } from "@/hooks/ReactQuery/useGenre";
+import { useGetAllAlbums } from "@/hooks/ReactQuery/useAlbum";
+import { useGetAllSingers } from "@/hooks/ReactQuery/useSinger";
+import { useGetAllPlaylist } from "@/hooks/ReactQuery/usePlaylist";
+import {
+  useCreateSong,
+  useEditSong,
+  useGetSong,
+} from "@/hooks/ReactQuery/useSong";
 
 /***************** Zod Schema *****************/
 export const addSongSchema = z.object({
@@ -47,16 +47,10 @@ export default function SongForm({ mode }: { mode: IMode }) {
   const searchParams = useSearchParams();
   const songId = searchParams.get("itemId");
   const { showToast } = useToast();
-
-  // State برای داده‌های فرم
-  const [singers, setSingers] = useState<ISinger[]>([]);
-  const [albums, setAlbums] = useState<IAlbum[]>([]);
-  const [genres, setGenres] = useState<IGenre[]>([]);
-  const [playlists, setPlaylists] = useState<IPlaylist[]>([]);
-  const [songData, setSongData] = useState<ISong | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const createMutation = useCreateSong();
+  const editMutation = useEditSong();
 
-  // فرم
   const {
     formState: { errors, isLoading },
     register,
@@ -76,102 +70,70 @@ export default function SongForm({ mode }: { mode: IMode }) {
     },
   });
 
-  // Fetch داده‌های مورد نیاز
+  const { data: singers } = useGetAllSingers();
+  const { data: albums } = useGetAllAlbums();
+  const { data: genres } = useGetAllGenres();
+  const { data: playlists } = useGetAllPlaylist();
+  const {
+    data: songData,
+    isLoading: isSongLoading,
+    error: songError,
+  } = useGetSong(songId as string);
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setSubmitError(null);
+    if (songId && songData?.data) {
+      reset({
+        name: songData.data.name || "",
+        lyric: songData.data.lyric || "",
+        album: songData.data.album?.id || "",
+        singer: songData.data.singer?.id || "",
+        audioUrl: songData.data.audio_url || "",
+        coverUrl: songData.data.cover_url || "",
+        genre: songData.data.songs_genres?.map((g) => g.genre.id) || [],
+        playlist:
+          songData.data.songs_playlists?.map((p) => p.playlist.id) || [],
+      });
+    }
+  }, [songId, songData, reset]);
 
-        // Array of promises برای parallel fetching
-        const fetchPromises: (
-          | Promise<IGetAllSingerResponse>
-          | Promise<IGetAllAlbumResponse>
-          | Promise<IGetAllGenreResponse>
-          | Promise<IGetAllPlaylistResponse>
-          | Promise<ISongResponse>
-        )[] = [
-          getAllSingers(),
-          getAllAlbums(),
-          getAllGenres(),
-          getAllPlaylists(),
-        ];
+  if (songId && isSongLoading) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="text-gray-500">Loading song data...</div>
+      </div>
+    );
+  }
+  if (songId && songError) {
+    return (
+      <div className="flex justify-center items-center h-64">
+        <div className="text-red-500">Error: {songError.message}</div>
+      </div>
+    );
+  }
 
-        // اگر در حالت edit هستیم، song data رو هم fetch کنیم
-        if (mode === "edit" && songId) {
-          fetchPromises.push(getSong(songId));
-        }
-
-        // اجرای همه promises به صورت موازی
-        const [singersRes, albumsRes, genresRes, playlistsRes, songRes] =
-          await Promise.all(fetchPromises);
-
-        // تنظیم state‌ها
-        setAlbums(albumsRes.data as IAlbum[]);
-        setSingers(singersRes?.data as ISinger[]);
-        setGenres(genresRes.data as IGenre[]);
-        setPlaylists(playlistsRes.data as IPlaylist[]);
-
-        if (mode === "edit" && songRes && songRes.success) {
-          const sData = songRes.data as ISong;
-          setSongData(sData);
-          console.log(sData);
-
-          reset({
-            name: sData.name,
-            lyric: sData.lyric,
-            album: sData.album.id,
-            singer: sData.singer.id,
-            audioUrl: sData.audioUrl,
-            coverUrl: sData.coverUrl,
-            genre: sData.songs_genres.map((g) => g.id),
-            playlist: sData.songs_playlists.map((p) => p.id),
-          });
-        }
-      } catch (error: unknown) {
-        console.log(error);
-        setSubmitError(
-          error instanceof Error
-            ? error?.message
-            : "Failed to fetch required data. Please try again.",
-        );
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  // Submit handler
   const submitHandler = async (data: SongFormData) => {
     setSubmitError(null);
-
+    let result: ISongResponse;
     try {
-      let result: ISongResponse;
-
       if (mode === "add") {
-        // Create new song
-        result = await createSong(data);
+        result = await createMutation.mutateAsync(data);
       } else {
-        // Edit existing song
         if (!songId) {
           setSubmitError("Song ID is required for editing");
           return;
         }
-        result = await editSong(songId, data);
+        result = await editMutation.mutateAsync({ id: songId, data });
       }
 
-      // بررسی موفقیت‌آمیز بودن عملیات
       if (result.success) {
         showToast(
           `Song ${mode === "add" ? "added" : "updated"} successfully!`,
           mode === "add" ? "green" : "orange",
         );
 
-        // Reset فرم
         reset();
-
-        // Redirect به صفحه songs
         router.push("/admin/dashboard/song");
-        router.refresh(); // برای update لیست songs
+        router.refresh();
       } else {
         setSubmitError(result.message || "Operation failed.");
       }
@@ -183,15 +145,6 @@ export default function SongForm({ mode }: { mode: IMode }) {
       );
     }
   };
-
-  // Loading state
-  if (mode === "edit" && songData === null) {
-    return (
-      <div className="flex justify-center items-center h-64">
-        <div className="text-gray-500">Loading song data...</div>
-      </div>
-    );
-  }
 
   return (
     <article className="mx-auto p-6 rounded-3xl bg-my-white-low dark:bg-my-black-max mt-8 shadow-md dark:shadow-my-black-low/30 text-my-black-max dark:text-my-white-low">
@@ -237,7 +190,7 @@ export default function SongForm({ mode }: { mode: IMode }) {
             title="Singer"
             icon={<Mic className="w-5 h-5" />}
             register={register("singer")}
-            data={singers}
+            data={singers?.data || []}
             error={errors.singer?.message}
           />
 
@@ -245,7 +198,7 @@ export default function SongForm({ mode }: { mode: IMode }) {
             title="Album"
             icon={<Disc className="w-5 h-5" />}
             register={register("album")}
-            data={albums}
+            data={albums?.data || []}
             error={errors.album?.message}
           />
 
@@ -254,7 +207,7 @@ export default function SongForm({ mode }: { mode: IMode }) {
             title="Genres"
             icon={<List className="w-5 h-5" />}
             register={register("genre")}
-            data={genres}
+            data={genres?.data || []}
             error={errors.genre?.message}
           />
 
@@ -263,7 +216,7 @@ export default function SongForm({ mode }: { mode: IMode }) {
             title="Playlists"
             icon={<List className="w-5 h-5" />}
             register={register("playlist")}
-            data={playlists}
+            data={playlists?.data || []}
             error={errors.playlist?.message}
           />
         </div>
