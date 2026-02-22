@@ -34,15 +34,7 @@ export const getSong = async (id: string): Promise<ISongResponse> => {
 export const createSong = async (
   data: SongFormData,
 ): Promise<ISongResponse> => {
-  const res = await apiClient.post<ISongResponse>(`/song`, {
-    name: data.name,
-    audioUrl: data.audioUrl,
-    coverUrl: data.coverUrl,
-    singer: data.singer,
-    album: data.album,
-    genre: data.genre.join(","),
-    playlist: data.playlist.join(","),
-  });
+  const res = await apiClient.post<ISongResponse>(`/song`, { data });
   if (res.success) {
     revalidateTag("songs");
     revalidatePath("/songs");
@@ -56,13 +48,7 @@ export const editSong = async (
 ): Promise<ISongResponse> => {
   const res = await apiClient.put<ISongResponse>(`/song`, {
     id,
-    name: data.name,
-    audioUrl: data.audioUrl,
-    coverUrl: data.coverUrl,
-    singer: data.singer,
-    album: data.album,
-    genre: data.genre.join(","),
-    playlist: data.playlist.join(","),
+    data: data,
   });
   if (res.success) {
     revalidateTag("songs");

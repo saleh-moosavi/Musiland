@@ -122,6 +122,7 @@ export default function SongForm({ mode }: { mode: IMode }) {
           setSubmitError("Song ID is required for editing");
           return;
         }
+        console.log(data)
         result = await editMutation.mutateAsync({ id: songId, data });
       }
 

@@ -3,14 +3,17 @@ import { apiClient } from "@/configs/apiConfig";
 import { revalidatePath, revalidateTag } from "next/cache";
 
 export const getAllSingers = async (): Promise<IGetAllSingerResponse> => {
-  const data = await apiClient.get<IGetAllSingerResponse>(`/singer`, {
-    next: { tags: ["singer"], revalidate: 300 },
-  });
-  if (!data.success) {
-    revalidateTag("singer");
-    revalidatePath("/singers");
+  try {
+    const data = await apiClient.get<IGetAllSingerResponse>(`/singer`, {
+      next: { tags: ["singer"], revalidate: 300 },
+    });
+
+    return data;
+  } catch (error: unknown) {
+    throw new Error(
+      error instanceof Error ? error.message : "Internal Server Error",
+    );
   }
-  return data;
 };
 
 export const getSinger = async (id: string): Promise<ISingerResponse> => {

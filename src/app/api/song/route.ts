@@ -138,16 +138,15 @@ export async function GET(req: NextRequest) {
 /*---------------- API ----------------*/
 export async function POST(req: NextRequest) {
   try {
-    const data = await req.json();
-
+    const {data} = await req.json();
     if (
-      !data.name?.trim() ||
-      !data.coverUrl?.trim() ||
-      !data.audioUrl?.trim() ||
-      !data.album ||
-      !data.singer ||
-      !data.genre?.length ||
-      !data.playlist?.length
+      data?.name?.trim() === "" ||
+      data?.coverUrl?.trim() === "" ||
+      data?.audioUrl?.trim() === "" ||
+      data?.album?.trim() === "" ||
+      data?.singer?.trim() === "" ||
+      data?.genre?.length <= 0 ||
+      data?.playlist?.length <= 0
     ) {
       return NextResponse.json(
         {
@@ -161,7 +160,7 @@ export async function POST(req: NextRequest) {
     const { data: existingSongs, error: checkError } = await supabase
       .from("songs")
       .select("id")
-      .eq("name", data.name)
+      .eq("name", data?.name?.trim())
       .limit(1);
 
     if (checkError)
@@ -184,12 +183,12 @@ export async function POST(req: NextRequest) {
     }
 
     const songData = {
-      name: data.name,
-      lyric: data.lyric || "",
-      audio_url: data.audioUrl,
-      cover_url: data.coverUrl,
-      singer_id: data.singer,
-      album_id: data.album,
+      name: data?.name?.trim(),
+      lyric: data?.lyric?.trim() || "",
+      audio_url: data?.audioUrl?.trim(),
+      cover_url: data?.coverUrl?.trim(),
+      singer_id: data?.singer?.trim(),
+      album_id: data?.album?.trim(),
       likes: 0,
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
@@ -206,7 +205,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         {
           success: false,
-          message: "Faild To Add Song",
+          message:  insertError.message || "Faild To Add Song",
         },
         { status: 405 },
       );
@@ -314,12 +313,13 @@ export async function PUT(req: NextRequest) {
     }
 
     if (
-      !songData?.name?.trim() ||
-      !songData?.coverUrl?.trim() ||
-      !songData?.audioUrl?.trim() ||
-      !songData?.album ||
-      !songData?.genre?.length ||
-      !songData?.playlist?.length
+      songData?.name?.trim() === "" ||
+      songData?.coverUrl?.trim() === "" ||
+      songData?.audioUrl?.trim() === "" ||
+      songData?.album?.trim() === "" ||
+      songData?.singer?.trim() === "" ||
+      songData?.genre?.length <= 0 ||
+      songData?.playlist?.length <= 0
     ) {
       return NextResponse.json(
         {

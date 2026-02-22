@@ -19,7 +19,7 @@ export const apiClient = {
   /***************** Post *****************/
   async post<T>(
     url: string,
-    data: Record<string, string | number | boolean>,
+    data: Record<string, string | number | boolean | object>,
     options?: RequestInit,
   ): Promise<T> {
     const response = await fetch(`${API_BASE_URL}${url}`, {
@@ -40,7 +40,7 @@ export const apiClient = {
   /***************** Put *****************/
   async put<T>(
     url: string,
-    data: Record<string, string | number | boolean>,
+    data: Record<string, string | number | boolean | object>,
     options?: RequestInit,
   ): Promise<T> {
     const response = await fetch(`${API_BASE_URL}${url}`, {
