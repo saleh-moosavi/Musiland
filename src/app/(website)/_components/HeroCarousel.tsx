@@ -20,7 +20,7 @@ export default async function HeroCarousel() {
               <p>{song.name}</p>
             </div>
             <Image
-              src={song.coverUrl}
+              src={song.cover_url || "/placeholder.webp"}
               alt={song.name}
               sizes="(max-width: 768px) 100vw, 50vw"
               priority={index < 3}

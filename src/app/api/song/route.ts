@@ -110,7 +110,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.json(
         {
           success: false,
-          message: "Failed to fetch Songs",
+          message: error.message ?? "Failed to fetch Songs",
         },
         { status: 400 },
       );
@@ -138,7 +138,7 @@ export async function GET(req: NextRequest) {
 /*---------------- API ----------------*/
 export async function POST(req: NextRequest) {
   try {
-    const {data} = await req.json();
+    const { data } = await req.json();
     if (
       data?.name?.trim() === "" ||
       data?.coverUrl?.trim() === "" ||
@@ -205,7 +205,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         {
           success: false,
-          message:  insertError.message || "Faild To Add Song",
+          message: insertError.message || "Faild To Add Song",
         },
         { status: 405 },
       );

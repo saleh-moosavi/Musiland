@@ -14,9 +14,8 @@ export default function SameSongs() {
 
   useEffect(() => {
     const fetchSongs = async () => {
-      const res = await getAllSongs(
-        SongQueries.related.query(audioGenres, audioPlaylists)
-      );
+      const query = SongQueries.related.query(audioGenres, audioPlaylists);
+      const res = await getAllSongs(query);
       const songs = res?.data;
       if (!songs || !res.success) {
         setSameSongsList([]);
@@ -26,11 +25,11 @@ export default function SameSongs() {
     };
     if (
       sameSongsList?.length < 1 ||
-      sameSongsList[sameSongsList?.length - 1]?.audioUrl === audioSrc
+      sameSongsList[sameSongsList?.length - 1]?.audio_url === audioSrc
     ) {
       fetchSongs();
     }
-  }, [audioSrc]);
+  }, [audioSrc, audioGenres, audioPlaylists]);
 
   return (
     <SameSongWrapper>

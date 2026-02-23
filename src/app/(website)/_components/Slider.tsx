@@ -32,7 +32,7 @@ export default async function Slider({ title, query }: IProp) {
             <article key={song.id}>
               <div className="relative group rounded-xl overflow-hidden">
                 <Image
-                  src={song.coverUrl}
+                  src={song.cover_url || "/placeholder.webp"}
                   alt={song.name}
                   width={100}
                   height={100}

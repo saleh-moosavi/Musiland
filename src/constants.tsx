@@ -26,9 +26,12 @@ export const SongQueries = {
   oldets: { title: "Oldets Songs", query: "sort=date" },
   related: {
     title: "Related Songs",
-    query: (genres: IGenre[], playlists: IPlaylist[]) =>
-      `genre=${genres.map((g: IGenre) => g.name).join(",")}&playlist=${playlists
-        .map((p: IPlaylist) => p.name)
+    query: (
+      genres: { genre: IGenre }[],
+      playlists: { playlist: IPlaylist }[],
+    ) =>
+      `genre=${genres.map((g) => g.genre.id).join(",")}&playlist=${playlists
+        .map((p) => p.playlist.id)
         .join(",")}`,
   },
 };

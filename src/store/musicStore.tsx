@@ -7,15 +7,15 @@ interface MusicStore {
   audioSrc: string;
   audioName: string;
   audioCover: string;
-  audioGenres: IGenre[];
-  audioPlaylists: IPlaylist[];
+  audioGenres: { genre: IGenre }[];
+  audioPlaylists: { playlist: IPlaylist }[];
   likesCount: number | null;
   comments: IComment[];
   setAudioSrc: (audioSrc: string) => void;
   setAudioName: (audioName: string) => void;
   setAudioCover: (setAudioSrc: string) => void;
-  setAudioGenres: (audioGenres: IGenre[]) => void;
-  setAudioPlaylists: (audioPlaylists: IPlaylist[]) => void;
+  setAudioGenres: (audioGenres: { genre: IGenre }[]) => void;
+  setAudioPlaylists: (audioPlaylists: { playlist: IPlaylist }[]) => void;
   setLikesCount: (likesCount: number | null) => void;
   setComments: (comments: IComment[]) => void;
 }

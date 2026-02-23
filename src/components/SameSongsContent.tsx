@@ -15,14 +15,14 @@ export default function SameSongsContent({ song }: { song: ISong }) {
   return (
     <section
       className={`flex justify-start items-center gap-2 mb-5 md:gap-10 w-full p-2 rounded-2xl overflow-hidden dark:text-my-white-low select-none transition-all duration-200 ${
-        audioSrc == song.audioUrl
+        audioSrc == song.audio_url
           ? "bg-my-white-high dark:bg-my-black-med"
           : "bg-my-white-med dark:bg-my-black-high hover:bg-my-white-high dark:hover:bg-my-black-med"
       }`}
     >
       <div className="relative group rounded-xl overflow-hidden">
         <Image
-          src={song.coverUrl}
+          src={song.cover_url}
           alt={song.name}
           sizes="(max-width: 768px) 100vw, 50vw"
           width={80}

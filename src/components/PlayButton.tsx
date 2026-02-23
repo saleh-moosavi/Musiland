@@ -21,8 +21,8 @@ export default function PlayButton({ song, children, buttonType }: IProps) {
 
   const handlePlaySong = () => {
     setAudioName(song.name);
-    setAudioSrc(song.audioUrl);
-    setAudioCover(song.coverUrl);
+    setAudioSrc(song.audio_url);
+    setAudioCover(song.cover_url);
     setAudioGenres(song.songs_genres);
     setAudioPlaylists(song.songs_playlists);
   };
