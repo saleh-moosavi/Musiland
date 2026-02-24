@@ -4,11 +4,13 @@ import { Heart } from "lucide-react";
 import useToast from "@/hooks/useToast";
 import useUserStore from "@/store/userStore";
 import useToggleLike from "@/hooks/useToggleLike";
+import { useGetUserLikedSongs } from "@/hooks/ReactQuery/useUser";
 
 export default function Likes({ count, id }: { count: number; id: string }) {
   const { showToast } = useToast();
-  const { toggleLike, likesCount } = useToggleLike();
   const { userData } = useUserStore();
+  const { data: likedSongs } = useGetUserLikedSongs(id);
+  const { toggleLike, likesCount } = useToggleLike();
 
   //get user id and user liked list
   useEffect(() => {

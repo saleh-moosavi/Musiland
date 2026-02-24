@@ -29,7 +29,7 @@ export default async function CategoryItems({ songs }: IProp) {
           </div>
           <Link
             className="dark:text-my-white-low text-center"
-            href={`/music/${song.singer.name || "Unknown"}-${song.id}`}
+            href={`/music/${song.singer.name || "Unknown"},${song.id}`}
           >
             <p className="font-semibold mt-2">{song.name}</p>
             <p className="text-sm">{song.singer.name || "Unknown Artist"}</p>

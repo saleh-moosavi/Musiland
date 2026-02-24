@@ -29,7 +29,7 @@ export default async function MusicNamePage({
   params: { music_name: string };
 }) {
   const { music_name } = await params;
-  const [, id] = decodeURIComponent(music_name).split("-");
+  const [, id] = decodeURIComponent(music_name).split(",");
   const [songRes, commentRes] = await Promise.all([
     getSong(id),
     getSongComments(id),
@@ -48,7 +48,10 @@ export default async function MusicNamePage({
         <div className="space-y-10 mt-10">
           <Slider
             title={SongQueries.related.title}
-            query={SongQueries.related.query(song.songs_genres, song.songs_playlists)}
+            query={SongQueries.related.query(
+              song.songs_genres,
+              song.songs_playlists,
+            )}
           />
         </div>
       </>

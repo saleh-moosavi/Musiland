@@ -2,8 +2,6 @@ import Likes from "./Likes";
 import Link from "next/link";
 import Image from "next/image";
 import { ISong } from "@/services/song";
-import { IGenre } from "@/services/genre";
-import { IPlaylist } from "@/services/playlist";
 import { MessageSquareMore } from "lucide-react";
 import PlayButton from "@/components/PlayButton";
 
@@ -16,7 +14,7 @@ export default function SingleMusicView({ song, commentCount }: IProps) {
   return (
     <div className="grid lg:grid-cols-3 items-start gap-10 w-full dark:text-my-white-low">
       <Image
-        src={song.coverUrl}
+        src={song.cover_url}
         alt={song.name}
         width={500}
         height={500}
@@ -37,10 +35,12 @@ export default function SingleMusicView({ song, commentCount }: IProps) {
             <ul className="font-semibold flex items-center gap-3">
               Genre :
               {song.songs_genres?.length
-                ? song.songs_genres.map((g: IGenre) => (
-                    <li key={g.id}>
-                      <Link href={`/category/${g.name}?genre=${g.name}`}>
-                        {g.name}
+                ? song.songs_genres.map((g) => (
+                    <li key={g.genre.id}>
+                      <Link
+                        href={`/category/${g.genre.name}?genre=${g.genre.name}`}
+                      >
+                        {g.genre.name}
                       </Link>
                     </li>
                   ))
@@ -50,10 +50,12 @@ export default function SingleMusicView({ song, commentCount }: IProps) {
             <ul className="font-semibold flex items-center gap-3">
               Playlist :
               {song.songs_playlists?.length
-                ? song.songs_playlists.map((p: IPlaylist) => (
-                    <li key={p.id}>
-                      <Link href={`/category/${p.name}?playlist=${p.name}`}>
-                        {p.name}
+                ? song.songs_playlists.map((p) => (
+                    <li key={p.playlist.id}>
+                      <Link
+                        href={`/category/${p.playlist.name}?playlist=${p.playlist.name}`}
+                      >
+                        {p.playlist.name}
                       </Link>
                     </li>
                   ))
@@ -65,7 +67,7 @@ export default function SingleMusicView({ song, commentCount }: IProps) {
         <div className="space-y-5">
           <a
             download
-            href={song.audioUrl}
+            href={song.audio_url}
             target="_blank"
             className="playdownloadbtn"
           >
@@ -77,8 +79,8 @@ export default function SingleMusicView({ song, commentCount }: IProps) {
             <p className="flex items-center gap-2">
               {commentCount} <MessageSquareMore className="size-4" />
             </p>
-            <Likes count={song.likes} id={song.id} />
-            <p>{song.createdAt.split("T")[0]}</p>
+            <Likes count={song.likes ?? 0} id={song.id} />
+            <p>{song.created_at.split("T")[0]}</p>
           </div>
         </div>
       </section>
