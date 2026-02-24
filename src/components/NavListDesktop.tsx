@@ -25,7 +25,7 @@ const NavListDesktop = ({
         {navbarData?.map((item) => (
           <Link
             key={item.id}
-            href={`/category/${item.name}?${type}=${item.name}`}
+            href={`/category/${item.name}?${type}=${item.id}`}
           >
             <li className="cursor-pointer">{item.name}</li>
           </Link>

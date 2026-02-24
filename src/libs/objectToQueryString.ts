@@ -1,27 +1,17 @@
-export async function objectToQueryString(obj: any, prefix = ""): Promise<any> {
-  const params = [];
+export function objectToQueryString(obj: Record<string, unknown>): string {
+  const params = new URLSearchParams();
 
-  for (const key in obj) {
-    if (Object.prototype.hasOwnProperty.call(obj, key)) {
-      const value = obj[key];
-      const newKey = prefix ? `${prefix}[${key}]` : key;
-
-      if (value && typeof value === "object" && !Array.isArray(value)) {
-        // پردازش آبجکت‌های تو در تو
-        params.push(objectToQueryString(value, newKey));
-      } else if (Array.isArray(value)) {
-        // پردازش آرایه‌ها
-        value.forEach((item, index) => {
-          params.push(objectToQueryString(item, `${newKey}[${index}]`));
-        });
+  for (const [key, value] of Object.entries(obj)) {
+    if (value !== undefined && value !== null) {
+      if (Array.isArray(value)) {
+        params.append(key, value.join(","));
+      } else if (typeof value === "object") {
+        params.append(key, JSON.stringify(value));
       } else {
-        // مقادیر ساده
-        params.push(
-          `${encodeURIComponent(newKey)}=${encodeURIComponent(value)}`
-        );
+        params.append(key, String(value));
       }
     }
   }
 
-  return params.filter(Boolean).join("&");
+  return params.toString();
 }

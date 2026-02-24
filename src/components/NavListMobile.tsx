@@ -33,7 +33,7 @@ export default function NavListMobile({
   genres: IGenre[];
   playlists: IPlaylist[];
 }) {
-  const { isLoggedIn } = useUserStore();
+  const { userData } = useUserStore();
   const [subNavType, setSubNavType] = useState("");
   const [showSubNav, setShowSubNav] = useState(false);
   const { setShowMobileMenuPanel } = useWindowStore();
@@ -76,7 +76,7 @@ export default function NavListMobile({
                   <Link
                     key={data.id}
                     onClick={() => setShowMobileMenuPanel(false)}
-                    href={`/category/${data.name}?${item.type}=${data.name}`}
+                    href={`/category/${data.name}?${item.type}=${data.id}`}
                   >
                     <p>{data.name}</p>
                   </Link>
@@ -87,11 +87,11 @@ export default function NavListMobile({
         ))}
         <li className="cursor-pointer">
           <Link
-            href={isLoggedIn ? "/profile" : "/register"}
+            href={userData?.id ? "/profile" : "/register"}
             onClick={() => setShowMobileMenuPanel(false)}
             className="font-semibold block p-2 w-full shadow-sm space-y-2 rounded-xl hover:shadow-md dark:shadow-my-white-high transition-all duration-300"
           >
-            {isLoggedIn ? "Profile" : "Register"}
+            {userData?.id ? "Profile" : "Register"}
           </Link>
         </li>
       </ul>

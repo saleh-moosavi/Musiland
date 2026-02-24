@@ -45,7 +45,7 @@ export default async function Slider({ title, query }: IProp) {
                 </p>
               </div>
               <Link
-                className="group dark:text-white"
+                className="group dark:text-white text-center"
                 href={`/music/${song.singer?.name}-${song.id}`}
               >
                 <p className="font-semibold mt-2">{song.name}</p>
