@@ -57,14 +57,6 @@ export const deleteUser = async (id: string): Promise<IUserResponse> => {
   return data;
 };
 
-export const getUserLikedSong = async (id: string): Promise<any> => {
-  const data = await apiClient.post<IUserResponse>(`user/liked-songs`, {
-    userId: id,
-  });
-  console.log(data)
-  return data;
-};
-
 /***************** Data Types *****************/
 export interface IAuth {
   id: string;

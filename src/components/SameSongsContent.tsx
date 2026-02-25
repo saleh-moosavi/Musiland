@@ -6,12 +6,12 @@ import { ISong } from "@/services/song";
 import PlayButton from "./PlayButton";
 import useUserStore from "@/store/userStore";
 import useMusicStore from "@/store/musicStore";
-import useToggleLike from "@/hooks/useToggleLike";
+import { useToggleLike } from "@/hooks/ReactQuery/useLike";
 
 export default function SameSongsContent({ song }: { song: ISong }) {
   const { audioSrc } = useMusicStore();
-  const { likedSongs } = useUserStore();
-  const { toggleLike } = useToggleLike();
+  const { likedSongs, userData } = useUserStore();
+  const toggleLike = useToggleLike();
   return (
     <section
       className={`flex justify-start items-center gap-2 mb-5 md:gap-10 w-full p-2 rounded-2xl overflow-hidden dark:text-my-white-low select-none transition-all duration-200 ${
@@ -41,7 +41,8 @@ export default function SameSongsContent({ song }: { song: ISong }) {
       </div>
       <Heart
         onClick={() => {
-          toggleLike(song.id);
+          if (userData?.id)
+            toggleLike.mutate({ userId: userData?.id, songId: song.id });
         }}
         className={`ms-auto md:me-5 cursor-pointer hover:scale-125 transition-all duration-200 ${
           likedSongs.includes(song.id)

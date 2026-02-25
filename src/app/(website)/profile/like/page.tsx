@@ -6,11 +6,11 @@ import { useEffect, useState } from "react";
 import useUserStore from "@/store/userStore";
 import { getUserLikes } from "@/services/like";
 import PlayButton from "@/components/PlayButton";
-import useToggleLike from "@/hooks/useToggleLike";
+import { useToggleLike } from "@/hooks/ReactQuery/useLike";
 
 const LikedSongsPage: React.FC = () => {
   const { userData } = useUserStore();
-  const { toggleLike } = useToggleLike();
+  const toggleLike = useToggleLike();
   const [songs, setSongs] = useState<ISong[]>([]);
 
   useEffect(() => {
@@ -48,10 +48,12 @@ const LikedSongsPage: React.FC = () => {
                   <p className="font-bold text-xl">{song.name}</p>
                   <X
                     onClick={() => {
-                      toggleLike(song.id);
-                      setSongs((prev) =>
-                        prev.filter((s) => s.id !== song.id)
-                      );
+                      if (userData?.id)
+                        toggleLike.mutate({
+                          userId: userData?.id,
+                          songId: song.id,
+                        });
+                      setSongs((prev) => prev.filter((s) => s.id !== song.id));
                     }}
                     className="md:me-5 cursor-pointer text-my-red-med hover:scale-125 transition-all duration-200"
                   />
